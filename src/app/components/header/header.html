@@ -1,0 +1,22 @@
+<header class="site-header">
+  <a routerLink="/" class="brand" aria-label="Movune inicio">
+    <img src="/logo-slogan-transparent.png" alt="Movune" />
+  </a>
+
+  <nav class="nav" aria-label="Navegacao principal">
+    <a
+      *ngFor="let link of primaryLinks"
+      [routerLink]="link.path"
+      routerLinkActive="is-active"
+      [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+    >
+      {{ link.label }}
+    </a>
+  </nav>
+
+  <nav class="access-nav" aria-label="Areas internas">
+    <a *ngFor="let link of accessLinks" [routerLink]="link.path" routerLinkActive="is-active">
+      {{ link.label }}
+    </a>
+  </nav>
+</header>

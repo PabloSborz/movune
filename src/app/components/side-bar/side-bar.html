@@ -1,0 +1,10 @@
+<aside class="side-bar">
+  <img src="/logo-transparent.png" alt="Movune" />
+
+  <section *ngFor="let group of groups">
+    <h2>{{ group.title }}</h2>
+    <a *ngFor="let link of group.links" [routerLink]="link.path" routerLinkActive="is-active">
+      {{ link.label }}
+    </a>
+  </section>
+</aside>

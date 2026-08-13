@@ -1,0 +1,41 @@
+.side-bar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: grid;
+  gap: 22px;
+  padding: 18px;
+}
+
+img {
+  display: block;
+  max-width: 92px;
+  width: 100%;
+}
+
+section {
+  display: grid;
+  gap: 8px;
+}
+
+h2 {
+  color: var(--teal);
+  font-size: 0.82rem;
+  letter-spacing: 0;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+a {
+  border-radius: 8px;
+  color: var(--muted);
+  font-weight: 800;
+  padding: 9px 10px;
+  text-decoration: none;
+}
+
+a:hover,
+a.is-active {
+  background: var(--soft-teal);
+  color: var(--blue);
+}
