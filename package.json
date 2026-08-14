@@ -22,6 +22,7 @@
     "@angular/ssr": "^21.2.21",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",
+    "server": "^1.0.42",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
