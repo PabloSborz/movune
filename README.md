@@ -30,7 +30,7 @@ O Movune surge como uma ponte entre a sociedade civil e as causas sociais, promo
 - **CLI Tool:** Angular CLI
 - **Gerenciamento de Pacotes:** npm / yarn
 - **Estilização / UI:** Tailwind CSS / Angular Material *(ajuste conforme usado)*
-- 
+  
 ---
 
 ## 📦 Como Executar o Projeto Localmente
