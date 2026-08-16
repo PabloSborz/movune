@@ -108,7 +108,26 @@
 }
 
 .menu-button {
+  align-items: center;
+  display: inline-grid;
   justify-self: start;
+  min-width: 42px;
+  padding: 8px;
+  place-items: center;
+}
+
+.menu-icon {
+  display: grid;
+  gap: 4px;
+  width: 18px;
+}
+
+.menu-icon span {
+  background: currentColor;
+  border-radius: 999px;
+  display: block;
+  height: 2px;
+  width: 100%;
 }
 
 .login-button {

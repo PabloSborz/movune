@@ -80,7 +80,11 @@ export class Home {
       title: 'Impacto',
       description:
         'Veja uma leitura rapida do alcance das campanhas, pessoas atendidas, recursos mobilizados e acoes em andamento.',
-      highlights: ['2.4 mil pessoas atendidas', '89 campanhas acompanhadas', '36 bairros impactados'],
+      highlights: [
+        '2.4 mil pessoas atendidas',
+        '89 campanhas acompanhadas',
+        '36 bairros impactados',
+      ],
       actionLabel: 'Ver transparencia',
       actionPath: '/#transparencia',
     },
@@ -90,7 +94,11 @@ export class Home {
       title: 'Parceiros',
       description:
         'Empresas, coletivos e apoiadores podem fortalecer campanhas com recursos, espacos, servicos e divulgacao.',
-      highlights: ['Empresas apoiadoras', 'Parcerias por causa', 'Beneficios para projetos sociais'],
+      highlights: [
+        'Empresas apoiadoras',
+        'Parcerias por causa',
+        'Beneficios para projetos sociais',
+      ],
       actionLabel: 'Ver parceiros',
       actionPath: '/empresas-parceiras',
     },

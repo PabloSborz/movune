@@ -4,16 +4,29 @@
       type="button"
       class="menu-button"
       aria-label="Abrir sites secundarios"
+      aria-controls="secondary-sites"
       (click)="abrirSidebar()"
     >
-      Menu
+      <span class="menu-icon" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
     </button>
 
     <a routerLink="/" class="brand" aria-label="Movune inicio">
       <img src="/logo-transparent.png" alt="Movune" />
     </a>
 
-    <button type="button" class="login-button" (click)="abrirLoginAlert()">Login</button>
+    <button
+      type="button"
+      class="login-button"
+      aria-controls="quick-access"
+      aria-haspopup="dialog"
+      (click)="abrirLoginAlert()"
+    >
+      Login
+    </button>
   </div>
 
   <nav class="nav" aria-label="Assuntos da home">
@@ -30,20 +43,35 @@
 
 <div class="side-backdrop" *ngIf="sidebarOpen" (click)="fecharSidebar()"></div>
 
-<aside class="side-drawer" *ngIf="sidebarOpen" aria-label="Sites secundarios">
+<aside
+  id="secondary-sites"
+  class="side-drawer"
+  *ngIf="sidebarOpen"
+  aria-label="Sites secundarios"
+  aria-modal="true"
+  role="dialog"
+>
   <div class="drawer-header">
     <strong>Sites secundarios</strong>
     <button type="button" aria-label="Fechar menu" (click)="fecharSidebar()">Fechar</button>
   </div>
 
-  <app-side-bar (click)="fecharSidebar()" />
+  <app-side-bar (click)="fecharSidebarDepoisDeNavegar($event)"></app-side-bar>
 </aside>
 
 <div class="login-backdrop" *ngIf="loginAlertOpen" (click)="fecharLoginAlert()"></div>
 
-<section class="login-alert" *ngIf="loginAlertOpen" aria-label="Acesso rapido">
+<form
+  id="quick-access"
+  class="login-alert"
+  *ngIf="loginAlertOpen"
+  aria-labelledby="quick-access-title"
+  aria-modal="true"
+  role="dialog"
+  (ngSubmit)="entrar()"
+>
   <div class="alert-header">
-    <strong>Acessar Movune</strong>
+    <strong id="quick-access-title">Acessar Movune</strong>
     <button type="button" aria-label="Fechar acesso" (click)="fecharLoginAlert()">Fechar</button>
   </div>
 
@@ -75,8 +103,8 @@
   </fieldset>
 
   <div class="alert-actions">
-    <button type="button" class="primary-action" (click)="entrar()">Entrar</button>
+    <button type="submit" class="primary-action">Entrar</button>
     <button type="button" (click)="criarConta()">Criar conta</button>
     <button *ngIf="session()" type="button" (click)="sair()">Sair</button>
   </div>
-</section>
+</form>

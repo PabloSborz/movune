@@ -1,5 +1,5 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
@@ -40,40 +40,25 @@ export class Header {
     { label: 'Suporte', fragment: 'suporte' },
   ];
 
-  dashboardLabel(profile: AccessProfile): string {
-    if (profile === 'admin') {
-      return 'Painel admin';
-    }
-
-    if (profile === 'ong') {
-      return 'Painel ONG';
-    }
-
-    return 'Minha area';
-  }
-
-  dashboardPath(profile: AccessProfile): string {
-    if (profile === 'admin') {
-      return '/admin/painel';
-    }
-
-    if (profile === 'ong') {
-      return '/ong/painel';
-    }
-
-    return '/usuario/meu-perfil';
-  }
-
   abrirSidebar(): void {
-    this.sidebarOpen = true;
+    this.sidebarOpen = !this.sidebarOpen;
+    this.loginAlertOpen = false;
   }
 
   fecharSidebar(): void {
     this.sidebarOpen = false;
   }
 
+  fecharSidebarDepoisDeNavegar(event: Event): void {
+    const target = event.target;
+
+    if (target instanceof HTMLElement && target.closest('a')) {
+      this.fecharSidebar();
+    }
+  }
+
   abrirLoginAlert(): void {
-    this.loginAlertOpen = true;
+    this.loginAlertOpen = !this.loginAlertOpen;
     this.sidebarOpen = false;
   }
 
@@ -83,6 +68,7 @@ export class Header {
 
   navegarParaAssunto(event: Event, fragment: string): void {
     event.preventDefault();
+    this.fecharPaineis();
 
     void this.router.navigate(['/'], { fragment }).then(() => {
       this.scrollToAssunto(fragment);
@@ -93,7 +79,7 @@ export class Header {
     void this.router.navigate(['/login'], {
       queryParams: this.accessQueryParams(),
     });
-    this.fecharLoginAlert();
+    this.fecharPaineis();
   }
 
   criarConta(): void {
@@ -102,13 +88,14 @@ export class Header {
     void this.router.navigate([route], {
       queryParams: this.accessQueryParams(),
     });
-    this.fecharLoginAlert();
+    this.fecharPaineis();
   }
 
   isActiveFragment(fragment: string): boolean {
     const urlTree = this.router.parseUrl(this.router.url);
     const primaryRoute = urlTree.root.children['primary'];
-    const isHome = !primaryRoute || primaryRoute.segments.length === 0;
+    const segments = primaryRoute?.segments.map((segment) => segment.path) || [];
+    const isHome = segments.length === 0;
     const activeFragment = urlTree.fragment || 'inicio';
 
     return isHome && activeFragment === fragment;
@@ -116,14 +103,24 @@ export class Header {
 
   sair(): void {
     this.auth.logout();
-    this.fecharLoginAlert();
+    this.fecharPaineis();
     void this.router.navigateByUrl('/login');
+  }
+
+  @HostListener('document:keydown.escape')
+  fecharComEscape(): void {
+    this.fecharPaineis();
   }
 
   private accessQueryParams(): Record<string, string> {
     const email = this.loginDraft.email.trim();
 
     return email ? { perfil: this.loginDraft.perfil, email } : { perfil: this.loginDraft.perfil };
+  }
+
+  fecharPaineis(): void {
+    this.sidebarOpen = false;
+    this.loginAlertOpen = false;
   }
 
   private scrollToAssunto(fragment: string): void {
