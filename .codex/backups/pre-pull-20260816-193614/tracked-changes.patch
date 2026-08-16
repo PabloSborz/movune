@@ -1,0 +1,3454 @@
+diff --git a/src/app/app.config.ts b/src/app/app.config.ts
+index f669dde..b90da72 100644
+--- a/src/app/app.config.ts
++++ b/src/app/app.config.ts
+@@ -1,5 +1,5 @@
+ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+-import { provideRouter } from '@angular/router';
++import { provideRouter, withInMemoryScrolling } from '@angular/router';
+ 
+ import { routes } from './app.routes';
+ import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+@@ -7,7 +7,10 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
+ export const appConfig: ApplicationConfig = {
+   providers: [
+     provideBrowserGlobalErrorListeners(),
+-    provideRouter(routes),
++    provideRouter(
++      routes,
++      withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }),
++    ),
+     provideClientHydration(withEventReplay()),
+   ],
+ };
+diff --git a/src/app/app.routes.ts b/src/app/app.routes.ts
+index 793819f..d8ef89d 100644
+--- a/src/app/app.routes.ts
++++ b/src/app/app.routes.ts
+@@ -1,11 +1,19 @@
+ import { Routes } from '@angular/router';
+ 
++import { adminGuard, ongGuard, userGuard } from './shared/auth.guard';
++
+ export const routes: Routes = [
+   {
+     path: '',
+     loadComponent: () => import('./feats/pagina-publica/home/home').then((m) => m.Home),
+   },
+   { path: 'home', redirectTo: '', pathMatch: 'full' },
++  {
++    path: 'como-funciona',
++    loadComponent: () =>
++      import('./feats/pagina-publica/como-funciona/como-funciona').then((m) => m.ComoFunciona),
++  },
++  { path: 'como-funcionda', redirectTo: 'como-funciona', pathMatch: 'full' },
+   {
+     path: 'sobre',
+     loadComponent: () => import('./feats/pagina-publica/sobre/sobre').then((m) => m.Sobre),
+@@ -115,39 +123,47 @@ export const routes: Routes = [
+   { path: 'painel-usuario', redirectTo: 'usuario/meu-perfil', pathMatch: 'full' },
+   {
+     path: 'usuario/meu-perfil',
++    canActivate: [userGuard],
+     loadComponent: () =>
+       import('./feats/area-usuario/meu-perfil/meu-perfil').then((m) => m.MeuPerfil),
+   },
+   {
+     path: 'usuario/minhas-inscricoes',
++    canActivate: [userGuard],
+     loadComponent: () =>
+       import('./feats/area-usuario/minha-inscricao/minha-inscricao').then((m) => m.MinhaInscricao),
+   },
+   {
+     path: 'usuario/minhas-doacoes',
++    canActivate: [userGuard],
+     loadComponent: () =>
+       import('./feats/area-usuario/minha-doacao/minha-doacao').then((m) => m.MinhaDoacao),
+   },
+   {
+     path: 'usuario/favoritos',
++    canActivate: [userGuard],
+     loadComponent: () =>
+       import('./feats/area-usuario/favoritos/favoritos').then((m) => m.Favoritos),
+   },
+   {
+     path: 'usuario/certificados',
++    canActivate: [userGuard],
+     loadComponent: () =>
+       import('./feats/area-usuario/certificado/certificado').then((m) => m.Certificado),
+   },
+   {
+     path: 'ong/painel',
++    canActivate: [ongGuard],
+     loadComponent: () => import('./feats/ong/painel-ong/painel-ong').then((m) => m.PainelOng),
+   },
+   {
+     path: 'ong/editar-perfil',
++    canActivate: [ongGuard],
+     loadComponent: () => import('./feats/ong/editar-ong/editar-ong').then((m) => m.EditarOng),
+   },
+   {
+     path: 'ong/projetos/cadastrar',
++    canActivate: [ongGuard],
+     loadComponent: () =>
+       import('./feats/ong/cadastrar-projeto-ong/cadastrar-projeto-ong').then(
+         (m) => m.CadastrarProjetoOng,
+@@ -155,6 +171,7 @@ export const routes: Routes = [
+   },
+   {
+     path: 'ong/projetos',
++    canActivate: [ongGuard],
+     loadComponent: () =>
+       import('./feats/ong/gerenciar-projeto-ong/gerenciar-projeto-ong').then(
+         (m) => m.GerenciarProjetoOng,
+@@ -162,11 +179,13 @@ export const routes: Routes = [
+   },
+   {
+     path: 'ong/vagas',
++    canActivate: [ongGuard],
+     loadComponent: () =>
+       import('./feats/ong/gerenciar-vaga-ong/gerenciar-vaga-ong').then((m) => m.GerenciarVagaOng),
+   },
+   {
+     path: 'ong/voluntarios',
++    canActivate: [ongGuard],
+     loadComponent: () =>
+       import('./feats/ong/gerenciar-voluntario-ong/gerenciar-voluntario-ong').then(
+         (m) => m.GerenciarVoluntarioOng,
+@@ -174,6 +193,7 @@ export const routes: Routes = [
+   },
+   {
+     path: 'ong/eventos',
++    canActivate: [ongGuard],
+     loadComponent: () =>
+       import('./feats/ong/gerenciar-eventos-ong/gerenciar-eventos-ong').then(
+         (m) => m.GerenciarEventosOng,
+@@ -181,6 +201,7 @@ export const routes: Routes = [
+   },
+   {
+     path: 'ong/doacoes',
++    canActivate: [ongGuard],
+     loadComponent: () =>
+       import('./feats/ong/gerencia-doacao-ong/gerencia-doacao-ong').then(
+         (m) => m.GerenciaDoacaoOng,
+@@ -188,6 +209,7 @@ export const routes: Routes = [
+   },
+   {
+     path: 'ong/prestacao-contas',
++    canActivate: [ongGuard],
+     loadComponent: () =>
+       import('./feats/ong/prestacao-conta-ong/prestacao-conta-ong').then(
+         (m) => m.PrestacaoContaOng,
+@@ -195,26 +217,31 @@ export const routes: Routes = [
+   },
+   {
+     path: 'ong/relatorios',
++    canActivate: [ongGuard],
+     loadComponent: () =>
+       import('./feats/ong/relatorio-ong/relatorio-ong').then((m) => m.RelatorioOng),
+   },
+   {
+     path: 'ong/documentos',
++    canActivate: [ongGuard],
+     loadComponent: () =>
+       import('./feats/ong/documento-ong/documento-ong').then((m) => m.DocumentoOng),
+   },
+   {
+     path: 'ong/configuracoes',
++    canActivate: [ongGuard],
+     loadComponent: () =>
+       import('./feats/ong/configuracao-ong/configuracao-ong').then((m) => m.ConfiguracaoOng),
+   },
+   {
+     path: 'admin/painel',
++    canActivate: [adminGuard],
+     loadComponent: () =>
+       import('./feats/area-administrativa/painel-admin/painel-admin').then((m) => m.PainelAdmin),
+   },
+   {
+     path: 'admin/usuarios',
++    canActivate: [adminGuard],
+     loadComponent: () =>
+       import('./feats/area-administrativa/gerenciar-usuario/gerenciar-usuario').then(
+         (m) => m.GerenciarUsuario,
+@@ -222,6 +249,7 @@ export const routes: Routes = [
+   },
+   {
+     path: 'admin/ongs',
++    canActivate: [adminGuard],
+     loadComponent: () =>
+       import('./feats/area-administrativa/gerenciar-ongs/gerenciar-ongs').then(
+         (m) => m.GerenciarOngs,
+@@ -229,6 +257,7 @@ export const routes: Routes = [
+   },
+   {
+     path: 'admin/projetos',
++    canActivate: [adminGuard],
+     loadComponent: () =>
+       import('./feats/area-administrativa/gerenciar-projetos/gerenciar-projetos').then(
+         (m) => m.GerenciarProjetos,
+@@ -236,6 +265,7 @@ export const routes: Routes = [
+   },
+   {
+     path: 'admin/doacoes',
++    canActivate: [adminGuard],
+     loadComponent: () =>
+       import('./feats/area-administrativa/gerenciar-doacao/gerenciar-doacao').then(
+         (m) => m.GerenciarDoacao,
+@@ -243,6 +273,7 @@ export const routes: Routes = [
+   },
+   {
+     path: 'admin/denuncias',
++    canActivate: [adminGuard],
+     loadComponent: () =>
+       import('./feats/area-administrativa/gerenciar-denuncia/gerenciar-denuncia').then(
+         (m) => m.GerenciarDenuncia,
+@@ -250,6 +281,7 @@ export const routes: Routes = [
+   },
+   {
+     path: 'admin/conteudo',
++    canActivate: [adminGuard],
+     loadComponent: () =>
+       import('./feats/area-administrativa/gerenciar-conteudo/gerenciar-conteudo').then(
+         (m) => m.GerenciarConteudo,
+@@ -257,6 +289,7 @@ export const routes: Routes = [
+   },
+   {
+     path: 'admin/relatorios',
++    canActivate: [adminGuard],
+     loadComponent: () =>
+       import('./feats/area-administrativa/relatorio-admin/relatorio-admin').then(
+         (m) => m.RelatorioAdmin,
+@@ -264,6 +297,7 @@ export const routes: Routes = [
+   },
+   {
+     path: 'admin/configuracoes',
++    canActivate: [adminGuard],
+     loadComponent: () =>
+       import('./feats/area-administrativa/comfiguracao-sistema/comfiguracao-sistema').then(
+         (m) => m.ComfiguracaoSistema,
+diff --git a/src/app/components/feature-page/feature-page.css b/src/app/components/feature-page/feature-page.css
+index ccf6761..2eb25db 100644
+--- a/src/app/components/feature-page/feature-page.css
++++ b/src/app/components/feature-page/feature-page.css
+@@ -9,14 +9,10 @@
+ 
+ .hero {
+   display: grid;
+-  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+-  gap: 32px;
+-  align-items: stretch;
+-  min-height: 420px;
++  min-height: 320px;
+ }
+ 
+ .hero__copy,
+-.brand-panel,
+ .panel,
+ .card,
+ .form-preview,
+@@ -38,7 +34,6 @@
+   color: var(--teal);
+   font-size: 0.78rem;
+   font-weight: 800;
+-  letter-spacing: 0;
+   text-transform: uppercase;
+ }
+ 
+@@ -56,6 +51,20 @@ h1 {
+   max-width: 820px;
+ }
+ 
++.title-image-heading {
++  line-height: 1;
++}
++
++.title-image-heading img {
++  display: block;
++  height: auto;
++  max-height: 170px;
++  max-width: min(520px, 100%);
++  object-fit: contain;
++  object-position: left center;
++  width: min(520px, 100%);
++}
++
+ .hero__copy p {
+   color: var(--muted);
+   font-size: 1.1rem;
+@@ -73,13 +82,16 @@ h1 {
+ 
+ .action,
+ .card a,
++.card button,
+ .form-preview button {
+   align-items: center;
+   background: var(--blue);
+   border: 1px solid var(--blue);
+   border-radius: 8px;
+   color: white;
++  cursor: pointer;
+   display: inline-flex;
++  font: inherit;
+   font-weight: 800;
+   justify-content: center;
+   min-height: 44px;
+@@ -92,36 +104,6 @@ h1 {
+   color: var(--blue);
+ }
+ 
+-.brand-panel {
+-  display: grid;
+-  gap: 22px;
+-  padding: 28px;
+-}
+-
+-.brand-panel img {
+-  align-self: center;
+-  border-radius: 8px;
+-  display: block;
+-  max-height: 260px;
+-  max-width: 100%;
+-  object-fit: contain;
+-  width: 100%;
+-}
+-
+-.brand-panel__note {
+-  background: var(--soft-teal);
+-  border-radius: 8px;
+-  color: var(--ink);
+-  display: grid;
+-  gap: 4px;
+-  padding: 18px;
+-}
+-
+-.brand-panel__note span {
+-  color: var(--teal);
+-  font-weight: 700;
+-}
+-
+ .metrics {
+   display: grid;
+   gap: 14px;
+@@ -240,8 +222,10 @@ ul {
+   gap: 8px;
+ }
+ 
+-.card a {
+-  justify-self: start;
++.card-actions {
++  display: flex;
++  flex-wrap: wrap;
++  gap: 10px;
+   margin-top: 4px;
+ }
+ 
+@@ -259,20 +243,45 @@ ul {
+   gap: 8px;
+ }
+ 
+-.form-preview input {
++.form-preview input,
++.form-preview textarea {
+   border: 1px solid var(--border);
+   border-radius: 8px;
+   font: inherit;
+   min-height: 44px;
+-  padding: 0 14px;
++  padding: 11px 14px;
+ }
+ 
+ .form-preview button {
+-  cursor: pointer;
+   grid-column: 1 / -1;
+   justify-self: start;
+ }
+ 
++.form-message,
++.saved-records {
++  grid-column: 1 / -1;
++}
++
++.form-message {
++  border-radius: 8px;
++  padding: 12px 14px;
++}
++
++.form-message--error {
++  background: #fff0f0;
++  color: #a02d2d;
++}
++
++.form-message--success {
++  background: var(--soft-teal);
++  color: var(--color-dark-green);
++}
++
++.saved-records {
++  display: grid;
++  gap: 6px;
++}
++
+ .table-panel {
+   overflow-x: auto;
+   padding: 10px;
+@@ -299,7 +308,6 @@ th {
+ }
+ 
+ @media (max-width: 900px) {
+-  .hero,
+   .cards,
+   .form-preview,
+   .metrics {
+@@ -309,15 +317,10 @@ th {
+   .hero {
+     min-height: auto;
+   }
+-
+-  .brand-panel {
+-    order: -1;
+-  }
+ }
+ 
+ @media (max-width: 560px) {
+   .hero__copy,
+-  .brand-panel,
+   .text-block,
+   .card,
+   .form-preview {
+@@ -330,6 +333,7 @@ th {
+ 
+   .action,
+   .card a,
++  .card button,
+   .form-preview button {
+     width: 100%;
+   }
+diff --git a/src/app/components/feature-page/feature-page.html b/src/app/components/feature-page/feature-page.html
+index f9fce44..59e3720 100644
+--- a/src/app/components/feature-page/feature-page.html
++++ b/src/app/components/feature-page/feature-page.html
+@@ -2,28 +2,39 @@
+   <div class="hero">
+     <div class="hero__copy">
+       <span class="eyebrow">{{ page.eyebrow }}</span>
+-      <h1>{{ page.title }}</h1>
++      <h1 *ngIf="!page.titleImage; else titleImage">{{ page.title }}</h1>
++      <ng-template #titleImage>
++        <h1 class="title-image-heading">
++          <img [src]="page.titleImage" [alt]="page.titleImageAlt || page.title" />
++        </h1>
++      </ng-template>
+       <p>{{ page.description }}</p>
+ 
+       <div class="actions" *ngIf="page.actions?.length">
+-        <a
+-          *ngFor="let action of page.actions"
+-          [attr.href]="action.href"
+-          class="action"
+-          [class.action--secondary]="action.variant === 'secondary'"
+-        >
+-          {{ action.label }}
+-        </a>
+-      </div>
+-    </div>
++        <ng-container *ngFor="let action of page.actions">
++          <button
++            *ngIf="isInlineAction(action); else routeAction"
++            type="button"
++            class="action"
++            [class.action--secondary]="action.variant === 'secondary'"
++            (click)="executarAcao(action)"
++          >
++            {{ action.label }}
++          </button>
+ 
+-    <aside class="brand-panel" aria-label="Marca Movune">
+-      <img [src]="page.image || '/logo-slogan-transparent.png'" alt="Logo Movune" />
+-      <div class="brand-panel__note">
+-        <strong>Mover pessoas.</strong>
+-        <span>Unir causas.</span>
++          <ng-template #routeAction>
++            <a
++              [attr.href]="action.href"
++              class="action"
++              [class.action--secondary]="action.variant === 'secondary'"
++              (click)="navegar($event, action.href)"
++            >
++              {{ action.label }}
++            </a>
++          </ng-template>
++        </ng-container>
+       </div>
+-    </aside>
++    </div>
+   </div>
+ 
+   <div class="metrics" *ngIf="page.metrics?.length">
+@@ -57,16 +68,51 @@
+         <div class="tags" *ngIf="card.tags?.length">
+           <small *ngFor="let tag of card.tags">{{ tag }}</small>
+         </div>
+-        <a *ngIf="card.href" [attr.href]="card.href">Abrir</a>
++        <div class="card-actions">
++          <a *ngIf="card.href" [attr.href]="card.href" (click)="navegar($event, card.href)">
++            Abrir
++          </a>
++          <button *ngIf="showFavoriteButton(card)" type="button" (click)="salvarFavorito(card)">
++            Salvar
++          </button>
++        </div>
+       </article>
+     </section>
+ 
+-    <form class="form-preview" *ngIf="page.fields?.length">
++    <form class="form-preview" *ngIf="page.fields?.length" (ngSubmit)="salvarInformacoes()">
+       <label *ngFor="let field of page.fields">
+         <span>{{ field }}</span>
+-        <input [placeholder]="field" />
++        <textarea
++          *ngIf="isLongField(field); else shortField"
++          [(ngModel)]="formModel[field]"
++          [name]="field"
++          [placeholder]="field"
++          required
++          rows="4"
++        ></textarea>
++
++        <ng-template #shortField>
++          <input [(ngModel)]="formModel[field]" [name]="field" [placeholder]="field" required />
++        </ng-template>
+       </label>
+-      <button type="button">Salvar informacoes</button>
++
++      <p
++        *ngIf="message"
++        class="form-message"
++        [class.form-message--error]="feedback === 'error'"
++        [class.form-message--success]="feedback === 'success'"
++      >
++        {{ message }}
++      </p>
++
++      <div class="saved-records" *ngIf="savedEntries().length">
++        <strong>Registros recentes</strong>
++        <span *ngFor="let entry of savedEntries()">
++          {{ entry.createdAt | date: 'dd/MM/yyyy HH:mm' }} - {{ entry.status }}
++        </span>
++      </div>
++
++      <button type="submit">{{ formButtonLabel() }}</button>
+     </form>
+ 
+     <section class="table-panel" *ngIf="page.table">
+diff --git a/src/app/components/feature-page/feature-page.ts b/src/app/components/feature-page/feature-page.ts
+index 42b2399..bb14a76 100644
+--- a/src/app/components/feature-page/feature-page.ts
++++ b/src/app/components/feature-page/feature-page.ts
+@@ -1,14 +1,279 @@
+ import { CommonModule } from '@angular/common';
+-import { Component, Input } from '@angular/core';
++import { Component, Input, OnChanges, inject } from '@angular/core';
++import { FormsModule } from '@angular/forms';
++import { Router } from '@angular/router';
+ 
+-import { PageContent } from '../../shared/page-content';
++import { AuthStore } from '../../shared/auth-store.service';
++import { PageAction, PageCard, PageContent } from '../../shared/page-content';
++import { ActivityRecord, SiteActivityStore } from '../../shared/site-activity.service';
+ 
+ @Component({
+   selector: 'app-feature-page',
+-  imports: [CommonModule],
++  imports: [CommonModule, FormsModule],
+   templateUrl: './feature-page.html',
+   styleUrl: './feature-page.css',
+ })
+-export class FeaturePage {
++export class FeaturePage implements OnChanges {
+   @Input({ required: true }) page!: PageContent;
++
++  formModel: Record<string, string> = {};
++  feedback: 'error' | 'success' | null = null;
++  message = '';
++
++  private readonly activity = inject(SiteActivityStore);
++  private readonly auth = inject(AuthStore);
++  private readonly router = inject(Router, { optional: true });
++
++  ngOnChanges(): void {
++    this.formModel = Object.fromEntries(
++      (this.page.fields || []).map((field) => [field, this.formModel[field] || '']),
++    ) as Record<string, string>;
++    this.feedback = null;
++    this.message = '';
++  }
++
++  salvarInformacoes(): void {
++    if (!this.hasRequiredFields()) {
++      this.feedback = 'error';
++      this.message = 'Preencha todos os campos antes de salvar.';
++      return;
++    }
++
++    if (this.isPasswordRecoveryPage()) {
++      this.activity.save({
++        pageTitle: this.page.title,
++        pageEyebrow: this.page.eyebrow,
++        fields: this.formModel,
++        status: 'Solicitacao registrada',
++        session: this.auth.session(),
++      });
++      this.feedback = 'success';
++      this.message =
++        'Solicitacao registrada. Use a pagina de redefinicao para cadastrar a nova senha.';
++      return;
++    }
++
++    if (this.isPasswordResetPage()) {
++      this.redefinirSenha();
++      return;
++    }
++
++    const record = this.activity.save({
++      pageTitle: this.page.title,
++      pageEyebrow: this.page.eyebrow,
++      fields: this.formModel,
++      session: this.auth.session(),
++    });
++
++    this.feedback = 'success';
++    this.message = `${this.formButtonLabel()} concluido. Protocolo ${record.id.slice(-8)}.`;
++  }
++
++  isLongField(field: string): boolean {
++    const normalizedField = this.normalize(field);
++
++    return (
++      normalizedField.includes('mensagem') ||
++      normalizedField.includes('descricao') ||
++      normalizedField.includes('noticias') ||
++      normalizedField.includes('valores')
++    );
++  }
++
++  formButtonLabel(): string {
++    const normalizedTitle = this.normalize(this.page.title);
++
++    if (normalizedTitle.includes('doac')) {
++      return 'Registrar doacao';
++    }
++
++    if (normalizedTitle.includes('contato')) {
++      return 'Enviar mensagem';
++    }
++
++    if (normalizedTitle.includes('recuperacao de senha')) {
++      return 'Solicitar recuperacao';
++    }
++
++    if (normalizedTitle.includes('redefinicao de senha')) {
++      return 'Atualizar senha';
++    }
++
++    if (normalizedTitle.includes('projeto')) {
++      return 'Salvar projeto';
++    }
++
++    if (normalizedTitle.includes('prestacao')) {
++      return 'Registrar prestacao';
++    }
++
++    return 'Salvar informacoes';
++  }
++
++  isInlineAction(action: PageAction): boolean {
++    return this.normalize(action.label).startsWith('inscrever');
++  }
++
++  navegar(event: MouseEvent, href: string): void {
++    if (!this.router || this.isExternalHref(href)) {
++      return;
++    }
++
++    event.preventDefault();
++    void this.router.navigateByUrl(href);
++  }
++
++  executarAcao(action: PageAction): void {
++    if (!this.isInlineAction(action)) {
++      return;
++    }
++
++    const session = this.auth.session();
++
++    if (session?.perfil !== 'usuario') {
++      this.feedback = 'error';
++      this.message = 'Entre como usuario para concluir a inscricao.';
++      const returnUrl = this.router?.url || '/';
++      void this.router?.navigate(['/login'], {
++        queryParams: { perfil: 'usuario', retorno: returnUrl },
++      });
++      return;
++    }
++
++    this.activity.save({
++      type: 'inscricao',
++      pageTitle: this.page.title,
++      pageEyebrow: this.page.eyebrow,
++      fields: {
++        Atividade: this.page.title,
++        Tipo: this.page.eyebrow,
++        Usuario: session.nome,
++      },
++      status: 'Pendente',
++      session,
++    });
++
++    void this.router?.navigateByUrl('/usuario/minhas-inscricoes');
++  }
++
++  salvarFavorito(card: PageCard): void {
++    const session = this.auth.session();
++
++    if (session?.perfil !== 'usuario') {
++      this.feedback = 'error';
++      this.message = 'Entre como usuario para salvar favoritos.';
++      const returnUrl = this.router?.url || '/';
++      void this.router?.navigate(['/login'], {
++        queryParams: { perfil: 'usuario', retorno: returnUrl },
++      });
++      return;
++    }
++
++    const alreadySaved = this.activity
++      .byType('favorito')
++      .some(
++        (record) =>
++          record.ownerId === session.id &&
++          record.fields['Titulo'] === card.title &&
++          record.fields['Link'] === (card.href || ''),
++      );
++
++    if (alreadySaved) {
++      this.feedback = 'success';
++      this.message = 'Este favorito ja esta salvo.';
++      return;
++    }
++
++    this.activity.save({
++      type: 'favorito',
++      pageTitle: 'Favoritos',
++      pageEyebrow: this.page.eyebrow,
++      fields: {
++        Titulo: card.title,
++        Categoria: card.meta || this.page.title,
++        Descricao: card.description,
++        Link: card.href || '',
++      },
++      status: 'Salvo',
++      session,
++    });
++
++    this.feedback = 'success';
++    this.message = 'Favorito salvo na sua area.';
++  }
++
++  showFavoriteButton(card: PageCard): boolean {
++    return Boolean(card.href) && this.page.title !== 'Favoritos';
++  }
++
++  savedEntries(): ActivityRecord[] {
++    return this.activity.byPage(this.page.title).slice(0, 3);
++  }
++
++  private redefinirSenha(): void {
++    const email = this.getFormValue('E-mail cadastrado', 'E-mail');
++    const senha = this.getFormValue('Nova senha', 'Senha');
++    const confirmacao = this.getFormValue('Confirmacao da senha', 'Confirmar senha');
++
++    if (senha !== confirmacao) {
++      this.feedback = 'error';
++      this.message = 'As senhas precisam ser iguais.';
++      return;
++    }
++
++    const result = this.auth.updatePassword(email, senha);
++
++    if (!result.ok) {
++      this.feedback = 'error';
++      this.message = result.message;
++      return;
++    }
++
++    this.activity.save({
++      type: 'seguranca',
++      pageTitle: this.page.title,
++      pageEyebrow: this.page.eyebrow,
++      fields: { 'E-mail cadastrado': email },
++      status: 'Senha atualizada',
++      session: this.auth.session(),
++    });
++
++    this.feedback = 'success';
++    this.message = result.message;
++  }
++
++  private hasRequiredFields(): boolean {
++    return (this.page.fields || []).every((field) => this.formModel[field]?.trim());
++  }
++
++  private isPasswordRecoveryPage(): boolean {
++    return this.normalize(this.page.title).includes('recuperacao de senha');
++  }
++
++  private isPasswordResetPage(): boolean {
++    return this.normalize(this.page.title).includes('redefinicao de senha');
++  }
++
++  private getFormValue(...labels: string[]): string {
++    for (const label of labels) {
++      const value = this.formModel[label];
++
++      if (value) {
++        return value.trim();
++      }
++    }
++
++    return '';
++  }
++
++  private normalize(value: string): string {
++    return value
++      .normalize('NFD')
++      .replace(/\p{Diacritic}/gu, '')
++      .toLowerCase();
++  }
++
++  private isExternalHref(href: string): boolean {
++    return /^https?:\/\//.test(href) || href.startsWith('mailto:') || href.startsWith('tel:');
++  }
+ }
+diff --git a/src/app/components/footer/footer.ts b/src/app/components/footer/footer.ts
+index 9269e0c..aece001 100644
+--- a/src/app/components/footer/footer.ts
++++ b/src/app/components/footer/footer.ts
+@@ -10,6 +10,7 @@ import { RouterLink } from '@angular/router';
+ })
+ export class Footer {
+   readonly publicLinks = [
++    { label: 'Como funciona', path: '/como-funciona' },
+     { label: 'Sobre', path: '/sobre' },
+     { label: 'Contato', path: '/contato' },
+     { label: 'Empresas parceiras', path: '/empresas-parceiras' },
+diff --git a/src/app/components/header/header.css b/src/app/components/header/header.css
+index ebff0f4..9305e25 100644
+--- a/src/app/components/header/header.css
++++ b/src/app/components/header/header.css
+@@ -1,86 +1,238 @@
+ .site-header {
+-  align-items: center;
+   background: rgba(255, 255, 255, 0.94);
+   border-bottom: 1px solid var(--border);
+   display: grid;
+-  gap: 18px;
+-  grid-template-columns: auto minmax(0, 1fr) auto;
+-  min-height: 86px;
+-  padding: 14px max(20px, calc((100vw - 1180px) / 2));
++  gap: 10px;
++  min-height: 96px;
++  padding: 10px max(18px, calc((100vw - 1180px) / 2)) 12px;
+   position: sticky;
+   top: 0;
+   z-index: 10;
+ }
+ 
++.header-main {
++  align-items: center;
++  display: grid;
++  gap: 14px;
++  grid-template-columns: minmax(88px, 1fr) auto minmax(88px, 1fr);
++  min-width: 0;
++}
++
+ .brand {
+   display: inline-flex;
++  justify-self: center;
++  padding: 0;
+ }
+ 
+ .brand img {
+   display: block;
+-  height: 52px;
+-  max-width: 210px;
++  height: 48px;
++  max-width: 72px;
+   object-fit: contain;
+ }
+ 
+-.nav,
+-.access-nav {
++.nav {
+   align-items: center;
+   display: flex;
+-  flex-wrap: wrap;
+-  gap: 8px;
++  gap: 6px;
++  justify-content: flex-start;
++  min-width: 0;
++  overflow-x: auto;
++  padding: 2px 0;
++  scrollbar-width: thin;
+ }
+ 
+-.nav {
+-  justify-content: center;
++@media (min-width: 1160px) {
++  .nav {
++    justify-content: center;
++    overflow-x: visible;
++  }
++}
++
++.nav::-webkit-scrollbar {
++  height: 6px;
+ }
+ 
+-.access-nav {
+-  justify-content: flex-end;
++.nav::-webkit-scrollbar-thumb {
++  background: var(--border);
++  border-radius: 999px;
+ }
+ 
+-a {
++.nav a {
++  align-items: center;
++  display: inline-flex;
++  flex: 0 0 auto;
++  justify-content: center;
++  white-space: nowrap;
++}
++
++.nav a,
++.menu-button,
++.login-button,
++.drawer-header button,
++.alert-header button,
++.alert-actions button {
++  background: transparent;
+   border-radius: 8px;
++  border: 1px solid transparent;
+   color: var(--muted);
+-  font-size: 0.93rem;
++  cursor: pointer;
++  font-size: 0.9rem;
+   font-weight: 800;
+   min-height: 36px;
+-  padding: 9px 11px;
++  padding: 8px 10px;
+   text-decoration: none;
+ }
+ 
+-a:hover,
+-a.is-active {
++.nav a:hover,
++.nav a.is-active,
++.menu-button:hover,
++.login-button:hover,
++.drawer-header button:hover,
++.alert-header button:hover,
++.alert-actions button:hover {
+   background: var(--soft-teal);
+   color: var(--blue);
+ }
+ 
+-.access-nav a:first-child {
++.nav a.is-active,
++.login-button,
++.primary-action {
++  border-color: rgba(30, 132, 133, 0.22);
++}
++
++.login-button,
++.primary-action {
+   background: var(--blue);
+   color: white;
+ }
+ 
++.menu-button {
++  justify-self: start;
++}
++
++.login-button {
++  justify-self: end;
++}
++
++.side-backdrop,
++.login-backdrop {
++  background: rgba(1, 28, 83, 0.24);
++  inset: 0;
++  position: fixed;
++  z-index: 19;
++}
++
++.side-drawer,
++.login-alert {
++  background: var(--surface);
++  border: 1px solid var(--border);
++  box-shadow: var(--shadow);
++  position: fixed;
++  z-index: 20;
++}
++
++.side-drawer {
++  display: grid;
++  gap: 14px;
++  inset: 0 auto 0 0;
++  max-width: 340px;
++  overflow: auto;
++  padding: 18px;
++  width: min(88vw, 340px);
++}
++
++.drawer-header,
++.alert-header,
++.alert-actions {
++  align-items: center;
++  display: flex;
++  gap: 10px;
++  justify-content: space-between;
++}
++
++.drawer-header strong,
++.alert-header strong {
++  color: var(--ink);
++}
++
++.login-alert {
++  border-radius: 8px;
++  display: grid;
++  gap: 16px;
++  left: 50%;
++  max-width: 420px;
++  padding: 22px;
++  top: 96px;
++  transform: translateX(-50%);
++  width: calc(100vw - 32px);
++}
++
++.login-alert label,
++fieldset {
++  display: grid;
++  gap: 8px;
++}
++
++.login-alert input[type='email'] {
++  border: 1px solid var(--border);
++  border-radius: 8px;
++  font: inherit;
++  min-height: 44px;
++  padding: 0 12px;
++}
++
++fieldset {
++  border: 1px solid var(--border);
++  border-radius: 8px;
++  grid-template-columns: 1fr 1fr;
++  margin: 0;
++  padding: 12px;
++}
++
++legend,
++.login-alert span,
++.session-note {
++  color: var(--muted);
++  font-weight: 800;
++}
++
++.session-note {
++  margin: 0;
++}
++
+ @media (max-width: 980px) {
+   .site-header {
+-    grid-template-columns: 1fr;
+-    justify-items: center;
+-    position: static;
++    min-height: 88px;
+   }
+ 
+-  .nav,
+-  .access-nav {
+-    justify-content: center;
++  .nav {
++    justify-content: flex-start;
+   }
+ }
+ 
+ @media (max-width: 560px) {
++  .site-header {
++    gap: 8px;
++    padding: 8px 12px 10px;
++  }
++
++  .header-main {
++    grid-template-columns: auto 1fr auto;
++  }
++
+   .brand img {
+-    height: 44px;
+-    max-width: 180px;
++    height: 42px;
+   }
+ 
+-  a {
++  .nav a,
++  .menu-button,
++  .login-button {
+     font-size: 0.86rem;
+     padding: 8px 9px;
+   }
++
++  .login-alert {
++    top: 72px;
++  }
+ }
+diff --git a/src/app/components/header/header.html b/src/app/components/header/header.html
+index fa6f6da..d2bc8ad 100644
+--- a/src/app/components/header/header.html
++++ b/src/app/components/header/header.html
+@@ -1,22 +1,82 @@
+ <header class="site-header">
+-  <a routerLink="/" class="brand" aria-label="Movune inicio">
+-    <img src="/logo-slogan-transparent.png" alt="Movune" />
+-  </a>
++  <div class="header-main">
++    <button
++      type="button"
++      class="menu-button"
++      aria-label="Abrir sites secundarios"
++      (click)="abrirSidebar()"
++    >
++      Menu
++    </button>
++
++    <a routerLink="/" class="brand" aria-label="Movune inicio">
++      <img src="/logo-transparent.png" alt="Movune" />
++    </a>
+ 
+-  <nav class="nav" aria-label="Navegacao principal">
++    <button type="button" class="login-button" (click)="abrirLoginAlert()">Login</button>
++  </div>
++
++  <nav class="nav" aria-label="Assuntos da home">
+     <a
+       *ngFor="let link of primaryLinks"
+-      [routerLink]="link.path"
+-      routerLinkActive="is-active"
+-      [routerLinkActiveOptions]="{ exact: link.path === '/' }"
++      [attr.href]="'/#' + link.fragment"
++      (click)="navegarParaAssunto($event, link.fragment)"
++      [class.is-active]="isActiveFragment(link.fragment)"
+     >
+       {{ link.label }}
+     </a>
+   </nav>
+-
+-  <nav class="access-nav" aria-label="Areas internas">
+-    <a *ngFor="let link of accessLinks" [routerLink]="link.path" routerLinkActive="is-active">
+-      {{ link.label }}
+-    </a>
+-  </nav>
+ </header>
++
++<div class="side-backdrop" *ngIf="sidebarOpen" (click)="fecharSidebar()"></div>
++
++<aside class="side-drawer" *ngIf="sidebarOpen" aria-label="Sites secundarios">
++  <div class="drawer-header">
++    <strong>Sites secundarios</strong>
++    <button type="button" aria-label="Fechar menu" (click)="fecharSidebar()">Fechar</button>
++  </div>
++
++  <app-side-bar (click)="fecharSidebar()" />
++</aside>
++
++<div class="login-backdrop" *ngIf="loginAlertOpen" (click)="fecharLoginAlert()"></div>
++
++<section class="login-alert" *ngIf="loginAlertOpen" aria-label="Acesso rapido">
++  <div class="alert-header">
++    <strong>Acessar Movune</strong>
++    <button type="button" aria-label="Fechar acesso" (click)="fecharLoginAlert()">Fechar</button>
++  </div>
++
++  <p *ngIf="session() as activeSession" class="session-note">
++    Sessao ativa: {{ activeSession.nome }}
++  </p>
++
++  <label>
++    <span>E-mail</span>
++    <input
++      [(ngModel)]="loginDraft.email"
++      autocomplete="email"
++      name="quickEmail"
++      placeholder="email@exemplo.com"
++      type="email"
++    />
++  </label>
++
++  <fieldset>
++    <legend>Tipo de conta</legend>
++    <label>
++      <input [(ngModel)]="loginDraft.perfil" name="quickPerfil" type="radio" value="usuario" />
++      Usuario
++    </label>
++    <label>
++      <input [(ngModel)]="loginDraft.perfil" name="quickPerfil" type="radio" value="ong" />
++      ONG
++    </label>
++  </fieldset>
++
++  <div class="alert-actions">
++    <button type="button" class="primary-action" (click)="entrar()">Entrar</button>
++    <button type="button" (click)="criarConta()">Criar conta</button>
++    <button *ngIf="session()" type="button" (click)="sair()">Sair</button>
++  </div>
++</section>
+diff --git a/src/app/components/header/header.ts b/src/app/components/header/header.ts
+index 613188c..23d5477 100644
+--- a/src/app/components/header/header.ts
++++ b/src/app/components/header/header.ts
+@@ -1,27 +1,140 @@
+-import { CommonModule } from '@angular/common';
+-import { Component } from '@angular/core';
+-import { RouterLink, RouterLinkActive } from '@angular/router';
++import { CommonModule, DOCUMENT } from '@angular/common';
++import { Component, inject } from '@angular/core';
++import { FormsModule } from '@angular/forms';
++import { Router, RouterLink } from '@angular/router';
++
++import { SideBar } from '../side-bar/side-bar';
++import { AccessProfile, AuthStore } from '../../shared/auth-store.service';
+ 
+ @Component({
+   selector: 'app-header',
+-  imports: [CommonModule, RouterLink, RouterLinkActive],
++  imports: [CommonModule, FormsModule, RouterLink, SideBar],
+   templateUrl: './header.html',
+   styleUrl: './header.css',
+ })
+ export class Header {
++  private readonly auth = inject(AuthStore);
++  private readonly router = inject(Router);
++  private readonly document = inject(DOCUMENT);
++
++  readonly session = this.auth.session;
++  sidebarOpen = false;
++  loginAlertOpen = false;
++
++  readonly loginDraft: { email: string; perfil: Exclude<AccessProfile, 'admin'> } = {
++    email: '',
++    perfil: 'usuario',
++  };
++
+   readonly primaryLinks = [
+-    { label: 'Inicio', path: '/' },
+-    { label: 'ONGs', path: '/ongs' },
+-    { label: 'Projetos', path: '/projetos' },
+-    { label: 'Voluntariado', path: '/voluntariado' },
+-    { label: 'Eventos', path: '/eventos' },
+-    { label: 'Transparencia', path: '/transparencia' },
++    { label: 'Inicio', fragment: 'inicio' },
++    { label: 'Como funciona', fragment: 'como-funciona' },
++    { label: 'ONGs', fragment: 'ongs' },
++    { label: 'Projetos', fragment: 'projetos' },
++    { label: 'Voluntariado', fragment: 'voluntariado' },
++    { label: 'Eventos', fragment: 'eventos' },
++    { label: 'Doacoes', fragment: 'doacoes' },
++    { label: 'Impacto', fragment: 'impacto' },
++    { label: 'Parceiros', fragment: 'parceiros' },
++    { label: 'Transparencia', fragment: 'transparencia' },
++    { label: 'Suporte', fragment: 'suporte' },
+   ];
+ 
+-  readonly accessLinks = [
+-    { label: 'Login', path: '/login' },
+-    { label: 'Usuario', path: '/usuario/meu-perfil' },
+-    { label: 'ONG', path: '/ong/painel' },
+-    { label: 'Admin', path: '/admin/painel' },
+-  ];
++  dashboardLabel(profile: AccessProfile): string {
++    if (profile === 'admin') {
++      return 'Painel admin';
++    }
++
++    if (profile === 'ong') {
++      return 'Painel ONG';
++    }
++
++    return 'Minha area';
++  }
++
++  dashboardPath(profile: AccessProfile): string {
++    if (profile === 'admin') {
++      return '/admin/painel';
++    }
++
++    if (profile === 'ong') {
++      return '/ong/painel';
++    }
++
++    return '/usuario/meu-perfil';
++  }
++
++  abrirSidebar(): void {
++    this.sidebarOpen = true;
++  }
++
++  fecharSidebar(): void {
++    this.sidebarOpen = false;
++  }
++
++  abrirLoginAlert(): void {
++    this.loginAlertOpen = true;
++    this.sidebarOpen = false;
++  }
++
++  fecharLoginAlert(): void {
++    this.loginAlertOpen = false;
++  }
++
++  navegarParaAssunto(event: Event, fragment: string): void {
++    event.preventDefault();
++
++    void this.router.navigate(['/'], { fragment }).then(() => {
++      this.scrollToAssunto(fragment);
++    });
++  }
++
++  entrar(): void {
++    void this.router.navigate(['/login'], {
++      queryParams: this.accessQueryParams(),
++    });
++    this.fecharLoginAlert();
++  }
++
++  criarConta(): void {
++    const route = this.loginDraft.perfil === 'ong' ? '/cadastro-ong' : '/cadastro-usuario';
++
++    void this.router.navigate([route], {
++      queryParams: this.accessQueryParams(),
++    });
++    this.fecharLoginAlert();
++  }
++
++  isActiveFragment(fragment: string): boolean {
++    const urlTree = this.router.parseUrl(this.router.url);
++    const primaryRoute = urlTree.root.children['primary'];
++    const isHome = !primaryRoute || primaryRoute.segments.length === 0;
++    const activeFragment = urlTree.fragment || 'inicio';
++
++    return isHome && activeFragment === fragment;
++  }
++
++  sair(): void {
++    this.auth.logout();
++    this.fecharLoginAlert();
++    void this.router.navigateByUrl('/login');
++  }
++
++  private accessQueryParams(): Record<string, string> {
++    const email = this.loginDraft.email.trim();
++
++    return email ? { perfil: this.loginDraft.perfil, email } : { perfil: this.loginDraft.perfil };
++  }
++
++  private scrollToAssunto(fragment: string): void {
++    const scroll = () => {
++      this.document.getElementById(fragment)?.scrollIntoView({
++        behavior: 'smooth',
++        block: 'start',
++      });
++    };
++
++    scroll();
++    this.document.defaultView?.setTimeout(scroll, 50);
++  }
+ }
+diff --git a/src/app/components/side-bar/side-bar.css b/src/app/components/side-bar/side-bar.css
+index e748f59..955b273 100644
+--- a/src/app/components/side-bar/side-bar.css
++++ b/src/app/components/side-bar/side-bar.css
+@@ -13,6 +13,28 @@ img {
+   width: 100%;
+ }
+ 
++.access-context {
++  background: var(--soft-teal);
++  border: 1px solid rgba(30, 132, 133, 0.18);
++  border-radius: 8px;
++  display: grid;
++  gap: 3px;
++  padding: 12px;
++}
++
++.access-context span {
++  color: var(--teal);
++  font-size: 0.76rem;
++  font-weight: 800;
++  text-transform: uppercase;
++}
++
++.access-context strong {
++  color: var(--ink);
++  font-size: 0.95rem;
++  line-height: 1.25;
++}
++
+ section {
+   display: grid;
+   gap: 8px;
+diff --git a/src/app/components/side-bar/side-bar.html b/src/app/components/side-bar/side-bar.html
+index 0fb8a8c..516c50f 100644
+--- a/src/app/components/side-bar/side-bar.html
++++ b/src/app/components/side-bar/side-bar.html
+@@ -1,9 +1,26 @@
+ <aside class="side-bar">
+   <img src="/logo-transparent.png" alt="Movune" />
+ 
+-  <section *ngFor="let group of groups">
++  <div class="access-context" *ngIf="session() as activeSession; else visitorAccess">
++    <span>{{ profileLabel(activeSession.perfil) }}</span>
++    <strong>{{ activeSession.nome }}</strong>
++  </div>
++
++  <ng-template #visitorAccess>
++    <div class="access-context">
++      <span>Visitante</span>
++      <strong>Acesso publico</strong>
++    </div>
++  </ng-template>
++
++  <section *ngFor="let group of groups()">
+     <h2>{{ group.title }}</h2>
+-    <a *ngFor="let link of group.links" [routerLink]="link.path" routerLinkActive="is-active">
++    <a
++      *ngFor="let link of group.links"
++      [routerLink]="link.path"
++      routerLinkActive="is-active"
++      [routerLinkActiveOptions]="{ exact: link.exact === true }"
++    >
+       {{ link.label }}
+     </a>
+   </section>
+diff --git a/src/app/components/side-bar/side-bar.spec.ts b/src/app/components/side-bar/side-bar.spec.ts
+index ea79454..ea0d0d3 100644
+--- a/src/app/components/side-bar/side-bar.spec.ts
++++ b/src/app/components/side-bar/side-bar.spec.ts
+@@ -1,11 +1,13 @@
+ import { ComponentFixture, TestBed } from '@angular/core/testing';
+ import { provideRouter } from '@angular/router';
+ 
++import { AuthStore } from '../../shared/auth-store.service';
+ import { SideBar } from './side-bar';
+ 
+ describe('SideBar', () => {
+   let component: SideBar;
+   let fixture: ComponentFixture<SideBar>;
++  let auth: AuthStore;
+ 
+   beforeEach(async () => {
+     await TestBed.configureTestingModule({
+@@ -13,6 +15,9 @@ describe('SideBar', () => {
+       providers: [provideRouter([])],
+     }).compileComponents();
+ 
++    auth = TestBed.inject(AuthStore);
++    auth.logout();
++
+     fixture = TestBed.createComponent(SideBar);
+     component = fixture.componentInstance;
+     await fixture.whenStable();
+@@ -21,4 +26,33 @@ describe('SideBar', () => {
+   it('should create', () => {
+     expect(component).toBeTruthy();
+   });
++
++  it('should show only public groups for visitors', () => {
++    const titles = component.groups().map((group) => group.title);
++
++    expect(titles).toContain('Pagina publica');
++    expect(titles).toContain('Sites secundarios');
++    expect(titles).toContain('Legal');
++    expect(titles).not.toContain('Area do usuario');
++    expect(titles).not.toContain('Area da ONG');
++    expect(titles).not.toContain('Administracao');
++  });
++
++  it('should show public and ONG groups for ONG sessions', () => {
++    auth.session.set({
++      id: 'ong-1',
++      perfil: 'ong',
++      nome: 'ONG Teste',
++      email: 'ong@teste.com',
++      iniciadoEm: new Date(0).toISOString(),
++    });
++
++    const titles = component.groups().map((group) => group.title);
++
++    expect(titles).toContain('Pagina publica');
++    expect(titles).toContain('Area da ONG');
++    expect(titles).toContain('Legal');
++    expect(titles).not.toContain('Area do usuario');
++    expect(titles).not.toContain('Administracao');
++  });
+ });
+diff --git a/src/app/components/side-bar/side-bar.ts b/src/app/components/side-bar/side-bar.ts
+index 2c0a041..ca6c4be 100644
+--- a/src/app/components/side-bar/side-bar.ts
++++ b/src/app/components/side-bar/side-bar.ts
+@@ -1,7 +1,20 @@
+ import { CommonModule } from '@angular/common';
+-import { Component } from '@angular/core';
++import { Component, computed, inject } from '@angular/core';
+ import { RouterLink, RouterLinkActive } from '@angular/router';
+ 
++import { AccessProfile, AuthStore } from '../../shared/auth-store.service';
++
++interface SideBarLink {
++  label: string;
++  path: string;
++  exact?: boolean;
++}
++
++interface SideBarGroup {
++  title: string;
++  links: SideBarLink[];
++}
++
+ @Component({
+   selector: 'app-side-bar',
+   imports: [CommonModule, RouterLink, RouterLinkActive],
+@@ -9,9 +22,37 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
+   styleUrl: './side-bar.css',
+ })
+ export class SideBar {
+-  readonly groups = [
++  private readonly auth = inject(AuthStore);
++  readonly session = this.auth.session;
++
++  private readonly publicGroups: SideBarGroup[] = [
+     {
+-      title: 'Usuario',
++      title: 'Pagina publica',
++      links: [
++        { label: 'Home', path: '/', exact: true },
++        { label: 'ONGs', path: '/ongs' },
++        { label: 'Projetos', path: '/projetos' },
++        { label: 'Voluntariado', path: '/voluntariado' },
++        { label: 'Eventos', path: '/eventos' },
++        { label: 'Doacoes', path: '/doacoes' },
++        { label: 'Transparencia', path: '/transparencia' },
++      ],
++    },
++    {
++      title: 'Sites secundarios',
++      links: [
++        { label: 'Como funciona', path: '/como-funciona' },
++        { label: 'Sobre', path: '/sobre' },
++        { label: 'Contato', path: '/contato' },
++        { label: 'Empresas parceiras', path: '/empresas-parceiras' },
++        { label: 'Perguntas frequentes', path: '/perguntas-frequentes' },
++      ],
++    },
++  ];
++
++  private readonly privateGroups: Record<AccessProfile, SideBarGroup> = {
++    usuario: {
++      title: 'Area do usuario',
+       links: [
+         { label: 'Meu perfil', path: '/usuario/meu-perfil' },
+         { label: 'Inscricoes', path: '/usuario/minhas-inscricoes' },
+@@ -20,25 +61,62 @@ export class SideBar {
+         { label: 'Certificados', path: '/usuario/certificados' },
+       ],
+     },
+-    {
+-      title: 'ONG',
++    ong: {
++      title: 'Area da ONG',
+       links: [
+         { label: 'Painel', path: '/ong/painel' },
+         { label: 'Projetos', path: '/ong/projetos' },
+         { label: 'Vagas', path: '/ong/vagas' },
+         { label: 'Voluntarios', path: '/ong/voluntarios' },
+         { label: 'Prestacao', path: '/ong/prestacao-contas' },
++        { label: 'Documentos', path: '/ong/documentos' },
++        { label: 'Configuracoes', path: '/ong/configuracoes' },
+       ],
+     },
+-    {
+-      title: 'Admin',
++    admin: {
++      title: 'Administracao',
+       links: [
+         { label: 'Painel', path: '/admin/painel' },
+         { label: 'Usuarios', path: '/admin/usuarios' },
+         { label: 'ONGs', path: '/admin/ongs' },
+         { label: 'Projetos', path: '/admin/projetos' },
++        { label: 'Doacoes', path: '/admin/doacoes' },
++        { label: 'Denuncias', path: '/admin/denuncias' },
++        { label: 'Conteudo', path: '/admin/conteudo' },
+         { label: 'Relatorios', path: '/admin/relatorios' },
++        { label: 'Configuracoes', path: '/admin/configuracoes' },
+       ],
+     },
+-  ];
++  };
++
++  private readonly legalGroup: SideBarGroup = {
++    title: 'Legal',
++    links: [
++      { label: 'Privacidade', path: '/politica-privacidade' },
++      { label: 'Termos de uso', path: '/termos-uso' },
++      { label: 'Cookies', path: '/politica-cookies' },
++      { label: 'Politica de doacoes', path: '/politica-doacoes' },
++      { label: 'Transparencia', path: '/politica-transparencia' },
++    ],
++  };
++
++  readonly groups = computed<SideBarGroup[]>(() => {
++    const activeSession = this.session();
++
++    if (!activeSession) {
++      return [...this.publicGroups, this.legalGroup];
++    }
++
++    return [...this.publicGroups, this.privateGroups[activeSession.perfil], this.legalGroup];
++  });
++
++  profileLabel(profile: AccessProfile): string {
++    const labels: Record<AccessProfile, string> = {
++      usuario: 'Usuario',
++      ong: 'ONG',
++      admin: 'Administrador',
++    };
++
++    return labels[profile];
++  }
+ }
+diff --git a/src/app/feats/area-administrativa/gerenciar-doacao/gerenciar-doacao.html b/src/app/feats/area-administrativa/gerenciar-doacao/gerenciar-doacao.html
+index d80a978..550723b 100644
+--- a/src/app/feats/area-administrativa/gerenciar-doacao/gerenciar-doacao.html
++++ b/src/app/feats/area-administrativa/gerenciar-doacao/gerenciar-doacao.html
+@@ -1 +1 @@
+-<app-feature-page [page]="page" />
++<app-feature-page [page]="page()" />
+diff --git a/src/app/feats/area-administrativa/gerenciar-doacao/gerenciar-doacao.ts b/src/app/feats/area-administrativa/gerenciar-doacao/gerenciar-doacao.ts
+index 7d7fd85..c5ba07f 100644
+--- a/src/app/feats/area-administrativa/gerenciar-doacao/gerenciar-doacao.ts
++++ b/src/app/feats/area-administrativa/gerenciar-doacao/gerenciar-doacao.ts
+@@ -1,7 +1,8 @@
+-import { Component } from '@angular/core';
++import { Component, computed, inject } from '@angular/core';
+ 
+ import { FeaturePage } from '../../../components/feature-page/feature-page';
+ import { PAGE_CONTENT } from '../../../shared/page-content';
++import { SiteActivityStore } from '../../../shared/site-activity.service';
+ 
+ @Component({
+   selector: 'app-gerenciar-doacao',
+@@ -10,5 +11,24 @@ import { PAGE_CONTENT } from '../../../shared/page-content';
+   styleUrl: './gerenciar-doacao.css',
+ })
+ export class GerenciarDoacao {
+-  readonly page = PAGE_CONTENT.gerenciarDoacao;
++  private readonly activity = inject(SiteActivityStore);
++
++  readonly page = computed(() => {
++    const registros = this.activity
++      .byType('doacao')
++      .map((record) => [
++        record.ownerName || record.fields['Dados do doador'] || 'Visitante',
++        record.fields['Valor ou item'] || record.fields['Tipo de doacao'] || 'Doacao',
++        record.fields['Projeto apoiado'] || record.pageTitle,
++        record.status,
++      ]);
++
++    return {
++      ...PAGE_CONTENT.gerenciarDoacao,
++      table: {
++        columns: PAGE_CONTENT.gerenciarDoacao.table.columns,
++        rows: [...registros, ...PAGE_CONTENT.gerenciarDoacao.table.rows],
++      },
++    };
++  });
+ }
+diff --git a/src/app/feats/area-administrativa/gerenciar-ongs/gerenciar-ongs.html b/src/app/feats/area-administrativa/gerenciar-ongs/gerenciar-ongs.html
+index d80a978..84fb315 100644
+--- a/src/app/feats/area-administrativa/gerenciar-ongs/gerenciar-ongs.html
++++ b/src/app/feats/area-administrativa/gerenciar-ongs/gerenciar-ongs.html
+@@ -1 +1,59 @@
+ <app-feature-page [page]="page" />
++
++<section class="management-panel">
++  <div class="management-header">
++    <h2>ONGs cadastradas</h2>
++    <span class="counter">{{ ongs().length }} registro(s)</span>
++  </div>
++
++  <div class="table-wrap" *ngIf="ongs().length; else emptyOngs">
++    <table>
++      <thead>
++        <tr>
++          <th>ONG</th>
++          <th>CNPJ</th>
++          <th>Responsavel</th>
++          <th>E-mail</th>
++          <th>Area</th>
++          <th>Documentos</th>
++          <th>Status</th>
++          <th>Cadastro</th>
++          <th>Acoes</th>
++        </tr>
++      </thead>
++      <tbody>
++        <tr *ngFor="let ong of ongs()">
++          <td>
++            <strong>{{ ong.nomeFantasia }}</strong>
++            <br />
++            {{ ong.razaoSocial }}
++          </td>
++          <td>{{ ong.cnpj }}</td>
++          <td>{{ ong.responsavel }}</td>
++          <td>{{ ong.email }}</td>
++          <td>{{ ong.areaAtuacao }}</td>
++          <td>{{ ong.documentos }}</td>
++          <td>
++            <span class="status">{{ ong.status }}</span>
++          </td>
++          <td>{{ formatDate(ong.criadoEm) }}</td>
++          <td>
++            <div class="row-actions">
++              <button type="button" (click)="aprovarOng(ong)">Aprovar</button>
++              <button type="button" (click)="alternarSuspensao(ong)">
++                {{ ong.status === 'Suspensa' ? 'Reabrir' : 'Suspender' }}
++              </button>
++              <button type="button" class="danger" (click)="removerOng(ong.id)">Remover</button>
++            </div>
++          </td>
++        </tr>
++      </tbody>
++    </table>
++  </div>
++
++  <ng-template #emptyOngs>
++    <div class="empty-state">
++      <p>Nenhuma ONG cadastrada ainda.</p>
++    </div>
++  </ng-template>
++</section>
+diff --git a/src/app/feats/area-administrativa/gerenciar-ongs/gerenciar-ongs.ts b/src/app/feats/area-administrativa/gerenciar-ongs/gerenciar-ongs.ts
+index f7955f1..d7d153e 100644
+--- a/src/app/feats/area-administrativa/gerenciar-ongs/gerenciar-ongs.ts
++++ b/src/app/feats/area-administrativa/gerenciar-ongs/gerenciar-ongs.ts
+@@ -1,14 +1,39 @@
+-import { Component } from '@angular/core';
++import { CommonModule } from '@angular/common';
++import { Component, inject } from '@angular/core';
+ 
+ import { FeaturePage } from '../../../components/feature-page/feature-page';
++import { AuthStore, MovuneOng } from '../../../shared/auth-store.service';
+ import { PAGE_CONTENT } from '../../../shared/page-content';
+ 
+ @Component({
+   selector: 'app-gerenciar-ongs',
+-  imports: [FeaturePage],
++  imports: [CommonModule, FeaturePage],
+   templateUrl: './gerenciar-ongs.html',
+-  styleUrl: './gerenciar-ongs.css',
++  styleUrls: ['../admin-management.css', './gerenciar-ongs.css'],
+ })
+ export class GerenciarOngs {
+-  readonly page = PAGE_CONTENT.gerenciarOngs;
++  private readonly auth = inject(AuthStore);
++
++  readonly page = { ...PAGE_CONTENT.gerenciarOngs, table: undefined };
++  readonly ongs = this.auth.ongs;
++
++  formatDate(value?: string): string {
++    if (!value) {
++      return 'Nunca';
++    }
++
++    return new Intl.DateTimeFormat('pt-BR').format(new Date(value));
++  }
++
++  aprovarOng(ong: MovuneOng): void {
++    this.auth.updateOngStatus(ong.id, 'Aprovada');
++  }
++
++  alternarSuspensao(ong: MovuneOng): void {
++    this.auth.updateOngStatus(ong.id, ong.status === 'Suspensa' ? 'Em analise' : 'Suspensa');
++  }
++
++  removerOng(id: string): void {
++    this.auth.removeOng(id);
++  }
+ }
+diff --git a/src/app/feats/area-administrativa/gerenciar-projetos/gerenciar-projetos.html b/src/app/feats/area-administrativa/gerenciar-projetos/gerenciar-projetos.html
+index d80a978..550723b 100644
+--- a/src/app/feats/area-administrativa/gerenciar-projetos/gerenciar-projetos.html
++++ b/src/app/feats/area-administrativa/gerenciar-projetos/gerenciar-projetos.html
+@@ -1 +1 @@
+-<app-feature-page [page]="page" />
++<app-feature-page [page]="page()" />
+diff --git a/src/app/feats/area-administrativa/gerenciar-projetos/gerenciar-projetos.ts b/src/app/feats/area-administrativa/gerenciar-projetos/gerenciar-projetos.ts
+index 2771c95..29a9ffa 100644
+--- a/src/app/feats/area-administrativa/gerenciar-projetos/gerenciar-projetos.ts
++++ b/src/app/feats/area-administrativa/gerenciar-projetos/gerenciar-projetos.ts
+@@ -1,7 +1,8 @@
+-import { Component } from '@angular/core';
++import { Component, computed, inject } from '@angular/core';
+ 
+ import { FeaturePage } from '../../../components/feature-page/feature-page';
+ import { PAGE_CONTENT } from '../../../shared/page-content';
++import { SiteActivityStore } from '../../../shared/site-activity.service';
+ 
+ @Component({
+   selector: 'app-gerenciar-projetos',
+@@ -10,5 +11,24 @@ import { PAGE_CONTENT } from '../../../shared/page-content';
+   styleUrl: './gerenciar-projetos.css',
+ })
+ export class GerenciarProjetos {
+-  readonly page = PAGE_CONTENT.gerenciarProjetos;
++  private readonly activity = inject(SiteActivityStore);
++
++  readonly page = computed(() => {
++    const registros = this.activity
++      .byType('projeto')
++      .map((record) => [
++        record.fields['Nome do projeto'] || record.pageTitle,
++        record.ownerName || 'ONG nao informada',
++        record.fields['Categoria'] || 'Sem categoria',
++        record.status,
++      ]);
++
++    return {
++      ...PAGE_CONTENT.gerenciarProjetos,
++      table: {
++        columns: PAGE_CONTENT.gerenciarProjetos.table.columns,
++        rows: [...registros, ...PAGE_CONTENT.gerenciarProjetos.table.rows],
++      },
++    };
++  });
+ }
+diff --git a/src/app/feats/area-administrativa/gerenciar-usuario/gerenciar-usuario.html b/src/app/feats/area-administrativa/gerenciar-usuario/gerenciar-usuario.html
+index d80a978..9b129ca 100644
+--- a/src/app/feats/area-administrativa/gerenciar-usuario/gerenciar-usuario.html
++++ b/src/app/feats/area-administrativa/gerenciar-usuario/gerenciar-usuario.html
+@@ -1 +1,56 @@
+ <app-feature-page [page]="page" />
++
++<section class="management-panel">
++  <div class="management-header">
++    <h2>Usuarios cadastrados</h2>
++    <span class="counter">{{ usuarios().length }} registro(s)</span>
++  </div>
++
++  <div class="table-wrap" *ngIf="usuarios().length; else emptyUsers">
++    <table>
++      <thead>
++        <tr>
++          <th>Nome</th>
++          <th>E-mail</th>
++          <th>Telefone</th>
++          <th>Cidade</th>
++          <th>Interesse</th>
++          <th>Status</th>
++          <th>Cadastro</th>
++          <th>Ultimo acesso</th>
++          <th>Acoes</th>
++        </tr>
++      </thead>
++      <tbody>
++        <tr *ngFor="let usuario of usuarios()">
++          <td>{{ usuario.nomeCompleto }}</td>
++          <td>{{ usuario.email }}</td>
++          <td>{{ usuario.telefone }}</td>
++          <td>{{ usuario.cidadeEstado }}</td>
++          <td>{{ usuario.interesses }}</td>
++          <td>
++            <span class="status">{{ usuario.status }}</span>
++          </td>
++          <td>{{ formatDate(usuario.criadoEm) }}</td>
++          <td>{{ formatDate(usuario.ultimoAcesso) }}</td>
++          <td>
++            <div class="row-actions">
++              <button type="button" (click)="alternarStatus(usuario)">
++                {{ usuario.status === 'Ativo' ? 'Bloquear' : 'Ativar' }}
++              </button>
++              <button type="button" class="danger" (click)="removerUsuario(usuario.id)">
++                Remover
++              </button>
++            </div>
++          </td>
++        </tr>
++      </tbody>
++    </table>
++  </div>
++
++  <ng-template #emptyUsers>
++    <div class="empty-state">
++      <p>Nenhum usuario cadastrado ainda.</p>
++    </div>
++  </ng-template>
++</section>
+diff --git a/src/app/feats/area-administrativa/gerenciar-usuario/gerenciar-usuario.ts b/src/app/feats/area-administrativa/gerenciar-usuario/gerenciar-usuario.ts
+index da559bc..05ea594 100644
+--- a/src/app/feats/area-administrativa/gerenciar-usuario/gerenciar-usuario.ts
++++ b/src/app/feats/area-administrativa/gerenciar-usuario/gerenciar-usuario.ts
+@@ -1,14 +1,35 @@
+-import { Component } from '@angular/core';
++import { CommonModule } from '@angular/common';
++import { Component, inject } from '@angular/core';
+ 
+ import { FeaturePage } from '../../../components/feature-page/feature-page';
++import { AuthStore, MovuneUser } from '../../../shared/auth-store.service';
+ import { PAGE_CONTENT } from '../../../shared/page-content';
+ 
+ @Component({
+   selector: 'app-gerenciar-usuario',
+-  imports: [FeaturePage],
++  imports: [CommonModule, FeaturePage],
+   templateUrl: './gerenciar-usuario.html',
+-  styleUrl: './gerenciar-usuario.css',
++  styleUrls: ['../admin-management.css', './gerenciar-usuario.css'],
+ })
+ export class GerenciarUsuario {
+-  readonly page = PAGE_CONTENT.gerenciarUsuario;
++  private readonly auth = inject(AuthStore);
++
++  readonly page = { ...PAGE_CONTENT.gerenciarUsuario, table: undefined };
++  readonly usuarios = this.auth.users;
++
++  formatDate(value?: string): string {
++    if (!value) {
++      return 'Nunca';
++    }
++
++    return new Intl.DateTimeFormat('pt-BR').format(new Date(value));
++  }
++
++  alternarStatus(usuario: MovuneUser): void {
++    this.auth.updateUserStatus(usuario.id, usuario.status === 'Ativo' ? 'Bloqueado' : 'Ativo');
++  }
++
++  removerUsuario(id: string): void {
++    this.auth.removeUser(id);
++  }
+ }
+diff --git a/src/app/feats/area-administrativa/painel-admin/painel-admin.html b/src/app/feats/area-administrativa/painel-admin/painel-admin.html
+index d80a978..550723b 100644
+--- a/src/app/feats/area-administrativa/painel-admin/painel-admin.html
++++ b/src/app/feats/area-administrativa/painel-admin/painel-admin.html
+@@ -1 +1 @@
+-<app-feature-page [page]="page" />
++<app-feature-page [page]="page()" />
+diff --git a/src/app/feats/area-administrativa/painel-admin/painel-admin.ts b/src/app/feats/area-administrativa/painel-admin/painel-admin.ts
+index 88c26ff..1338f8d 100644
+--- a/src/app/feats/area-administrativa/painel-admin/painel-admin.ts
++++ b/src/app/feats/area-administrativa/painel-admin/painel-admin.ts
+@@ -1,7 +1,9 @@
+-import { Component } from '@angular/core';
++import { Component, computed, inject } from '@angular/core';
+ 
+ import { FeaturePage } from '../../../components/feature-page/feature-page';
++import { AuthStore } from '../../../shared/auth-store.service';
+ import { PAGE_CONTENT } from '../../../shared/page-content';
++import { SiteActivityStore } from '../../../shared/site-activity.service';
+ 
+ @Component({
+   selector: 'app-painel-admin',
+@@ -10,5 +12,16 @@ import { PAGE_CONTENT } from '../../../shared/page-content';
+   styleUrl: './painel-admin.css',
+ })
+ export class PainelAdmin {
+-  readonly page = PAGE_CONTENT.painelAdmin;
++  private readonly auth = inject(AuthStore);
++  private readonly activity = inject(SiteActivityStore);
++
++  readonly page = computed(() => ({
++    ...PAGE_CONTENT.painelAdmin,
++    metrics: [
++      { value: String(this.auth.users().length), label: 'usuarios cadastrados' },
++      { value: String(this.auth.ongs().length), label: 'ONGs cadastradas' },
++      { value: String(this.activity.byType('projeto').length), label: 'projetos cadastrados' },
++      { value: String(this.activity.records().length), label: 'registros ativos' },
++    ],
++  }));
+ }
+diff --git a/src/app/feats/area-usuario/favoritos/favoritos.html b/src/app/feats/area-usuario/favoritos/favoritos.html
+index d80a978..550723b 100644
+--- a/src/app/feats/area-usuario/favoritos/favoritos.html
++++ b/src/app/feats/area-usuario/favoritos/favoritos.html
+@@ -1 +1 @@
+-<app-feature-page [page]="page" />
++<app-feature-page [page]="page()" />
+diff --git a/src/app/feats/area-usuario/favoritos/favoritos.ts b/src/app/feats/area-usuario/favoritos/favoritos.ts
+index b7f9c98..e7d2b0b 100644
+--- a/src/app/feats/area-usuario/favoritos/favoritos.ts
++++ b/src/app/feats/area-usuario/favoritos/favoritos.ts
+@@ -1,7 +1,9 @@
+-import { Component } from '@angular/core';
++import { Component, computed, inject } from '@angular/core';
+ 
+ import { FeaturePage } from '../../../components/feature-page/feature-page';
++import { AuthStore } from '../../../shared/auth-store.service';
+ import { PAGE_CONTENT } from '../../../shared/page-content';
++import { SiteActivityStore } from '../../../shared/site-activity.service';
+ 
+ @Component({
+   selector: 'app-favoritos',
+@@ -10,5 +12,29 @@ import { PAGE_CONTENT } from '../../../shared/page-content';
+   styleUrl: './favoritos.css',
+ })
+ export class Favoritos {
+-  readonly page = PAGE_CONTENT.favoritos;
++  private readonly activity = inject(SiteActivityStore);
++  private readonly auth = inject(AuthStore);
++
++  readonly page = computed(() => {
++    const session = this.auth.session();
++    const favoritos = this.activity
++      .byType('favorito')
++      .filter((record) => !session || record.ownerId === session.id)
++      .map((record) => ({
++        title: record.fields['Titulo'] || record.pageTitle,
++        meta: record.fields['Categoria'] || 'Favorito',
++        description: record.fields['Descricao'] || 'Item salvo na sua area.',
++        tags: [record.status, this.formatDate(record.createdAt)],
++        href: record.fields['Link'] || undefined,
++      }));
++
++    return {
++      ...PAGE_CONTENT.favoritos,
++      cards: [...favoritos, ...PAGE_CONTENT.favoritos.cards],
++    };
++  });
++
++  private formatDate(value: string): string {
++    return new Intl.DateTimeFormat('pt-BR').format(new Date(value));
++  }
+ }
+diff --git a/src/app/feats/area-usuario/minha-doacao/minha-doacao.html b/src/app/feats/area-usuario/minha-doacao/minha-doacao.html
+index d80a978..550723b 100644
+--- a/src/app/feats/area-usuario/minha-doacao/minha-doacao.html
++++ b/src/app/feats/area-usuario/minha-doacao/minha-doacao.html
+@@ -1 +1 @@
+-<app-feature-page [page]="page" />
++<app-feature-page [page]="page()" />
+diff --git a/src/app/feats/area-usuario/minha-doacao/minha-doacao.ts b/src/app/feats/area-usuario/minha-doacao/minha-doacao.ts
+index 7eb5d20..e4c0645 100644
+--- a/src/app/feats/area-usuario/minha-doacao/minha-doacao.ts
++++ b/src/app/feats/area-usuario/minha-doacao/minha-doacao.ts
+@@ -1,7 +1,9 @@
+-import { Component } from '@angular/core';
++import { Component, computed, inject } from '@angular/core';
+ 
+ import { FeaturePage } from '../../../components/feature-page/feature-page';
++import { AuthStore } from '../../../shared/auth-store.service';
+ import { PAGE_CONTENT } from '../../../shared/page-content';
++import { SiteActivityStore } from '../../../shared/site-activity.service';
+ 
+ @Component({
+   selector: 'app-minha-doacao',
+@@ -10,5 +12,64 @@ import { PAGE_CONTENT } from '../../../shared/page-content';
+   styleUrl: './minha-doacao.css',
+ })
+ export class MinhaDoacao {
+-  readonly page = PAGE_CONTENT.minhaDoacao;
++  private readonly activity = inject(SiteActivityStore);
++  private readonly auth = inject(AuthStore);
++
++  readonly page = computed(() => {
++    const session = this.auth.session();
++    const registros = this.activity
++      .byType('doacao')
++      .filter((record) => !session || record.ownerId === session.id)
++      .map((record) => [
++        record.fields['Projeto apoiado'] || record.pageTitle,
++        record.fields['Valor ou item'] || record.fields['Tipo de doacao'] || 'Registrado',
++        this.formatDate(record.createdAt),
++        record.status,
++      ]);
++
++    const totalRegistrado = this.activity
++      .byType('doacao')
++      .filter((record) => !session || record.ownerId === session.id)
++      .reduce((total, record) => total + this.parseCurrency(record.fields['Valor ou item']), 0);
++
++    return {
++      ...PAGE_CONTENT.minhaDoacao,
++      metrics:
++        registros.length > 0
++          ? [
++              { value: this.formatCurrency(totalRegistrado), label: 'total registrado' },
++              { value: String(registros.length), label: 'doacoes registradas' },
++              {
++                value: String(new Set(registros.map((row) => row[0])).size),
++                label: 'projetos apoiados',
++              },
++            ]
++          : PAGE_CONTENT.minhaDoacao.metrics,
++      table: {
++        columns: PAGE_CONTENT.minhaDoacao.table.columns,
++        rows: [...registros, ...PAGE_CONTENT.minhaDoacao.table.rows],
++      },
++    };
++  });
++
++  private formatDate(value: string): string {
++    return new Intl.DateTimeFormat('pt-BR').format(new Date(value));
++  }
++
++  private formatCurrency(value: number): string {
++    return new Intl.NumberFormat('pt-BR', {
++      currency: 'BRL',
++      style: 'currency',
++    }).format(value);
++  }
++
++  private parseCurrency(value = ''): number {
++    const normalized = value
++      .replace(/[^\d,.-]/g, '')
++      .replace(/\./g, '')
++      .replace(',', '.');
++    const parsed = Number(normalized);
++
++    return Number.isFinite(parsed) ? parsed : 0;
++  }
+ }
+diff --git a/src/app/feats/area-usuario/minha-inscricao/minha-inscricao.html b/src/app/feats/area-usuario/minha-inscricao/minha-inscricao.html
+index d80a978..550723b 100644
+--- a/src/app/feats/area-usuario/minha-inscricao/minha-inscricao.html
++++ b/src/app/feats/area-usuario/minha-inscricao/minha-inscricao.html
+@@ -1 +1 @@
+-<app-feature-page [page]="page" />
++<app-feature-page [page]="page()" />
+diff --git a/src/app/feats/area-usuario/minha-inscricao/minha-inscricao.ts b/src/app/feats/area-usuario/minha-inscricao/minha-inscricao.ts
+index bb4ee65..6c1cb12 100644
+--- a/src/app/feats/area-usuario/minha-inscricao/minha-inscricao.ts
++++ b/src/app/feats/area-usuario/minha-inscricao/minha-inscricao.ts
+@@ -1,7 +1,9 @@
+-import { Component } from '@angular/core';
++import { Component, computed, inject } from '@angular/core';
+ 
+ import { FeaturePage } from '../../../components/feature-page/feature-page';
++import { AuthStore } from '../../../shared/auth-store.service';
+ import { PAGE_CONTENT } from '../../../shared/page-content';
++import { SiteActivityStore } from '../../../shared/site-activity.service';
+ 
+ @Component({
+   selector: 'app-minha-inscricao',
+@@ -10,5 +12,31 @@ import { PAGE_CONTENT } from '../../../shared/page-content';
+   styleUrl: './minha-inscricao.css',
+ })
+ export class MinhaInscricao {
+-  readonly page = PAGE_CONTENT.minhaInscricao;
++  private readonly activity = inject(SiteActivityStore);
++  private readonly auth = inject(AuthStore);
++
++  readonly page = computed(() => {
++    const session = this.auth.session();
++    const registros = this.activity
++      .byType('inscricao')
++      .filter((record) => !session || record.ownerId === session.id)
++      .map((record) => [
++        record.fields['Atividade'] || record.pageTitle,
++        record.fields['Tipo'] || 'Inscricao',
++        this.formatDate(record.createdAt),
++        record.status,
++      ]);
++
++    return {
++      ...PAGE_CONTENT.minhaInscricao,
++      table: {
++        columns: PAGE_CONTENT.minhaInscricao.table.columns,
++        rows: [...registros, ...PAGE_CONTENT.minhaInscricao.table.rows],
++      },
++    };
++  });
++
++  private formatDate(value: string): string {
++    return new Intl.DateTimeFormat('pt-BR').format(new Date(value));
++  }
+ }
+diff --git a/src/app/feats/ong/gerencia-doacao-ong/gerencia-doacao-ong.html b/src/app/feats/ong/gerencia-doacao-ong/gerencia-doacao-ong.html
+index d80a978..550723b 100644
+--- a/src/app/feats/ong/gerencia-doacao-ong/gerencia-doacao-ong.html
++++ b/src/app/feats/ong/gerencia-doacao-ong/gerencia-doacao-ong.html
+@@ -1 +1 @@
+-<app-feature-page [page]="page" />
++<app-feature-page [page]="page()" />
+diff --git a/src/app/feats/ong/gerencia-doacao-ong/gerencia-doacao-ong.ts b/src/app/feats/ong/gerencia-doacao-ong/gerencia-doacao-ong.ts
+index ea94f8a..72d999d 100644
+--- a/src/app/feats/ong/gerencia-doacao-ong/gerencia-doacao-ong.ts
++++ b/src/app/feats/ong/gerencia-doacao-ong/gerencia-doacao-ong.ts
+@@ -1,7 +1,8 @@
+-import { Component } from '@angular/core';
++import { Component, computed, inject } from '@angular/core';
+ 
+ import { FeaturePage } from '../../../components/feature-page/feature-page';
+ import { PAGE_CONTENT } from '../../../shared/page-content';
++import { SiteActivityStore } from '../../../shared/site-activity.service';
+ 
+ @Component({
+   selector: 'app-gerencia-doacao-ong',
+@@ -10,5 +11,24 @@ import { PAGE_CONTENT } from '../../../shared/page-content';
+   styleUrl: './gerencia-doacao-ong.css',
+ })
+ export class GerenciaDoacaoOng {
+-  readonly page = PAGE_CONTENT.gerenciaDoacaoOng;
++  private readonly activity = inject(SiteActivityStore);
++
++  readonly page = computed(() => {
++    const registros = this.activity
++      .byType('doacao')
++      .map((record) => [
++        record.ownerName || record.fields['Dados do doador'] || 'Visitante',
++        record.fields['Tipo de doacao'] || 'Doacao',
++        record.fields['Projeto apoiado'] || record.pageTitle,
++        record.status,
++      ]);
++
++    return {
++      ...PAGE_CONTENT.gerenciaDoacaoOng,
++      table: {
++        columns: PAGE_CONTENT.gerenciaDoacaoOng.table.columns,
++        rows: [...registros, ...PAGE_CONTENT.gerenciaDoacaoOng.table.rows],
++      },
++    };
++  });
+ }
+diff --git a/src/app/feats/ong/gerenciar-projeto-ong/gerenciar-projeto-ong.html b/src/app/feats/ong/gerenciar-projeto-ong/gerenciar-projeto-ong.html
+index d80a978..550723b 100644
+--- a/src/app/feats/ong/gerenciar-projeto-ong/gerenciar-projeto-ong.html
++++ b/src/app/feats/ong/gerenciar-projeto-ong/gerenciar-projeto-ong.html
+@@ -1 +1 @@
+-<app-feature-page [page]="page" />
++<app-feature-page [page]="page()" />
+diff --git a/src/app/feats/ong/gerenciar-projeto-ong/gerenciar-projeto-ong.ts b/src/app/feats/ong/gerenciar-projeto-ong/gerenciar-projeto-ong.ts
+index 58bef50..3550d9c 100644
+--- a/src/app/feats/ong/gerenciar-projeto-ong/gerenciar-projeto-ong.ts
++++ b/src/app/feats/ong/gerenciar-projeto-ong/gerenciar-projeto-ong.ts
+@@ -1,7 +1,8 @@
+-import { Component } from '@angular/core';
++import { Component, computed, inject } from '@angular/core';
+ 
+ import { FeaturePage } from '../../../components/feature-page/feature-page';
+ import { PAGE_CONTENT } from '../../../shared/page-content';
++import { SiteActivityStore } from '../../../shared/site-activity.service';
+ 
+ @Component({
+   selector: 'app-gerenciar-projeto-ong',
+@@ -10,5 +11,28 @@ import { PAGE_CONTENT } from '../../../shared/page-content';
+   styleUrl: './gerenciar-projeto-ong.css',
+ })
+ export class GerenciarProjetoOng {
+-  readonly page = PAGE_CONTENT.gerenciarProjetoOng;
++  private readonly activity = inject(SiteActivityStore);
++
++  readonly page = computed(() => {
++    const registros = this.activity
++      .byType('projeto')
++      .map((record) => [
++        record.fields['Nome do projeto'] || record.pageTitle,
++        record.fields['Meta financeira'] || 'A definir',
++        record.fields['Prazo'] || this.formatDate(record.createdAt),
++        record.status,
++      ]);
++
++    return {
++      ...PAGE_CONTENT.gerenciarProjetoOng,
++      table: {
++        columns: PAGE_CONTENT.gerenciarProjetoOng.table.columns,
++        rows: [...registros, ...PAGE_CONTENT.gerenciarProjetoOng.table.rows],
++      },
++    };
++  });
++
++  private formatDate(value: string): string {
++    return new Intl.DateTimeFormat('pt-BR').format(new Date(value));
++  }
+ }
+diff --git a/src/app/feats/ong/prestacao-conta-ong/prestacao-conta-ong.html b/src/app/feats/ong/prestacao-conta-ong/prestacao-conta-ong.html
+index d80a978..550723b 100644
+--- a/src/app/feats/ong/prestacao-conta-ong/prestacao-conta-ong.html
++++ b/src/app/feats/ong/prestacao-conta-ong/prestacao-conta-ong.html
+@@ -1 +1 @@
+-<app-feature-page [page]="page" />
++<app-feature-page [page]="page()" />
+diff --git a/src/app/feats/ong/prestacao-conta-ong/prestacao-conta-ong.ts b/src/app/feats/ong/prestacao-conta-ong/prestacao-conta-ong.ts
+index ff65550..b37ac27 100644
+--- a/src/app/feats/ong/prestacao-conta-ong/prestacao-conta-ong.ts
++++ b/src/app/feats/ong/prestacao-conta-ong/prestacao-conta-ong.ts
+@@ -1,7 +1,8 @@
+-import { Component } from '@angular/core';
++import { Component, computed, inject } from '@angular/core';
+ 
+ import { FeaturePage } from '../../../components/feature-page/feature-page';
+ import { PAGE_CONTENT } from '../../../shared/page-content';
++import { SiteActivityStore } from '../../../shared/site-activity.service';
+ 
+ @Component({
+   selector: 'app-prestacao-conta-ong',
+@@ -10,5 +11,24 @@ import { PAGE_CONTENT } from '../../../shared/page-content';
+   styleUrl: './prestacao-conta-ong.css',
+ })
+ export class PrestacaoContaOng {
+-  readonly page = PAGE_CONTENT.prestacaoContaOng;
++  private readonly activity = inject(SiteActivityStore);
++
++  readonly page = computed(() => {
++    const registros = this.activity
++      .byType('prestacao')
++      .map((record) => [
++        record.fields['Descricao'] || record.fields['Tipo de lancamento'] || record.pageTitle,
++        record.fields['Projeto vinculado'] || 'Sem projeto',
++        record.fields['Valor'] || 'A conferir',
++        record.status,
++      ]);
++
++    return {
++      ...PAGE_CONTENT.prestacaoContaOng,
++      table: {
++        columns: PAGE_CONTENT.prestacaoContaOng.table.columns,
++        rows: [...registros, ...PAGE_CONTENT.prestacaoContaOng.table.rows],
++      },
++    };
++  });
+ }
+diff --git a/src/app/feats/pagina-acesso/cadastro-ong/cadastro-ong.html b/src/app/feats/pagina-acesso/cadastro-ong/cadastro-ong.html
+index d80a978..c0935f9 100644
+--- a/src/app/feats/pagina-acesso/cadastro-ong/cadastro-ong.html
++++ b/src/app/feats/pagina-acesso/cadastro-ong/cadastro-ong.html
+@@ -1 +1,149 @@
+-<app-feature-page [page]="page" />
++<section class="access-page">
++  <div class="access-copy">
++    <span class="eyebrow">Cadastro de ONG</span>
++    <h1>Cadastre a organizacao</h1>
++    <p>Registre a ONG para gerenciar projetos, vagas, eventos, documentos e prestacao de contas.</p>
++    <img class="brand-mark" src="/logo-slogan-transparent.png" alt="Movune" />
++  </div>
++
++  <form class="access-card" (ngSubmit)="cadastrar()">
++    <div class="form-grid">
++      <label class="field">
++        <span>Razao social</span>
++        <input
++          [(ngModel)]="form.razaoSocial"
++          name="razaoSocial"
++          placeholder="Razao social da ONG"
++          required
++        />
++      </label>
++
++      <label class="field">
++        <span>Nome fantasia</span>
++        <input
++          [(ngModel)]="form.nomeFantasia"
++          name="nomeFantasia"
++          placeholder="Nome publico"
++          required
++        />
++      </label>
++
++      <label class="field">
++        <span>CNPJ</span>
++        <input [(ngModel)]="form.cnpj" name="cnpj" placeholder="00.000.000/0000-00" required />
++      </label>
++
++      <label class="field">
++        <span>Responsavel legal</span>
++        <input
++          [(ngModel)]="form.responsavel"
++          autocomplete="name"
++          name="responsavel"
++          placeholder="Nome do responsavel"
++          required
++        />
++      </label>
++
++      <label class="field">
++        <span>E-mail institucional</span>
++        <input
++          [(ngModel)]="form.email"
++          autocomplete="email"
++          name="email"
++          placeholder="ong@exemplo.org"
++          required
++          type="email"
++        />
++      </label>
++
++      <label class="field">
++        <span>Telefone</span>
++        <input
++          [(ngModel)]="form.telefone"
++          autocomplete="tel"
++          name="telefone"
++          placeholder="(00) 00000-0000"
++          required
++        />
++      </label>
++
++      <label class="field field--full">
++        <span>Endereco</span>
++        <input
++          [(ngModel)]="form.endereco"
++          autocomplete="street-address"
++          name="endereco"
++          placeholder="Rua, numero, cidade e estado"
++          required
++        />
++      </label>
++
++      <label class="field">
++        <span>Area de atuacao</span>
++        <select [(ngModel)]="form.areaAtuacao" name="areaAtuacao" required>
++          <option *ngFor="let area of areasAtuacao" [ngValue]="area">
++            {{ area }}
++          </option>
++        </select>
++      </label>
++
++      <label class="field">
++        <span>Documentos enviados</span>
++        <input
++          [(ngModel)]="form.documentos"
++          name="documentos"
++          placeholder="CNPJ, estatuto, ata..."
++          required
++        />
++      </label>
++
++      <label class="field">
++        <span>Senha</span>
++        <input
++          [(ngModel)]="form.senha"
++          autocomplete="new-password"
++          minlength="4"
++          name="senha"
++          placeholder="Crie uma senha"
++          required
++          type="password"
++        />
++      </label>
++
++      <label class="field">
++        <span>Confirmar senha</span>
++        <input
++          [(ngModel)]="form.confirmarSenha"
++          autocomplete="new-password"
++          name="confirmarSenha"
++          placeholder="Repita a senha"
++          required
++          type="password"
++        />
++      </label>
++
++      <label class="check-field">
++        <input [(ngModel)]="form.aceite" name="aceite" required type="checkbox" />
++        <span>Confirmo que os dados informados representam a ONG cadastrada.</span>
++      </label>
++
++      <p
++        *ngIf="message"
++        class="message"
++        [class.message--error]="feedback === 'error'"
++        [class.message--success]="feedback === 'success'"
++      >
++        {{ message }}
++      </p>
++
++      <div class="submit-row">
++        <button type="submit">Cadastrar ONG</button>
++      </div>
++
++      <div class="access-links">
++        <a routerLink="/login">Ja tenho conta</a>
++        <a routerLink="/politica-transparencia">Politica de transparencia</a>
++      </div>
++    </div>
++  </form>
++</section>
+diff --git a/src/app/feats/pagina-acesso/cadastro-ong/cadastro-ong.spec.ts b/src/app/feats/pagina-acesso/cadastro-ong/cadastro-ong.spec.ts
+index 36d9ee2..555b541 100644
+--- a/src/app/feats/pagina-acesso/cadastro-ong/cadastro-ong.spec.ts
++++ b/src/app/feats/pagina-acesso/cadastro-ong/cadastro-ong.spec.ts
+@@ -1,4 +1,5 @@
+ import { ComponentFixture, TestBed } from '@angular/core/testing';
++import { provideRouter } from '@angular/router';
+ 
+ import { CadastroOng } from './cadastro-ong';
+ 
+@@ -9,6 +10,7 @@ describe('CadastroOng', () => {
+   beforeEach(async () => {
+     await TestBed.configureTestingModule({
+       imports: [CadastroOng],
++      providers: [provideRouter([])],
+     }).compileComponents();
+ 
+     fixture = TestBed.createComponent(CadastroOng);
+diff --git a/src/app/feats/pagina-acesso/cadastro-ong/cadastro-ong.ts b/src/app/feats/pagina-acesso/cadastro-ong/cadastro-ong.ts
+index 8df3320..7462e80 100644
+--- a/src/app/feats/pagina-acesso/cadastro-ong/cadastro-ong.ts
++++ b/src/app/feats/pagina-acesso/cadastro-ong/cadastro-ong.ts
+@@ -1,14 +1,90 @@
++import { CommonModule } from '@angular/common';
+ import { Component } from '@angular/core';
++import { FormsModule } from '@angular/forms';
++import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+ 
+-import { FeaturePage } from '../../../components/feature-page/feature-page';
+-import { PAGE_CONTENT } from '../../../shared/page-content';
++import { AuthStore, OngRegistrationInput } from '../../../shared/auth-store.service';
+ 
+ @Component({
+   selector: 'app-cadastro-ong',
+-  imports: [FeaturePage],
++  imports: [CommonModule, FormsModule, RouterLink],
+   templateUrl: './cadastro-ong.html',
+-  styleUrl: './cadastro-ong.css',
++  styleUrls: ['../access-form.css', './cadastro-ong.css'],
+ })
+ export class CadastroOng {
+-  readonly page = PAGE_CONTENT.cadastroOng;
++  readonly areasAtuacao = [
++    'Assistencia social',
++    'Educacao',
++    'Saude',
++    'Meio ambiente',
++    'Cultura',
++    'Protecao animal',
++  ];
++
++  readonly form: OngRegistrationInput & { confirmarSenha: string; aceite: boolean } = {
++    razaoSocial: '',
++    nomeFantasia: '',
++    cnpj: '',
++    responsavel: '',
++    email: '',
++    telefone: '',
++    endereco: '',
++    areaAtuacao: 'Assistencia social',
++    documentos: '',
++    senha: '',
++    confirmarSenha: '',
++    aceite: false,
++  };
++
++  feedback: 'error' | 'success' | null = null;
++  message = '';
++
++  constructor(
++    private readonly auth: AuthStore,
++    private readonly router: Router,
++    route: ActivatedRoute,
++  ) {
++    const email = route.snapshot.queryParamMap.get('email');
++
++    if (email) {
++      this.form.email = email;
++    }
++  }
++
++  cadastrar(): void {
++    if (this.form.senha !== this.form.confirmarSenha) {
++      this.feedback = 'error';
++      this.message = 'As senhas precisam ser iguais.';
++      return;
++    }
++
++    if (!this.form.aceite) {
++      this.feedback = 'error';
++      this.message = 'Confirme o aceite das regras para cadastrar a ONG.';
++      return;
++    }
++
++    const result = this.auth.registerOng({
++      razaoSocial: this.form.razaoSocial,
++      nomeFantasia: this.form.nomeFantasia,
++      cnpj: this.form.cnpj,
++      responsavel: this.form.responsavel,
++      email: this.form.email,
++      telefone: this.form.telefone,
++      endereco: this.form.endereco,
++      areaAtuacao: this.form.areaAtuacao,
++      documentos: this.form.documentos,
++      senha: this.form.senha,
++    });
++
++    if (!result.ok) {
++      this.feedback = 'error';
++      this.message = result.message;
++      return;
++    }
++
++    this.feedback = 'success';
++    this.message = result.message;
++    void this.router.navigateByUrl(result.route || '/ong/painel');
++  }
+ }
+diff --git a/src/app/feats/pagina-acesso/cadastro-usuario/cadastro-usuario.html b/src/app/feats/pagina-acesso/cadastro-usuario/cadastro-usuario.html
+index d80a978..e21a4d3 100644
+--- a/src/app/feats/pagina-acesso/cadastro-usuario/cadastro-usuario.html
++++ b/src/app/feats/pagina-acesso/cadastro-usuario/cadastro-usuario.html
+@@ -1 +1,124 @@
+-<app-feature-page [page]="page" />
++<section class="access-page">
++  <div class="access-copy">
++    <span class="eyebrow">Cadastro de usuario</span>
++    <h1>Crie sua conta</h1>
++    <p>Cadastre seus dados para doar, favoritar causas e se inscrever em vagas ou eventos.</p>
++    <img class="brand-mark" src="/logo-transparent.png" alt="Movune" />
++  </div>
++
++  <form class="access-card" (ngSubmit)="cadastrar()">
++    <div class="form-grid">
++      <label class="field">
++        <span>Nome completo</span>
++        <input
++          [(ngModel)]="form.nomeCompleto"
++          autocomplete="name"
++          name="nomeCompleto"
++          placeholder="Seu nome"
++          required
++        />
++      </label>
++
++      <label class="field">
++        <span>E-mail</span>
++        <input
++          [(ngModel)]="form.email"
++          autocomplete="email"
++          name="email"
++          placeholder="email@exemplo.com"
++          required
++          type="email"
++        />
++      </label>
++
++      <label class="field">
++        <span>Telefone</span>
++        <input
++          [(ngModel)]="form.telefone"
++          autocomplete="tel"
++          name="telefone"
++          placeholder="(00) 00000-0000"
++          required
++        />
++      </label>
++
++      <label class="field">
++        <span>Cidade e estado</span>
++        <input
++          [(ngModel)]="form.cidadeEstado"
++          autocomplete="address-level2"
++          name="cidadeEstado"
++          placeholder="Sao Paulo, SP"
++          required
++        />
++      </label>
++
++      <label class="field">
++        <span>Interesse principal</span>
++        <select [(ngModel)]="form.interesses" name="interesses" required>
++          <option *ngFor="let interesse of interesses" [ngValue]="interesse">
++            {{ interesse }}
++          </option>
++        </select>
++      </label>
++
++      <label class="field">
++        <span>Habilidades</span>
++        <input
++          [(ngModel)]="form.habilidades"
++          name="habilidades"
++          placeholder="Comunicacao, tecnologia, aulas..."
++          required
++        />
++      </label>
++
++      <label class="field">
++        <span>Senha</span>
++        <input
++          [(ngModel)]="form.senha"
++          autocomplete="new-password"
++          minlength="4"
++          name="senha"
++          placeholder="Crie uma senha"
++          required
++          type="password"
++        />
++      </label>
++
++      <label class="field">
++        <span>Confirmar senha</span>
++        <input
++          [(ngModel)]="form.confirmarSenha"
++          autocomplete="new-password"
++          name="confirmarSenha"
++          placeholder="Repita a senha"
++          required
++          type="password"
++        />
++      </label>
++
++      <label class="check-field">
++        <input [(ngModel)]="form.aceite" name="aceite" required type="checkbox" />
++        <span>Li e aceito os termos de uso e a politica de privacidade.</span>
++      </label>
++
++      <p
++        *ngIf="message"
++        class="message"
++        [class.message--error]="feedback === 'error'"
++        [class.message--success]="feedback === 'success'"
++      >
++        {{ message }}
++      </p>
++
++      <div class="submit-row">
++        <button type="submit">Cadastrar usuario</button>
++      </div>
++
++      <div class="access-links">
++        <a routerLink="/login">Ja tenho conta</a>
++        <a routerLink="/cadastro-ong">Cadastrar ONG</a>
++      </div>
++    </div>
++  </form>
++</section>
+diff --git a/src/app/feats/pagina-acesso/cadastro-usuario/cadastro-usuario.spec.ts b/src/app/feats/pagina-acesso/cadastro-usuario/cadastro-usuario.spec.ts
+index 47cc816..771303f 100644
+--- a/src/app/feats/pagina-acesso/cadastro-usuario/cadastro-usuario.spec.ts
++++ b/src/app/feats/pagina-acesso/cadastro-usuario/cadastro-usuario.spec.ts
+@@ -1,4 +1,5 @@
+ import { ComponentFixture, TestBed } from '@angular/core/testing';
++import { provideRouter } from '@angular/router';
+ 
+ import { CadastroUsuario } from './cadastro-usuario';
+ 
+@@ -9,6 +10,7 @@ describe('CadastroUsuario', () => {
+   beforeEach(async () => {
+     await TestBed.configureTestingModule({
+       imports: [CadastroUsuario],
++      providers: [provideRouter([])],
+     }).compileComponents();
+ 
+     fixture = TestBed.createComponent(CadastroUsuario);
+diff --git a/src/app/feats/pagina-acesso/cadastro-usuario/cadastro-usuario.ts b/src/app/feats/pagina-acesso/cadastro-usuario/cadastro-usuario.ts
+index 78d9308..f674962 100644
+--- a/src/app/feats/pagina-acesso/cadastro-usuario/cadastro-usuario.ts
++++ b/src/app/feats/pagina-acesso/cadastro-usuario/cadastro-usuario.ts
+@@ -1,14 +1,84 @@
++import { CommonModule } from '@angular/common';
+ import { Component } from '@angular/core';
++import { FormsModule } from '@angular/forms';
++import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+ 
+-import { FeaturePage } from '../../../components/feature-page/feature-page';
+-import { PAGE_CONTENT } from '../../../shared/page-content';
++import { AuthStore, UserRegistrationInput } from '../../../shared/auth-store.service';
+ 
+ @Component({
+   selector: 'app-cadastro-usuario',
+-  imports: [FeaturePage],
++  imports: [CommonModule, FormsModule, RouterLink],
+   templateUrl: './cadastro-usuario.html',
+-  styleUrl: './cadastro-usuario.css',
++  styleUrls: ['../access-form.css', './cadastro-usuario.css'],
+ })
+ export class CadastroUsuario {
+-  readonly page = PAGE_CONTENT.cadastroUsuario;
++  readonly interesses = [
++    'Doacoes',
++    'Voluntariado',
++    'Eventos',
++    'Educacao',
++    'Meio ambiente',
++    'Assistencia social',
++  ];
++
++  readonly form: UserRegistrationInput & { confirmarSenha: string; aceite: boolean } = {
++    nomeCompleto: '',
++    email: '',
++    telefone: '',
++    cidadeEstado: '',
++    interesses: 'Voluntariado',
++    habilidades: '',
++    senha: '',
++    confirmarSenha: '',
++    aceite: false,
++  };
++
++  feedback: 'error' | 'success' | null = null;
++  message = '';
++
++  constructor(
++    private readonly auth: AuthStore,
++    private readonly router: Router,
++    route: ActivatedRoute,
++  ) {
++    const email = route.snapshot.queryParamMap.get('email');
++
++    if (email) {
++      this.form.email = email;
++    }
++  }
++
++  cadastrar(): void {
++    if (this.form.senha !== this.form.confirmarSenha) {
++      this.feedback = 'error';
++      this.message = 'As senhas precisam ser iguais.';
++      return;
++    }
++
++    if (!this.form.aceite) {
++      this.feedback = 'error';
++      this.message = 'Confirme o aceite dos termos para continuar.';
++      return;
++    }
++
++    const result = this.auth.registerUser({
++      nomeCompleto: this.form.nomeCompleto,
++      email: this.form.email,
++      telefone: this.form.telefone,
++      cidadeEstado: this.form.cidadeEstado,
++      interesses: this.form.interesses,
++      habilidades: this.form.habilidades,
++      senha: this.form.senha,
++    });
++
++    if (!result.ok) {
++      this.feedback = 'error';
++      this.message = result.message;
++      return;
++    }
++
++    this.feedback = 'success';
++    this.message = result.message;
++    void this.router.navigateByUrl(result.route || '/usuario/meu-perfil');
++  }
+ }
+diff --git a/src/app/feats/pagina-acesso/login/login.html b/src/app/feats/pagina-acesso/login/login.html
+index d80a978..0cc3d88 100644
+--- a/src/app/feats/pagina-acesso/login/login.html
++++ b/src/app/feats/pagina-acesso/login/login.html
+@@ -1 +1,63 @@
+-<app-feature-page [page]="page" />
++<section class="access-page">
++  <div class="access-copy">
++    <span class="eyebrow">Acesso</span>
++    <h1>Entrar na Movune</h1>
++    <p>Use seu cadastro de usuario, ONG ou o acesso administrativo para abrir o painel correto.</p>
++    <img class="brand-mark" src="/logo-transparent.png" alt="Movune" />
++  </div>
++
++  <form class="access-card" (ngSubmit)="entrar()">
++    <div class="form-grid">
++      <label class="field field--full">
++        <span>Perfil de acesso</span>
++        <select [(ngModel)]="form.perfil" name="perfil" required>
++          <option *ngFor="let perfil of perfis" [ngValue]="perfil.value">
++            {{ perfil.label }}
++          </option>
++        </select>
++      </label>
++
++      <label class="field field--full">
++        <span>{{ form.perfil === 'admin' ? 'Usuario administrador' : 'E-mail' }}</span>
++        <input
++          [(ngModel)]="form.identificador"
++          [placeholder]="form.perfil === 'admin' ? 'admin' : 'email@exemplo.com'"
++          autocomplete="username"
++          name="identificador"
++          required
++        />
++      </label>
++
++      <label class="field field--full">
++        <span>Senha</span>
++        <input
++          [(ngModel)]="form.senha"
++          autocomplete="current-password"
++          name="senha"
++          placeholder="Digite sua senha"
++          required
++          type="password"
++        />
++      </label>
++
++      <p
++        *ngIf="message"
++        class="message"
++        [class.message--error]="feedback === 'error'"
++        [class.message--success]="feedback === 'success'"
++      >
++        {{ message }}
++      </p>
++
++      <div class="submit-row">
++        <button type="submit">Entrar</button>
++      </div>
++
++      <div class="access-links">
++        <a routerLink="/cadastro-usuario">Cadastrar usuario</a>
++        <a routerLink="/cadastro-ong">Cadastrar ONG</a>
++        <a routerLink="/recuperacao-senha">Recuperar senha</a>
++      </div>
++    </div>
++  </form>
++</section>
+diff --git a/src/app/feats/pagina-acesso/login/login.spec.ts b/src/app/feats/pagina-acesso/login/login.spec.ts
+index 1ee4152..03be35e 100644
+--- a/src/app/feats/pagina-acesso/login/login.spec.ts
++++ b/src/app/feats/pagina-acesso/login/login.spec.ts
+@@ -1,4 +1,5 @@
+ import { ComponentFixture, TestBed } from '@angular/core/testing';
++import { provideRouter } from '@angular/router';
+ 
+ import { Login } from './login';
+ 
+@@ -9,6 +10,7 @@ describe('Login', () => {
+   beforeEach(async () => {
+     await TestBed.configureTestingModule({
+       imports: [Login],
++      providers: [provideRouter([])],
+     }).compileComponents();
+ 
+     fixture = TestBed.createComponent(Login);
+diff --git a/src/app/feats/pagina-acesso/login/login.ts b/src/app/feats/pagina-acesso/login/login.ts
+index a8e7f2f..ba27735 100644
+--- a/src/app/feats/pagina-acesso/login/login.ts
++++ b/src/app/feats/pagina-acesso/login/login.ts
+@@ -1,14 +1,81 @@
++import { CommonModule } from '@angular/common';
+ import { Component } from '@angular/core';
++import { FormsModule } from '@angular/forms';
++import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+ 
+-import { FeaturePage } from '../../../components/feature-page/feature-page';
+-import { PAGE_CONTENT } from '../../../shared/page-content';
++import { AccessProfile, AuthStore } from '../../../shared/auth-store.service';
+ 
+ @Component({
+   selector: 'app-login',
+-  imports: [FeaturePage],
++  imports: [CommonModule, FormsModule, RouterLink],
+   templateUrl: './login.html',
+-  styleUrl: './login.css',
++  styleUrls: ['../access-form.css', './login.css'],
+ })
+ export class Login {
+-  readonly page = PAGE_CONTENT.login;
++  readonly perfis: Array<{ label: string; value: AccessProfile }> = [
++    { label: 'Usuario', value: 'usuario' },
++    { label: 'ONG', value: 'ong' },
++    { label: 'Administrador', value: 'admin' },
++  ];
++
++  readonly form = {
++    perfil: 'usuario' as AccessProfile,
++    identificador: '',
++    senha: '',
++  };
++
++  feedback: 'error' | 'success' | null = null;
++  message = '';
++
++  private readonly returnUrl: string | null;
++
++  constructor(
++    private readonly auth: AuthStore,
++    private readonly router: Router,
++    route: ActivatedRoute,
++  ) {
++    const requestedProfile = route.snapshot.queryParamMap.get('perfil');
++    this.returnUrl = route.snapshot.queryParamMap.get('retorno');
++
++    if (this.isAccessProfile(requestedProfile)) {
++      this.form.perfil = requestedProfile;
++    }
++
++    const email = route.snapshot.queryParamMap.get('email');
++
++    if (email) {
++      this.form.identificador = email;
++    }
++  }
++
++  entrar(): void {
++    const result = this.auth.login({
++      perfil: this.form.perfil,
++      identificador: this.form.identificador,
++      senha: this.form.senha,
++    });
++
++    if (!result.ok) {
++      this.feedback = 'error';
++      this.message = result.message;
++      return;
++    }
++
++    this.feedback = 'success';
++    this.message = result.message;
++
++    void this.router.navigateByUrl(this.getDestination(result.route));
++  }
++
++  private isAccessProfile(value: string | null): value is AccessProfile {
++    return value === 'usuario' || value === 'ong' || value === 'admin';
++  }
++
++  private getDestination(defaultRoute?: string): string {
++    if (this.returnUrl?.startsWith('/') && !this.returnUrl.startsWith('//')) {
++      return this.returnUrl;
++    }
++
++    return defaultRoute || '/';
++  }
+ }
+diff --git a/src/app/feats/pagina-publica/home/home.css b/src/app/feats/pagina-publica/home/home.css
+index 5d4e87f..403c764 100644
+--- a/src/app/feats/pagina-publica/home/home.css
++++ b/src/app/feats/pagina-publica/home/home.css
+@@ -1,3 +1,98 @@
+ :host {
+   display: block;
+ }
++
++.home-anchor,
++.summary-block {
++  scroll-margin-top: 110px;
++}
++
++.home-summary {
++  display: grid;
++  gap: 18px;
++  margin-top: 34px;
++}
++
++.summary-block {
++  align-items: center;
++  background: var(--surface);
++  border: 1px solid var(--border);
++  border-radius: 8px;
++  box-shadow: var(--shadow);
++  display: grid;
++  gap: 24px;
++  grid-template-columns: minmax(0, 1fr) minmax(240px, 360px);
++  padding: clamp(22px, 4vw, 36px);
++}
++
++.summary-copy {
++  display: grid;
++  gap: 12px;
++}
++
++.summary-copy span {
++  color: var(--teal);
++  font-size: 0.78rem;
++  font-weight: 800;
++  text-transform: uppercase;
++}
++
++.summary-copy h2,
++.summary-copy p {
++  margin: 0;
++}
++
++.summary-copy h2 {
++  color: var(--ink);
++  font-size: clamp(1.6rem, 3vw, 2.35rem);
++}
++
++.summary-copy p,
++li {
++  color: var(--muted);
++  line-height: 1.65;
++}
++
++.summary-copy a {
++  align-items: center;
++  background: var(--blue);
++  border-radius: 8px;
++  color: white;
++  display: inline-flex;
++  font-weight: 800;
++  justify-self: start;
++  min-height: 42px;
++  padding: 0 16px;
++  text-decoration: none;
++}
++
++ul {
++  background: var(--soft-teal);
++  border-radius: 8px;
++  display: grid;
++  gap: 10px;
++  margin: 0;
++  padding: 20px 20px 20px 38px;
++}
++
++li {
++  font-weight: 700;
++}
++
++@media (max-width: 780px) {
++  .summary-block {
++    grid-template-columns: 1fr;
++  }
++}
++
++@media (max-width: 560px) {
++  .home-anchor,
++  .summary-block {
++    scroll-margin-top: 24px;
++  }
++
++  .summary-copy a {
++    width: 100%;
++    justify-content: center;
++  }
++}
+diff --git a/src/app/feats/pagina-publica/home/home.html b/src/app/feats/pagina-publica/home/home.html
+index d80a978..1125fae 100644
+--- a/src/app/feats/pagina-publica/home/home.html
++++ b/src/app/feats/pagina-publica/home/home.html
+@@ -1 +1,18 @@
+-<app-feature-page [page]="page" />
++<div id="inicio" class="home-anchor">
++  <app-feature-page class="metrics-centered" [page]="page" />
++</div>
++
++<section class="home-summary" aria-label="Resumo das areas da Movune">
++  <article *ngFor="let summary of summaries" [id]="summary.id" class="summary-block">
++    <div class="summary-copy">
++      <span>{{ summary.eyebrow }}</span>
++      <h2>{{ summary.title }}</h2>
++      <p>{{ summary.description }}</p>
++      <a [attr.href]="summary.actionPath">{{ summary.actionLabel }}</a>
++    </div>
++
++    <ul aria-label="Destaques">
++      <li *ngFor="let item of summary.highlights">{{ item }}</li>
++    </ul>
++  </article>
++</section>
+diff --git a/src/app/feats/pagina-publica/home/home.ts b/src/app/feats/pagina-publica/home/home.ts
+index 2a99b3c..13f2af5 100644
+--- a/src/app/feats/pagina-publica/home/home.ts
++++ b/src/app/feats/pagina-publica/home/home.ts
+@@ -1,3 +1,4 @@
++import { CommonModule } from '@angular/common';
+ import { Component } from '@angular/core';
+ 
+ import { FeaturePage } from '../../../components/feature-page/feature-page';
+@@ -5,10 +6,113 @@ import { PAGE_CONTENT } from '../../../shared/page-content';
+ 
+ @Component({
+   selector: 'app-home',
+-  imports: [FeaturePage],
++  imports: [CommonModule, FeaturePage],
+   templateUrl: './home.html',
+   styleUrl: './home.css',
+ })
+ export class Home {
+   readonly page = PAGE_CONTENT.home;
++
++  readonly summaries = [
++    {
++      id: 'como-funciona',
++      eyebrow: 'Jornada dentro da plataforma',
++      title: 'Como funciona',
++      description:
++        'A Movune organiza ONGs, projetos, eventos, vagas e doacoes em um fluxo simples para quem quer ajudar ou divulgar uma causa.',
++      highlights: ['Descubra causas', 'Compare oportunidades', 'Acompanhe cada contribuicao'],
++      actionLabel: 'Ver como funciona',
++      actionPath: '/como-funciona',
++    },
++    {
++      id: 'ongs',
++      eyebrow: 'Catalogo de organizacoes',
++      title: 'ONGs',
++      description:
++        'Encontre organizacoes por causa, cidade e status de verificacao, com acesso rapido a contatos e projetos ativos.',
++      highlights: ['Rede Cuidar', 'Instituto Aprender', 'Casa Verde Viva'],
++      actionLabel: 'Ver pagina de ONGs',
++      actionPath: '/ongs',
++    },
++    {
++      id: 'projetos',
++      eyebrow: 'Campanhas sociais',
++      title: 'Projetos',
++      description:
++        'Veja campanhas abertas para doacao, metas financeiras, necessidades materiais e resultados esperados.',
++      highlights: ['Biblioteca de bairro', 'Cozinha solidaria', 'Horta escola'],
++      actionLabel: 'Ver projetos completos',
++      actionPath: '/projetos',
++    },
++    {
++      id: 'voluntariado',
++      eyebrow: 'Tempo e habilidades',
++      title: 'Voluntariado',
++      description:
++        'Resumo das vagas presenciais, remotas e hibridas para quem quer contribuir com conhecimento ou apoio operacional.',
++      highlights: ['Mentoria de carreira', 'Organizacao de evento', 'Comunicacao digital'],
++      actionLabel: 'Ver vagas completas',
++      actionPath: '/voluntariado',
++    },
++    {
++      id: 'eventos',
++      eyebrow: 'Agenda social',
++      title: 'Eventos',
++      description:
++        'Acompanhe mutiroes, oficinas e campanhas das ONGs sem sair da Home, com datas e formas de participacao.',
++      highlights: ['Mutirao de arrecadacao', 'Oficina financeira', 'Encontro de parceiros'],
++      actionLabel: 'Ver agenda completa',
++      actionPath: '/eventos',
++    },
++    {
++      id: 'doacoes',
++      eyebrow: 'Apoio financeiro e material',
++      title: 'Doacoes',
++      description:
++        'Escolha como apoiar: Pix, materiais, servicos ou doacoes recorrentes vinculadas a campanhas verificadas.',
++      highlights: ['Doacao por projeto', 'Doacao material', 'Acompanhamento do impacto'],
++      actionLabel: 'Registrar doacao',
++      actionPath: '/doacoes',
++    },
++    {
++      id: 'impacto',
++      eyebrow: 'Resultado das acoes',
++      title: 'Impacto',
++      description:
++        'Veja uma leitura rapida do alcance das campanhas, pessoas atendidas, recursos mobilizados e acoes em andamento.',
++      highlights: ['2.4 mil pessoas atendidas', '89 campanhas acompanhadas', '36 bairros impactados'],
++      actionLabel: 'Ver transparencia',
++      actionPath: '/#transparencia',
++    },
++    {
++      id: 'parceiros',
++      eyebrow: 'Apoio institucional',
++      title: 'Parceiros',
++      description:
++        'Empresas, coletivos e apoiadores podem fortalecer campanhas com recursos, espacos, servicos e divulgacao.',
++      highlights: ['Empresas apoiadoras', 'Parcerias por causa', 'Beneficios para projetos sociais'],
++      actionLabel: 'Ver parceiros',
++      actionPath: '/empresas-parceiras',
++    },
++    {
++      id: 'transparencia',
++      eyebrow: 'Prestacao de contas',
++      title: 'Transparencia',
++      description:
++        'Resumo dos valores arrecadados, despesas, comprovantes e indicadores de impacto publicados na plataforma.',
++      highlights: ['R$ 860k mobilizados', '412 comprovantes', 'Relatorios por campanha'],
++      actionLabel: 'Ver transparencia completa',
++      actionPath: '/transparencia',
++    },
++    {
++      id: 'suporte',
++      eyebrow: 'Ajuda e relacionamento',
++      title: 'Suporte',
++      description:
++        'Encontre caminhos para tirar duvidas, falar com a equipe, entender regras de uso e receber orientacao sobre a plataforma.',
++      highlights: ['Perguntas frequentes', 'Canal de contato', 'Orientacao para usuarios e ONGs'],
++      actionLabel: 'Falar com a Movune',
++      actionPath: '/contato',
++    },
++  ];
+ }
+diff --git a/src/app/feats/pagina-publica/transparencia/transparencia.html b/src/app/feats/pagina-publica/transparencia/transparencia.html
+index d80a978..20e6915 100644
+--- a/src/app/feats/pagina-publica/transparencia/transparencia.html
++++ b/src/app/feats/pagina-publica/transparencia/transparencia.html
+@@ -1 +1 @@
+-<app-feature-page [page]="page" />
++<app-feature-page class="metrics-centered" [page]="page" />
+diff --git a/src/app/shared/page-content.ts b/src/app/shared/page-content.ts
+index a0cde9f..9f9e839 100644
+--- a/src/app/shared/page-content.ts
++++ b/src/app/shared/page-content.ts
+@@ -31,6 +31,8 @@ export interface PageTable {
+ export interface PageContent {
+   eyebrow: string;
+   title: string;
++  titleImage?: string;
++  titleImageAlt?: string;
+   description: string;
+   image?: string;
+   actions?: PageAction[];
+@@ -50,12 +52,14 @@ export const PAGE_CONTENT = {
+   home: {
+     eyebrow: 'Pagina publica',
+     title: 'Conecta ONG',
++    titleImage: brandImage,
++    titleImageAlt: 'Movune - Mover pessoas. Unir causas.',
+     description:
+       'Uma plataforma para aproximar pessoas, empresas e ONGs em projetos sociais com transparencia, doacoes e voluntariado.',
+     image: brandImage,
+     actions: [
+-      { label: 'Doar agora', href: '/doacoes' },
+-      { label: 'Ser voluntario', href: '/voluntariado', variant: 'secondary' },
++      { label: 'Doar agora', href: '/#doacoes' },
++      { label: 'Ser voluntario', href: '/#voluntariado', variant: 'secondary' },
+       { label: 'Cadastrar ONG', href: '/cadastro-ong', variant: 'secondary' },
+     ],
+     metrics: [
+@@ -79,21 +83,94 @@ export const PAGE_CONTENT = {
+         meta: 'Educacao comunitaria',
+         description: 'Aulas de reforco e tecnologia para jovens em situacao de vulnerabilidade.',
+         tags: ['Meta 72%', 'Sao Paulo', 'Doacao aberta'],
+-        href: '/detalhes-projeto',
++        href: '/#projetos',
+       },
+       {
+         title: 'ONG em destaque',
+         meta: 'Rede Cuidar',
+         description: 'Organizacao focada em seguranca alimentar e acolhimento familiar.',
+         tags: ['Verificada', '120 familias', 'Transparencia ativa'],
+-        href: '/perfil-ong',
++        href: '/#ongs',
+       },
+       {
+         title: 'Vaga urgente',
+         meta: 'Voluntariado remoto',
+         description: 'Apoio na comunicacao digital de uma campanha de arrecadacao.',
+         tags: ['4h semanais', 'Remoto', 'Inscricoes abertas'],
+-        href: '/detalhe-vaga-voluntario',
++        href: '/#voluntariado',
++      },
++    ],
++  },
++  comoFunciona: {
++    eyebrow: 'Guia da plataforma',
++    title: 'Como funciona',
++    description:
++      'Entenda o caminho da Movune para conectar pessoas, ONGs, empresas, doacoes, voluntariado e transparencia em um unico fluxo.',
++    image: sloganImage,
++    actions: [
++      { label: 'Encontrar ONGs', href: '/ongs' },
++      { label: 'Ver projetos', href: '/projetos', variant: 'secondary' },
++      { label: 'Cadastrar ONG', href: '/cadastro-ong', variant: 'secondary' },
++    ],
++    metrics: [
++      { value: '1', label: 'descubra uma causa' },
++      { value: '2', label: 'escolha como ajudar' },
++      { value: '3', label: 'acompanhe o impacto' },
++    ],
++    sections: [
++      {
++        title: 'Para usuarios',
++        items: [
++          'Use a Home para ver um resumo das causas, projetos, eventos, vagas e doacoes.',
++          'Acesse as paginas publicas para comparar ONGs, entender campanhas e escolher uma forma de apoio.',
++          'Ao entrar como usuario, salve favoritos, acompanhe inscricoes, consulte doacoes e veja certificados.',
++        ],
++      },
++      {
++        title: 'Para ONGs',
++        items: [
++          'Cadastre o perfil institucional com dados publicos, area de atuacao e canais de contato.',
++          'Publique projetos, vagas, eventos, documentos e prestacoes de contas para fortalecer a confianca.',
++          'Acompanhe doacoes, voluntarios e relatorios na area da ONG depois do acesso autenticado.',
++        ],
++      },
++      {
++        title: 'Para empresas parceiras',
++        items: [
++          'Encontre campanhas alinhadas a causas sociais, territorios e indicadores de impacto.',
++          'Apoie projetos com recursos, servicos, espacos, comunicacao ou programas de voluntariado corporativo.',
++          'Use os dados de transparencia para acompanhar resultados e manter a parceria bem documentada.',
++        ],
++      },
++      {
++        title: 'Transparencia em cada etapa',
++        body: 'A Movune organiza metas, comprovantes, despesas, resultados e historico de atualizacoes para que cada apoiador entenda como a ajuda vira impacto real.',
++      },
++    ],
++    cards: [
++      {
++        title: 'Doar',
++        meta: 'Apoio financeiro ou material',
++        description:
++          'Escolha uma campanha, veja a meta e registre a contribuicao com dados suficientes para acompanhamento.',
++        tags: ['Pix', 'Itens', 'Recorrente'],
++        href: '/doacoes',
++      },
++      {
++        title: 'Ser voluntario',
++        meta: 'Tempo e habilidades',
++        description:
++          'Encontre vagas presenciais, remotas ou hibridas e participe de atividades com inscricao organizada.',
++        tags: ['Remoto', 'Presencial', 'Certificado'],
++        href: '/voluntariado',
++      },
++      {
++        title: 'Cadastrar ONG',
++        meta: 'Organizacao social',
++        description:
++          'Abra um perfil para publicar causas, receber apoio e manter a prestacao de contas em um lugar claro.',
++        tags: ['Perfil publico', 'Projetos', 'Prestacao'],
++        href: '/cadastro-ong',
+       },
+     ],
+   },
+@@ -561,7 +638,10 @@ export const PAGE_CONTENT = {
+     description:
+       'Solicite um link seguro para recuperar o acesso a conta cadastrada na plataforma.',
+     image: logoImage,
+-    actions: [{ label: 'Voltar ao login', href: '/login', variant: 'secondary' }],
++    actions: [
++      { label: 'Redefinir senha', href: '/redefinicao-senha' },
++      { label: 'Voltar ao login', href: '/login', variant: 'secondary' },
++    ],
+     fields: ['E-mail cadastrado'],
+   },
+   redefinicaoSenha: {
+@@ -570,7 +650,7 @@ export const PAGE_CONTENT = {
+     description: 'Crie uma nova senha e confirme a alteracao para retomar o acesso com seguranca.',
+     image: logoImage,
+     actions: [{ label: 'Acessar login', href: '/login', variant: 'secondary' }],
+-    fields: ['Nova senha', 'Confirmacao da senha'],
++    fields: ['E-mail cadastrado', 'Nova senha', 'Confirmacao da senha'],
+   },
+   meuPerfil: {
+     eyebrow: 'Area do usuario',
+diff --git a/src/styles.css b/src/styles.css
+index d653f83..3b3c7b3 100644
+--- a/src/styles.css
++++ b/src/styles.css
+@@ -50,3 +50,18 @@ input {
+ img {
+   max-width: 100%;
+ }
++
++.metrics-centered .metrics {
++  grid-template-columns: repeat(3, minmax(210px, 280px));
++  justify-content: center;
++}
++
++.metrics-centered .metrics article {
++  text-align: center;
++}
++
++@media (max-width: 900px) {
++  .metrics-centered .metrics {
++    grid-template-columns: minmax(0, 1fr);
++  }
++}
