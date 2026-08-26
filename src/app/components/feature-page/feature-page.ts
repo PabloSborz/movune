@@ -17,6 +17,8 @@ export class FeaturePage implements OnChanges {
   @Input({ required: true }) page!: PageContent;
 
   formModel: Record<string, string> = {};
+  searchTerm = '';
+  activeFilter = '';
   feedback: 'error' | 'success' | null = null;
   message = '';
 
@@ -30,6 +32,29 @@ export class FeaturePage implements OnChanges {
     ) as Record<string, string>;
     this.feedback = null;
     this.message = '';
+    this.searchTerm = '';
+    this.activeFilter = '';
+  }
+
+  filteredCards(): PageCard[] {
+    const search = this.normalize(this.searchTerm.trim());
+    const filter = this.normalize(this.activeFilter);
+
+    return (this.page.cards || []).filter((card) => {
+      const content = this.normalize(
+        [card.title, card.meta, card.description, ...(card.tags || [])].filter(Boolean).join(' '),
+      );
+
+      return (!search || content.includes(search)) && (!filter || content.includes(filter));
+    });
+  }
+
+  availableFilters(): string[] {
+    return [...new Set((this.page.cards || []).flatMap((card) => card.tags || []))].slice(0, 6);
+  }
+
+  selecionarFiltro(filter: string): void {
+    this.activeFilter = this.activeFilter === filter ? '' : filter;
   }
 
   salvarInformacoes(): void {

@@ -132,6 +132,29 @@ h1 {
 }
 
 .filters {
+  display: grid;
+  gap: 10px;
+}
+
+.filters-heading {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filters-heading strong {
+  color: var(--ink);
+  font-size: 1.15rem;
+}
+
+.filters-heading span {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.search-filter,
+.filter-options {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
@@ -144,6 +167,22 @@ h1 {
   margin-right: 2px;
 }
 
+.search-filter input {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  min-height: 42px;
+  max-width: 360px;
+  padding: 0 12px;
+  width: 100%;
+}
+
+.search-filter input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(2, 89, 225, 0.14);
+  outline: none;
+}
+
 .filters button,
 .tags small {
   background: white;
@@ -154,6 +193,17 @@ h1 {
   font-size: 0.88rem;
   font-weight: 700;
   padding: 9px 13px;
+}
+
+.filters button {
+  cursor: pointer;
+}
+
+.filters button:hover,
+.filters button.is-active {
+  background: var(--soft-teal);
+  border-color: var(--teal);
+  color: var(--color-dark-green);
 }
 
 .content-grid {
@@ -201,6 +251,17 @@ ul {
   display: grid;
   gap: 18px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.empty-state {
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 24px;
+  text-align: center;
 }
 
 .card {
@@ -329,6 +390,19 @@ th {
 
   h1 {
     font-size: 2.35rem;
+  }
+
+  .search-filter input {
+    max-width: none;
+  }
+
+  .filter-options {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .filter-options button {
+    width: 100%;
   }
 
   .action,

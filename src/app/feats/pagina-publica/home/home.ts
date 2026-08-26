@@ -17,9 +17,9 @@ export class Home {
     {
       id: 'ongs',
       eyebrow: 'Encontre uma causa',
-      title: 'Conheca as ONGs',
+      title: 'Conheça as ONGs',
       description:
-        'Explore organizacoes por causa, localizacao e verificacao antes de escolher onde participar.',
+        'Explore organizações por causa, localização e verificação antes de escolher onde participar.',
       highlights: ['Causas sociais', 'Projetos ativos', 'Perfis verificados'],
       actionLabel: 'Explorar ONGs',
       actionPath: '/ongs',
@@ -37,10 +37,10 @@ export class Home {
     {
       id: 'voluntariado',
       eyebrow: 'Doe seu tempo',
-      title: 'Seja voluntario',
+      title: 'Seja voluntário',
       description:
         'Encontre vagas presenciais ou remotas que combinam com seu tempo e suas habilidades.',
-      highlights: ['Vagas por habilidade', 'Presencial ou remoto', 'Inscricao organizada'],
+      highlights: ['Vagas por habilidade', 'Presencial ou remoto', 'Inscrição organizada'],
       actionLabel: 'Encontrar vagas',
       actionPath: '/voluntariado',
     },
