@@ -28,16 +28,9 @@ export class Header {
 
   readonly primaryLinks = [
     { label: 'Inicio', fragment: 'inicio' },
-    { label: 'Como funciona', fragment: 'como-funciona' },
     { label: 'ONGs', fragment: 'ongs' },
     { label: 'Projetos', fragment: 'projetos' },
     { label: 'Voluntariado', fragment: 'voluntariado' },
-    { label: 'Eventos', fragment: 'eventos' },
-    { label: 'Doacoes', fragment: 'doacoes' },
-    { label: 'Impacto', fragment: 'impacto' },
-    { label: 'Parceiros', fragment: 'parceiros' },
-    { label: 'Transparencia', fragment: 'transparencia' },
-    { label: 'Suporte', fragment: 'suporte' },
   ];
 
   abrirSidebar(): void {

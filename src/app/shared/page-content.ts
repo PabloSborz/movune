@@ -58,8 +58,8 @@ export const PAGE_CONTENT = {
       'Uma plataforma para aproximar pessoas, empresas e ONGs em projetos sociais com transparencia, doacoes e voluntariado.',
     image: brandImage,
     actions: [
-      { label: 'Doar agora', href: '/#doacoes' },
-      { label: 'Ser voluntario', href: '/#voluntariado', variant: 'secondary' },
+      { label: 'Doar agora', href: '/doacoes' },
+      { label: 'Ser voluntario', href: '/voluntariado', variant: 'secondary' },
       { label: 'Cadastrar ONG', href: '/cadastro-ong', variant: 'secondary' },
     ],
     metrics: [
