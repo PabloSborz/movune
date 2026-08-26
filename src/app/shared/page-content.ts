@@ -67,39 +67,6 @@ export const PAGE_CONTENT = {
       { value: '3.4k', label: 'voluntários conectados' },
       { value: 'R$ 860k', label: 'em apoio mobilizado' },
     ],
-    sections: [
-      {
-        title: 'Como a Movune conecta causas',
-        items: [
-          'ONGs publicam projetos, vagas, eventos e prestações de contas.',
-          'Pessoas encontram causas por local, categoria e tipo de participacao.',
-          'Empresas acompanham impacto e apoiam campanhas verificadas.',
-        ],
-      },
-    ],
-    cards: [
-      {
-        title: 'Projeto em destaque',
-        meta: 'Educação comunitária',
-        description: 'Aulas de reforco e tecnologia para jovens em situacao de vulnerabilidade.',
-        tags: ['Meta 72%', 'Sao Paulo', 'Doacao aberta'],
-        href: '/#projetos',
-      },
-      {
-        title: 'ONG em destaque',
-        meta: 'Rede Cuidar',
-        description: 'Organização focada em segurança alimentar e acolhimento familiar.',
-        tags: ['Verificada', '120 famílias', 'Transparência ativa'],
-        href: '/#ongs',
-      },
-      {
-        title: 'Vaga urgente',
-        meta: 'Voluntariado remoto',
-        description: 'Apoio na comunicação digital de uma campanha de arrecadação.',
-        tags: ['4h semanais', 'Remoto', 'Inscricoes abertas'],
-        href: '/#voluntariado',
-      },
-    ],
   },
   comoFunciona: {
     eyebrow: 'Guia da plataforma',

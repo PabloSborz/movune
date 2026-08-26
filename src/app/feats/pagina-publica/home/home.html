@@ -8,10 +8,12 @@
       <span>{{ summary.eyebrow }}</span>
       <h2>{{ summary.title }}</h2>
       <p>{{ summary.description }}</p>
-      <a [attr.href]="summary.actionPath">{{ summary.actionLabel }}</a>
+      <a [attr.href]="summary.actionPath" [attr.aria-label]="summary.actionLabel + ': ' + summary.title">
+        {{ summary.actionLabel }}
+      </a>
     </div>
 
-    <ul aria-label="Destaques">
+    <ul aria-label="Destaques do caminho">
       <li *ngFor="let item of summary.highlights">{{ item }}</li>
     </ul>
   </article>

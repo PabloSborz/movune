@@ -88,10 +88,10 @@
         </div>
         <div class="card-actions">
           <a *ngIf="card.href" [attr.href]="card.href" (click)="navegar($event, card.href)">
-            Abrir
+            Ver detalhes
           </a>
           <button *ngIf="showFavoriteButton(card)" type="button" (click)="salvarFavorito(card)">
-            Salvar
+            Salvar nos favoritos
           </button>
         </div>
       </article>
