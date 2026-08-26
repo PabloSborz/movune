@@ -1,122 +1,75 @@
 <section class="access-page">
   <div class="access-copy">
-    <span class="eyebrow">Cadastro de usuario</span>
+    <span class="eyebrow">Cadastro de usuário</span>
     <h1>Crie sua conta</h1>
     <p>Cadastre seus dados para doar, favoritar causas e se inscrever em vagas ou eventos.</p>
     <img class="brand-mark" src="/logo-transparent.png" alt="Movune" />
   </div>
 
   <form class="access-card" (ngSubmit)="cadastrar()">
+    <div class="form-header">
+      <h2>Seus dados</h2>
+      <p>Preencha os campos para criar seu acesso.</p>
+    </div>
+
     <div class="form-grid">
       <label class="field">
         <span>Nome completo</span>
-        <input
-          [(ngModel)]="form.nomeCompleto"
-          autocomplete="name"
-          name="nomeCompleto"
-          placeholder="Seu nome"
-          required
-        />
+        <input [(ngModel)]="form.nomeCompleto" autocomplete="name" name="nomeCompleto" placeholder="Seu nome" required />
       </label>
 
       <label class="field">
         <span>E-mail</span>
-        <input
-          [(ngModel)]="form.email"
-          autocomplete="email"
-          name="email"
-          placeholder="email@exemplo.com"
-          required
-          type="email"
-        />
+        <input [(ngModel)]="form.email" autocomplete="email" name="email" placeholder="email@exemplo.com" required type="email" />
       </label>
 
       <label class="field">
         <span>Telefone</span>
-        <input
-          [(ngModel)]="form.telefone"
-          autocomplete="tel"
-          name="telefone"
-          placeholder="(00) 00000-0000"
-          required
-        />
+        <input [(ngModel)]="form.telefone" autocomplete="tel" name="telefone" placeholder="(00) 00000-0000" required />
       </label>
 
       <label class="field">
         <span>Cidade e estado</span>
-        <input
-          [(ngModel)]="form.cidadeEstado"
-          autocomplete="address-level2"
-          name="cidadeEstado"
-          placeholder="Sao Paulo, SP"
-          required
-        />
+        <input [(ngModel)]="form.cidadeEstado" autocomplete="address-level2" name="cidadeEstado" placeholder="São Paulo, SP" required />
       </label>
 
       <label class="field">
         <span>Interesse principal</span>
         <select [(ngModel)]="form.interesses" name="interesses" required>
-          <option *ngFor="let interesse of interesses" [ngValue]="interesse">
-            {{ interesse }}
-          </option>
+          <option *ngFor="let interesse of interesses" [ngValue]="interesse">{{ interesse }}</option>
         </select>
       </label>
 
       <label class="field">
         <span>Habilidades</span>
-        <input
-          [(ngModel)]="form.habilidades"
-          name="habilidades"
-          placeholder="Comunicacao, tecnologia, aulas..."
-          required
-        />
+        <input [(ngModel)]="form.habilidades" name="habilidades" placeholder="Comunicação, tecnologia, aulas..." required />
       </label>
 
       <label class="field">
         <span>Senha</span>
-        <input
-          [(ngModel)]="form.senha"
-          autocomplete="new-password"
-          minlength="4"
-          name="senha"
-          placeholder="Crie uma senha"
-          required
-          type="password"
-        />
+        <input [(ngModel)]="form.senha" autocomplete="new-password" minlength="4" name="senha" placeholder="Crie uma senha" required type="password" />
       </label>
 
       <label class="field">
         <span>Confirmar senha</span>
-        <input
-          [(ngModel)]="form.confirmarSenha"
-          autocomplete="new-password"
-          name="confirmarSenha"
-          placeholder="Repita a senha"
-          required
-          type="password"
-        />
+        <input [(ngModel)]="form.confirmarSenha" autocomplete="new-password" name="confirmarSenha" placeholder="Repita a senha" required type="password" />
       </label>
 
       <label class="check-field">
         <input [(ngModel)]="form.aceite" name="aceite" required type="checkbox" />
-        <span>Li e aceito os termos de uso e a politica de privacidade.</span>
+        <span>Li e aceito os termos de uso e a política de privacidade.</span>
       </label>
 
-      <p
-        *ngIf="message"
-        class="message"
-        [class.message--error]="feedback === 'error'"
-        [class.message--success]="feedback === 'success'"
-      >
+      <p *ngIf="message" class="message" [class.message--error]="feedback === 'error'" [class.message--success]="feedback === 'success'">
         {{ message }}
       </p>
 
       <div class="submit-row">
-        <button type="submit">Cadastrar usuario</button>
+        <button type="submit">Criar minha conta</button>
       </div>
 
       <div class="access-links">
-        <a routerLink="/login">Ja tenho conta</a>
+        <a routerLink="/login">Já tenho conta</a>
         <a routerLink="/cadastro-ong">Cadastrar ONG</a>
       </div>
     </div>
