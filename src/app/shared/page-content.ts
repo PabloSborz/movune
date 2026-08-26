@@ -50,62 +50,29 @@ const sloganImage = '/slogan-transparent.png';
 
 export const PAGE_CONTENT = {
   home: {
-    eyebrow: 'Pagina publica',
+    eyebrow: 'Página pública',
     title: 'Conecta ONG',
     titleImage: brandImage,
     titleImageAlt: 'Movune - Mover pessoas. Unir causas.',
     description:
-      'Uma plataforma para aproximar pessoas, empresas e ONGs em projetos sociais com transparencia, doacoes e voluntariado.',
+      'Uma plataforma para aproximar pessoas, empresas e ONGs em projetos sociais com transparência, doações e voluntariado.',
     image: brandImage,
     actions: [
       { label: 'Doar agora', href: '/doacoes' },
-      { label: 'Ser voluntario', href: '/voluntariado', variant: 'secondary' },
+      { label: 'Ser voluntário', href: '/voluntariado', variant: 'secondary' },
       { label: 'Cadastrar ONG', href: '/cadastro-ong', variant: 'secondary' },
     ],
     metrics: [
       { value: '128', label: 'ONGs cadastradas' },
-      { value: '3.4k', label: 'voluntarios conectados' },
+      { value: '3.4k', label: 'voluntários conectados' },
       { value: 'R$ 860k', label: 'em apoio mobilizado' },
-    ],
-    sections: [
-      {
-        title: 'Como a Movune conecta causas',
-        items: [
-          'ONGs publicam projetos, vagas, eventos e prestacoes de contas.',
-          'Pessoas encontram causas por local, categoria e tipo de participacao.',
-          'Empresas acompanham impacto e apoiam campanhas verificadas.',
-        ],
-      },
-    ],
-    cards: [
-      {
-        title: 'Projeto em destaque',
-        meta: 'Educacao comunitaria',
-        description: 'Aulas de reforco e tecnologia para jovens em situacao de vulnerabilidade.',
-        tags: ['Meta 72%', 'Sao Paulo', 'Doacao aberta'],
-        href: '/#projetos',
-      },
-      {
-        title: 'ONG em destaque',
-        meta: 'Rede Cuidar',
-        description: 'Organizacao focada em seguranca alimentar e acolhimento familiar.',
-        tags: ['Verificada', '120 familias', 'Transparencia ativa'],
-        href: '/#ongs',
-      },
-      {
-        title: 'Vaga urgente',
-        meta: 'Voluntariado remoto',
-        description: 'Apoio na comunicacao digital de uma campanha de arrecadacao.',
-        tags: ['4h semanais', 'Remoto', 'Inscricoes abertas'],
-        href: '/#voluntariado',
-      },
     ],
   },
   comoFunciona: {
     eyebrow: 'Guia da plataforma',
     title: 'Como funciona',
     description:
-      'Entenda o caminho da Movune para conectar pessoas, ONGs, empresas, doacoes, voluntariado e transparencia em um unico fluxo.',
+      'Entenda o caminho da Movune para conectar pessoas, ONGs, empresas, doações, voluntariado e transparência em um único fluxo.',
     image: sloganImage,
     actions: [
       { label: 'Encontrar ONGs', href: '/ongs' },
@@ -119,32 +86,32 @@ export const PAGE_CONTENT = {
     ],
     sections: [
       {
-        title: 'Para usuarios',
+        title: 'Para usuários',
         items: [
-          'Use a Home para ver um resumo das causas, projetos, eventos, vagas e doacoes.',
-          'Acesse as paginas publicas para comparar ONGs, entender campanhas e escolher uma forma de apoio.',
-          'Ao entrar como usuario, salve favoritos, acompanhe inscricoes, consulte doacoes e veja certificados.',
+          'Use a Home para ver um resumo das causas, projetos, eventos, vagas e doações.',
+          'Acesse as páginas públicas para comparar ONGs, entender campanhas e escolher uma forma de apoio.',
+          'Ao entrar como usuário, salve favoritos, acompanhe inscrições, consulte doações e veja certificados.',
         ],
       },
       {
         title: 'Para ONGs',
         items: [
           'Cadastre o perfil institucional com dados publicos, area de atuacao e canais de contato.',
-          'Publique projetos, vagas, eventos, documentos e prestacoes de contas para fortalecer a confianca.',
-          'Acompanhe doacoes, voluntarios e relatorios na area da ONG depois do acesso autenticado.',
+          'Publique projetos, vagas, eventos, documentos e prestações de contas para fortalecer a confiança.',
+          'Acompanhe doações, voluntários e relatórios na área da ONG depois do acesso autenticado.',
         ],
       },
       {
         title: 'Para empresas parceiras',
         items: [
           'Encontre campanhas alinhadas a causas sociais, territorios e indicadores de impacto.',
-          'Apoie projetos com recursos, servicos, espacos, comunicacao ou programas de voluntariado corporativo.',
-          'Use os dados de transparencia para acompanhar resultados e manter a parceria bem documentada.',
+          'Apoie projetos com recursos, serviços, espaços, comunicação ou programas de voluntariado corporativo.',
+          'Use os dados de transparência para acompanhar resultados e manter a parceria bem documentada.',
         ],
       },
       {
-        title: 'Transparencia em cada etapa',
-        body: 'A Movune organiza metas, comprovantes, despesas, resultados e historico de atualizacoes para que cada apoiador entenda como a ajuda vira impacto real.',
+        title: 'Transparência em cada etapa',
+        body: 'A Movune organiza metas, comprovantes, despesas, resultados e histórico de atualizações para que cada apoiador entenda como a ajuda vira impacto real.',
       },
     ],
     cards: [
@@ -152,24 +119,24 @@ export const PAGE_CONTENT = {
         title: 'Doar',
         meta: 'Apoio financeiro ou material',
         description:
-          'Escolha uma campanha, veja a meta e registre a contribuicao com dados suficientes para acompanhamento.',
+          'Escolha uma campanha, veja a meta e registre a contribuição com dados suficientes para acompanhamento.',
         tags: ['Pix', 'Itens', 'Recorrente'],
         href: '/doacoes',
       },
       {
-        title: 'Ser voluntario',
+        title: 'Ser voluntário',
         meta: 'Tempo e habilidades',
         description:
-          'Encontre vagas presenciais, remotas ou hibridas e participe de atividades com inscricao organizada.',
+          'Encontre vagas presenciais, remotas ou híbridas e participe de atividades com inscrição organizada.',
         tags: ['Remoto', 'Presencial', 'Certificado'],
         href: '/voluntariado',
       },
       {
         title: 'Cadastrar ONG',
-        meta: 'Organizacao social',
+        meta: 'Organização social',
         description:
-          'Abra um perfil para publicar causas, receber apoio e manter a prestacao de contas em um lugar claro.',
-        tags: ['Perfil publico', 'Projetos', 'Prestacao'],
+          'Abra um perfil para publicar causas, receber apoio e manter a prestação de contas em um lugar claro.',
+        tags: ['Perfil público', 'Projetos', 'Prestação'],
         href: '/cadastro-ong',
       },
     ],
@@ -207,7 +174,7 @@ export const PAGE_CONTENT = {
     eyebrow: 'Catalogo publico',
     title: 'Lista de ONGs',
     description:
-      'Explore organizacoes cadastradas por cidade, estado, causa social e status de verificacao.',
+      'Explore organizações cadastradas por cidade, estado, causa social e status de verificação.',
     image: brandImage,
     actions: [
       { label: 'Ver perfil modelo', href: '/perfil-ong' },
@@ -219,22 +186,22 @@ export const PAGE_CONTENT = {
         title: 'Rede Cuidar',
         meta: 'Assistencia social',
         description:
-          'Atende familias com cestas, oficinas e encaminhamento para servicos publicos.',
+          'Atende famílias com cestas, oficinas e encaminhamento para serviços públicos.',
         tags: ['Sao Paulo', 'Verificada', '24 projetos'],
         href: '/perfil-ong',
       },
       {
         title: 'Instituto Aprender',
-        meta: 'Educacao',
-        description: 'Promove reforco escolar, leitura e inclusao digital para criancas e jovens.',
+        meta: 'Educação',
+        description: 'Promove reforço escolar, leitura e inclusão digital para crianças e jovens.',
         tags: ['Curitiba', 'Voluntariado', 'Eventos ativos'],
         href: '/perfil-ong',
       },
       {
         title: 'Casa Verde Viva',
         meta: 'Meio ambiente',
-        description: 'Organiza mutiroes, hortas comunitarias e educacao ambiental nos bairros.',
-        tags: ['Recife', 'Doacoes materiais', 'Impacto local'],
+        description: 'Organiza mutirões, hortas comunitárias e educação ambiental nos bairros.',
+        tags: ['Recife', 'Doações materiais', 'Impacto local'],
         href: '/perfil-ong',
       },
     ],
@@ -243,7 +210,7 @@ export const PAGE_CONTENT = {
     eyebrow: 'Perfil publico',
     title: 'Perfil da ONG',
     description:
-      'Pagina institucional com historia, contato, projetos ativos, eventos, vagas e indicadores de transparencia.',
+      'Página institucional com história, contato, projetos ativos, eventos, vagas e indicadores de transparência.',
     image: logoImage,
     actions: [
       { label: 'Doar para esta ONG', href: '/doacoes' },
@@ -256,7 +223,7 @@ export const PAGE_CONTENT = {
     ],
     sections: [
       {
-        title: 'Informacoes institucionais',
+        title: 'Informações institucionais',
         items: [
           'CNPJ, responsavel legal e area de atuacao.',
           'Endereco, telefone, e-mail e redes sociais.',
@@ -264,22 +231,22 @@ export const PAGE_CONTENT = {
       },
       {
         title: 'Transparencia',
-        body: 'A ONG exibe comprovantes, relatorios, despesas e resultados para fortalecer a confianca dos apoiadores.',
+        body: 'A ONG exibe comprovantes, relatórios, despesas e resultados para fortalecer a confiança dos apoiadores.',
       },
     ],
     cards: [
       {
         title: 'Projeto Escola Aberta',
         meta: 'Educacao',
-        description: 'Oficinas no contraturno para estudantes da rede publica.',
-        tags: ['Meta 72%', '80 criancas', 'Atualizado hoje'],
+        description: 'Oficinas no contraturno para estudantes da rede pública.',
+        tags: ['Meta 72%', '80 crianças', 'Atualizado hoje'],
         href: '/detalhes-projeto',
       },
       {
         title: 'Mutirao de alimentos',
         meta: 'Evento',
-        description: 'Arrecadacao e triagem de cestas para distribuicao no fim de semana.',
-        tags: ['Sabado', '30 vagas', 'Inscricao aberta'],
+        description: 'Arrecadação e triagem de cestas para distribuição no fim de semana.',
+        tags: ['Sábado', '30 vagas', 'Inscrição aberta'],
         href: '/detalhes-eventos',
       },
     ],
@@ -288,7 +255,7 @@ export const PAGE_CONTENT = {
     eyebrow: 'Projetos sociais',
     title: 'Lista de Projetos',
     description:
-      'Campanhas sociais disponiveis para doacao, participacao e acompanhamento de resultados.',
+      'Campanhas sociais disponíveis para doação, participação e acompanhamento de resultados.',
     image: brandImage,
     actions: [
       { label: 'Abrir projeto modelo', href: '/detalhes-projeto' },
@@ -306,7 +273,7 @@ export const PAGE_CONTENT = {
       {
         title: 'Cozinha solidaria',
         meta: 'Seguranca alimentar',
-        description: 'Refeicoes semanais para familias acompanhadas pela rede socioassistencial.',
+        description: 'Refeições semanais para famílias acompanhadas pela rede socioassistencial.',
         tags: ['Prazo 20 dias', 'Recife', 'Doacao recorrente'],
         href: '/detalhes-projeto',
       },
@@ -323,7 +290,7 @@ export const PAGE_CONTENT = {
     eyebrow: 'Projeto social',
     title: 'Detalhes do Projeto',
     description:
-      'Descricao completa da campanha, metas, publico beneficiado, atualizacoes e resultados esperados.',
+      'Descrição completa da campanha, metas, público beneficiado, atualizações e resultados esperados.',
     image: brandImage,
     actions: [
       { label: 'Doar para o projeto', href: '/doacoes' },
@@ -337,14 +304,14 @@ export const PAGE_CONTENT = {
     sections: [
       {
         title: 'Objetivo',
-        body: 'Criar uma biblioteca comunitaria com acesso a leitura, computadores e apoio de voluntarios educadores.',
+        body: 'Criar uma biblioteca comunitária com acesso à leitura, computadores e apoio de voluntários educadores.',
       },
       {
-        title: 'Atualizacoes',
+        title: 'Atualizações',
         items: [
           'Primeira compra de livros aprovada.',
           'Parceria com escola local confirmada.',
-          'Prestacao parcial anexada.',
+          'Prestação parcial anexada.',
         ],
       },
       {
@@ -357,7 +324,7 @@ export const PAGE_CONTENT = {
     eyebrow: 'Oportunidades',
     title: 'Voluntariado',
     description:
-      'Encontre vagas presenciais, remotas e hibridas para contribuir com tempo, habilidades e conhecimento.',
+      'Encontre vagas presenciais, remotas e híbridas para contribuir com tempo, habilidades e conhecimento.',
     image: sloganImage,
     actions: [{ label: 'Ver vaga modelo', href: '/detalhe-vaga-voluntario' }],
     filters: ['Area de atuacao', 'Localizacao', 'Modalidade', 'Disponibilidade', 'Habilidade'],

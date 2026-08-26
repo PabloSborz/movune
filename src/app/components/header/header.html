@@ -14,7 +14,7 @@
       </span>
     </button>
 
-    <a routerLink="/" class="brand" aria-label="Movune inicio">
+    <a routerLink="/" class="brand" aria-label="Movune início">
       <img src="/logo-transparent.png" alt="Movune" />
     </a>
 
@@ -29,7 +29,7 @@
     </button>
   </div>
 
-  <nav class="nav" aria-label="Assuntos da home">
+  <nav class="nav" aria-label="Navegação principal">
     <a
       *ngFor="let link of primaryLinks"
       [attr.href]="'/#' + link.fragment"
@@ -76,7 +76,7 @@
   </div>
 
   <p *ngIf="session() as activeSession" class="session-note">
-    Sessao ativa: {{ activeSession.nome }}
+    Sessão ativa: {{ activeSession.nome }}
   </p>
 
   <label>
@@ -94,7 +94,7 @@
     <legend>Tipo de conta</legend>
     <label>
       <input [(ngModel)]="loginDraft.perfil" name="quickPerfil" type="radio" value="usuario" />
-      Usuario
+      Usuário
     </label>
     <label>
       <input [(ngModel)]="loginDraft.perfil" name="quickPerfil" type="radio" value="ong" />

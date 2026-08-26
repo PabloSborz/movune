@@ -45,8 +45,26 @@
   </div>
 
   <div class="filters" *ngIf="page.filters?.length">
-    <span>Filtros</span>
-    <button type="button" *ngFor="let filter of page.filters">{{ filter }}</button>
+    <div class="filters-heading">
+      <strong>Encontre o que procura</strong>
+      <span>{{ filteredCards().length }} resultado(s)</span>
+    </div>
+    <label class="search-filter" *ngIf="page.filters?.length">
+      <span>Buscar</span>
+      <input [(ngModel)]="searchTerm" placeholder="Nome, causa ou palavra-chave" type="search" />
+    </label>
+    <div class="filter-options" *ngIf="availableFilters().length">
+      <span>Filtrar por</span>
+      <button
+        type="button"
+        *ngFor="let filter of availableFilters()"
+        [class.is-active]="activeFilter === filter"
+        [attr.aria-pressed]="activeFilter === filter"
+        (click)="selecionarFiltro(filter)"
+      >
+        {{ filter }}
+      </button>
+    </div>
   </div>
 
   <div class="content-grid">
@@ -61,7 +79,7 @@
     </section>
 
     <section class="cards" *ngIf="page.cards?.length">
-      <article *ngFor="let card of page.cards" class="card">
+      <article *ngFor="let card of filteredCards()" class="card">
         <span *ngIf="card.meta">{{ card.meta }}</span>
         <h2>{{ card.title }}</h2>
         <p>{{ card.description }}</p>
@@ -70,13 +88,16 @@
         </div>
         <div class="card-actions">
           <a *ngIf="card.href" [attr.href]="card.href" (click)="navegar($event, card.href)">
-            Abrir
+            Ver detalhes
           </a>
           <button *ngIf="showFavoriteButton(card)" type="button" (click)="salvarFavorito(card)">
-            Salvar
+            Salvar nos favoritos
           </button>
         </div>
       </article>
+      <p class="empty-state" *ngIf="!filteredCards().length">
+        Nenhum resultado encontrado. Tente outra busca ou remova o filtro.
+      </p>
     </section>
 
     <form class="form-preview" *ngIf="page.fields?.length" (ngSubmit)="salvarInformacoes()">

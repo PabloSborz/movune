@@ -1,19 +1,23 @@
 <section class="access-page">
   <div class="access-copy">
     <span class="eyebrow">Cadastro de ONG</span>
-    <h1>Cadastre a organizacao</h1>
-    <p>Registre a ONG para gerenciar projetos, vagas, eventos, documentos e prestacao de contas.</p>
+    <h1>Cadastre a organização</h1>
+    <p>Registre a ONG para gerenciar projetos, vagas, eventos, documentos e prestação de contas.</p>
     <img class="brand-mark" src="/logo-slogan-transparent.png" alt="Movune" />
   </div>
 
   <form class="access-card" (ngSubmit)="cadastrar()">
+    <div class="form-header">
+      <h2>Dados da organização</h2>
+      <p>Essas informações ajudam pessoas a encontrar e apoiar sua ONG.</p>
+    </div>
     <div class="form-grid">
       <label class="field">
-        <span>Razao social</span>
+        <span>Razão social</span>
         <input
           [(ngModel)]="form.razaoSocial"
           name="razaoSocial"
-          placeholder="Razao social da ONG"
+          placeholder="Razão social da ONG"
           required
         />
       </label>
@@ -23,7 +27,7 @@
         <input
           [(ngModel)]="form.nomeFantasia"
           name="nomeFantasia"
-          placeholder="Nome publico"
+          placeholder="Nome público"
           required
         />
       </label>
@@ -34,12 +38,12 @@
       </label>
 
       <label class="field">
-        <span>Responsavel legal</span>
+        <span>Responsável legal</span>
         <input
           [(ngModel)]="form.responsavel"
           autocomplete="name"
           name="responsavel"
-          placeholder="Nome do responsavel"
+          placeholder="Nome do responsável"
           required
         />
       </label>
@@ -68,18 +72,18 @@
       </label>
 
       <label class="field field--full">
-        <span>Endereco</span>
+        <span>Endereço</span>
         <input
           [(ngModel)]="form.endereco"
           autocomplete="street-address"
           name="endereco"
-          placeholder="Rua, numero, cidade e estado"
+          placeholder="Rua, número, cidade e estado"
           required
         />
       </label>
 
       <label class="field">
-        <span>Area de atuacao</span>
+        <span>Área de atuação</span>
         <select [(ngModel)]="form.areaAtuacao" name="areaAtuacao" required>
           <option *ngFor="let area of areasAtuacao" [ngValue]="area">
             {{ area }}
@@ -141,8 +145,8 @@
       </div>
 
       <div class="access-links">
-        <a routerLink="/login">Ja tenho conta</a>
-        <a routerLink="/politica-transparencia">Politica de transparencia</a>
+        <a routerLink="/login">Já tenho conta</a>
+        <a routerLink="/politica-transparencia">Política de transparência</a>
       </div>
     </div>
   </form>
