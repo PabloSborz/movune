@@ -21,10 +21,13 @@ export class Header {
   sidebarOpen = false;
   loginAlertOpen = false;
 
-  readonly loginDraft: { email: string; perfil: Exclude<AccessProfile, 'admin'> } = {
+  readonly loginDraft: { email: string; senha: string; perfil: Exclude<AccessProfile, 'admin'> } = {
     email: '',
+    senha: '',
     perfil: 'usuario',
   };
+
+  loginFeedback = '';
 
   readonly primaryLinks = [
     { label: 'Inicio', fragment: 'inicio' },
@@ -69,8 +72,25 @@ export class Header {
   }
 
   entrar(): void {
-    void this.router.navigate(['/login'], {
-      queryParams: this.accessQueryParams(),
+    const result = this.auth.login({
+      perfil: this.loginDraft.perfil,
+      identificador: this.loginDraft.email,
+      senha: this.loginDraft.senha,
+    });
+
+    if (!result.ok) {
+      this.loginFeedback = result.message;
+      return;
+    }
+
+    this.loginFeedback = '';
+    this.fecharPaineis();
+    void this.router.navigateByUrl(result.route || '/');
+  }
+
+  recuperarSenha(): void {
+    void this.router.navigate(['/recuperacao-senha'], {
+      queryParams: this.loginDraft.email.trim() ? { email: this.loginDraft.email.trim() } : {},
     });
     this.fecharPaineis();
   }
@@ -114,6 +134,7 @@ export class Header {
   fecharPaineis(): void {
     this.sidebarOpen = false;
     this.loginAlertOpen = false;
+    this.loginFeedback = '';
   }
 
   private scrollToAssunto(fragment: string): void {
