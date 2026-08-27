@@ -6,7 +6,7 @@
     <img class="brand-mark" src="/logo-transparent.png" alt="Movune" />
   </div>
 
-  <form class="access-card" (ngSubmit)="entrar()">
+  <form class="access-card" autocomplete="off" (ngSubmit)="entrar()">
     <div class="form-grid">
       <label class="field field--full">
         <span>Perfil de acesso</span>
@@ -20,10 +20,10 @@
       <label class="field field--full">
         <span>{{ form.perfil === 'admin' ? 'Usuario administrador' : 'E-mail' }}</span>
         <input
+          appDisableAutofill
           [(ngModel)]="form.identificador"
           [placeholder]="form.perfil === 'admin' ? 'admin' : 'email@exemplo.com'"
-          autocomplete="username"
-          name="identificador"
+          name="manualLoginIdentity"
           required
         />
       </label>
@@ -31,9 +31,9 @@
       <label class="field field--full">
         <span>Senha</span>
         <input
+          appDisableAutofill
           [(ngModel)]="form.senha"
-          autocomplete="current-password"
-          name="senha"
+          name="manualLoginSecret"
           placeholder="Digite sua senha"
           required
           type="password"

@@ -28,6 +28,7 @@ export class Header {
   };
 
   loginFeedback = '';
+  readonly loginFieldLocked = { email: true, senha: true };
 
   readonly primaryLinks = [
     { label: 'Inicio', fragment: 'inicio' },
@@ -93,6 +94,19 @@ export class Header {
       queryParams: this.loginDraft.email.trim() ? { email: this.loginDraft.email.trim() } : {},
     });
     this.fecharPaineis();
+  }
+
+  habilitarLoginField(field: 'email' | 'senha', event: Event): void {
+    if (!this.loginFieldLocked[field]) {
+      return;
+    }
+
+    this.loginFieldLocked[field] = false;
+    this.loginDraft[field] = '';
+
+    const input = event.target as HTMLInputElement;
+    input.value = '';
+    input.removeAttribute('readonly');
   }
 
   criarConta(): void {

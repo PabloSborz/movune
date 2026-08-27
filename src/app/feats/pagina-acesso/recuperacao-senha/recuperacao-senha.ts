@@ -40,7 +40,7 @@ export class RecuperacaoSenha {
 
     const request = this.recovery.create(normalizedEmail);
     this.sentCode = request.code;
-    this.resetLink = `/redefinicao-senha?token=${encodeURIComponent(request.token)}&codigo=${request.code}`;
+    this.resetLink = `/redefinicao-senha?token=${encodeURIComponent(request.token)}`;
     this.message = 'Codigo enviado. Verifique o e-mail cadastrado.';
   }
 }
