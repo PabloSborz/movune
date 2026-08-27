@@ -49,7 +49,7 @@
       <strong>Encontre o que procura</strong>
       <span>{{ filteredCards().length }} resultado(s)</span>
     </div>
-    <label class="search-filter" *ngIf="page.filters?.length">
+    <label class="search-filter">
       <span>Buscar</span>
       <input [(ngModel)]="searchTerm" placeholder="Nome, causa ou palavra-chave" type="search" />
     </label>
