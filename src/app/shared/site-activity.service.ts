@@ -125,7 +125,7 @@ export class SiteActivityStore {
   }
 
   private readRecords(): ActivityRecord[] {
-    const rawValue = localStorage.getItem(ACTIVITY_KEY);
+    const rawValue = globalThis.localStorage?.getItem(ACTIVITY_KEY);
 
     if (!rawValue) {
       return [];
@@ -141,11 +141,11 @@ export class SiteActivityStore {
   }
 
   private persist(): void {
-    if (!this.isBrowser) {
+    if (!this.isBrowser || !globalThis.localStorage) {
       return;
     }
 
-    localStorage.setItem(ACTIVITY_KEY, JSON.stringify(this.records()));
+    globalThis.localStorage.setItem(ACTIVITY_KEY, JSON.stringify(this.records()));
   }
 
   private createId(prefix: string): string {

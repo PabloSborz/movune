@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { AccessProfile, AuthStore } from '../../../shared/auth-store.service';
+import { DisableAutofillDirective } from '../../../shared/disable-autofill.directive';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, DisableAutofillDirective, FormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrls: ['../access-form.css', './login.css'],
 })
@@ -39,12 +40,6 @@ export class Login {
 
     if (this.isAccessProfile(requestedProfile)) {
       this.form.perfil = requestedProfile;
-    }
-
-    const email = route.snapshot.queryParamMap.get('email');
-
-    if (email) {
-      this.form.identificador = email;
     }
   }
 

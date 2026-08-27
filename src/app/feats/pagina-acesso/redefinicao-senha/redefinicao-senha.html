@@ -10,7 +10,19 @@
     <div class="form-grid">
       <label class="field field--full">
         <span>Codigo de verificacao</span>
-        <input [(ngModel)]="form.codigo" inputmode="numeric" maxlength="6" name="codigo" required />
+        <input
+          [(ngModel)]="form.codigo"
+          [readOnly]="codigoBloqueado"
+          (pointerdown)="habilitarCodigo($event)"
+          (focus)="habilitarCodigo($event)"
+          autocomplete="new-password"
+          data-1p-ignore="true"
+          data-lpignore="true"
+          inputmode="numeric"
+          maxlength="6"
+          name="manualVerificationValue"
+          required
+        />
       </label>
 
       <label class="field field--full">

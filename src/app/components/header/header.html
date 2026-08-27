@@ -68,6 +68,7 @@
   aria-labelledby="quick-access-title"
   aria-modal="true"
   role="dialog"
+  autocomplete="off"
   (ngSubmit)="entrar()"
 >
   <div class="alert-header">
@@ -83,8 +84,13 @@
     <span>E-mail</span>
     <input
       [(ngModel)]="loginDraft.email"
-      autocomplete="email"
-      name="quickEmail"
+      [readOnly]="loginFieldLocked.email"
+      (pointerdown)="habilitarLoginField('email', $event)"
+      (focus)="habilitarLoginField('email', $event)"
+      autocomplete="off"
+      data-1p-ignore="true"
+      data-lpignore="true"
+      name="manualAccessIdentity"
       placeholder="email@exemplo.com"
       required
       type="email"
@@ -95,8 +101,13 @@
     <span>Senha</span>
     <input
       [(ngModel)]="loginDraft.senha"
-      autocomplete="current-password"
-      name="quickPassword"
+      [readOnly]="loginFieldLocked.senha"
+      (pointerdown)="habilitarLoginField('senha', $event)"
+      (focus)="habilitarLoginField('senha', $event)"
+      autocomplete="new-password"
+      data-1p-ignore="true"
+      data-lpignore="true"
+      name="manualAccessSecret"
       placeholder="Digite sua senha"
       required
       type="password"

@@ -21,6 +21,7 @@ export class RedefinicaoSenha {
   };
 
   feedback: 'error' | 'success' | null = null;
+  codigoBloqueado = true;
   message = '';
 
   constructor(
@@ -30,7 +31,6 @@ export class RedefinicaoSenha {
     route: ActivatedRoute,
   ) {
     this.form.token = route.snapshot.queryParamMap.get('token') || '';
-    this.form.codigo = route.snapshot.queryParamMap.get('codigo') || '';
   }
 
   redefinirSenha(): void {
@@ -62,6 +62,19 @@ export class RedefinicaoSenha {
     this.feedback = 'success';
     this.message = 'Senha atualizada. Redirecionando para o login...';
     setTimeout(() => void this.router.navigate(['/login'], { queryParams: { email: request.email } }), 900);
+  }
+
+  habilitarCodigo(event: Event): void {
+    if (!this.codigoBloqueado) {
+      return;
+    }
+
+    this.codigoBloqueado = false;
+    this.form.codigo = '';
+
+    const input = event.target as HTMLInputElement;
+    input.value = '';
+    input.removeAttribute('readonly');
   }
 
   private setError(message: string): void {
