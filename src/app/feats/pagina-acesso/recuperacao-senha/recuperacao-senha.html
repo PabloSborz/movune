@@ -1,1 +1,41 @@
-<app-feature-page [page]="page" />
+<section class="access-page recovery-page">
+  <div class="access-copy">
+    <span class="eyebrow">Seguranca da conta</span>
+    <h1>Esqueceu a senha?</h1>
+    <p>Enviaremos um codigo e um link de redefinicao para o e-mail cadastrado.</p>
+    <img class="brand-mark" src="/logo-transparent.png" alt="Movune" />
+  </div>
+
+  <form class="access-card" (ngSubmit)="enviarCodigo()">
+    <div class="form-grid">
+      <label class="field field--full">
+        <span>E-mail cadastrado</span>
+        <input [(ngModel)]="email" autocomplete="email" name="email" required type="email" />
+      </label>
+
+      <fieldset class="delivery-option">
+        <legend>Como deseja receber?</legend>
+        <label>
+          <input checked name="delivery" type="radio" value="email" />
+          <span><strong>Enviar por e-mail</strong><small>Codigo de 6 digitos e link seguro</small></span>
+        </label>
+      </fieldset>
+
+      <p *ngIf="message" class="message" [class.message--error]="!resetLink" [class.message--success]="resetLink">
+        {{ message }}
+      </p>
+
+      <div *ngIf="resetLink" class="email-preview">
+        <span>E-mail de demonstracao</span>
+        <strong>Seu codigo: {{ sentCode }}</strong>
+        <small>O codigo expira em 15 minutos.</small>
+        <a [attr.href]="resetLink">Criar nova senha</a>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit">Enviar codigo</button>
+        <a routerLink="/login">Voltar ao login</a>
+      </div>
+    </div>
+  </form>
+</section>

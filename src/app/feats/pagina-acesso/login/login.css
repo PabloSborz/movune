@@ -1,3 +1,32 @@
 :host {
   display: block;
 }
+
+.submit-row,
+.submit-row button,
+.access-links {
+  width: 100%;
+}
+
+.submit-row button {
+  min-height: 46px;
+}
+
+.access-links {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.access-links a {
+  min-width: 0;
+  padding: 8px 10px;
+  text-align: center;
+  width: 100%;
+}
+
+@media (max-width: 520px) {
+  .access-links {
+    grid-template-columns: 1fr;
+  }
+}

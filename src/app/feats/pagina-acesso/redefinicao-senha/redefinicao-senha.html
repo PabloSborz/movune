@@ -1,1 +1,36 @@
-<app-feature-page [page]="page" />
+<section class="access-page reset-page">
+  <div class="access-copy">
+    <span class="eyebrow">Seguranca da conta</span>
+    <h1>Crie uma nova senha</h1>
+    <p>Informe o codigo recebido e escolha uma senha com pelo menos 6 caracteres.</p>
+    <img class="brand-mark" src="/logo-transparent.png" alt="Movune" />
+  </div>
+
+  <form class="access-card" (ngSubmit)="redefinirSenha()">
+    <div class="form-grid">
+      <label class="field field--full">
+        <span>Codigo de verificacao</span>
+        <input [(ngModel)]="form.codigo" inputmode="numeric" maxlength="6" name="codigo" required />
+      </label>
+
+      <label class="field field--full">
+        <span>Nova senha</span>
+        <input [(ngModel)]="form.senha" autocomplete="new-password" minlength="6" name="senha" required type="password" />
+      </label>
+
+      <label class="field field--full">
+        <span>Confirmar nova senha</span>
+        <input [(ngModel)]="form.confirmacao" autocomplete="new-password" minlength="6" name="confirmacao" required type="password" />
+      </label>
+
+      <p *ngIf="message" class="message" [class.message--error]="feedback === 'error'" [class.message--success]="feedback === 'success'">
+        {{ message }}
+      </p>
+
+      <div class="submit-row">
+        <button type="submit">Atualizar senha</button>
+        <a routerLink="/recuperacao-senha">Solicitar outro codigo</a>
+      </div>
+    </div>
+  </form>
+</section>

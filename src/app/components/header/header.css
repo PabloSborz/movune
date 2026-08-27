@@ -142,6 +142,11 @@
   z-index: 19;
 }
 
+.login-backdrop {
+  backdrop-filter: blur(3px);
+  background: rgba(1, 28, 83, 0.32);
+}
+
 .side-drawer,
 .login-alert {
   background: var(--surface);
@@ -176,37 +181,181 @@
 }
 
 .login-alert {
+  border: 1px solid rgba(2, 89, 225, 0.14);
   border-radius: 8px;
+  box-shadow: 0 24px 60px rgba(1, 28, 83, 0.2);
   display: grid;
   gap: 16px;
   left: 50%;
   max-width: 420px;
-  padding: 22px;
+  overflow: hidden;
+  padding: 26px;
   top: 96px;
   transform: translateX(-50%);
   width: calc(100vw - 32px);
 }
 
-.login-alert label,
+.login-alert::before {
+  background: linear-gradient(90deg, var(--blue), var(--teal), var(--coral));
+  content: '';
+  height: 4px;
+  inset: 0 0 auto;
+  position: absolute;
+}
+
+.alert-header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 14px;
+}
+
+.alert-header strong {
+  font-size: 1.18rem;
+}
+
+.alert-header button {
+  font-size: 0.82rem;
+  min-height: 32px;
+  padding: 5px 9px;
+}
+
+.login-alert > label,
 fieldset {
   display: grid;
   gap: 8px;
 }
 
-.login-alert input[type='email'] {
+.login-alert > label {
+  width: 100%;
+}
+
+.login-alert input[type='email'],
+.login-alert input[type='password'] {
+  background: var(--color-light-bg);
   border: 1px solid var(--border);
   border-radius: 8px;
+  color: var(--ink);
   font: inherit;
-  min-height: 44px;
-  padding: 0 12px;
+  min-height: 48px;
+  outline: none;
+  padding: 0 14px;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  width: 100%;
+}
+
+.login-alert input[type='email']:focus,
+.login-alert input[type='password']:focus {
+  background: white;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(2, 89, 225, 0.12);
+}
+
+.forgot-password {
+  background: transparent;
+  border: 0;
+  color: var(--blue);
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 800;
+  justify-self: end;
+  margin-top: -8px;
+  padding: 0;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.login-feedback {
+  background: #fff0f0;
+  border-left: 3px solid #a02d2d;
+  border-radius: 6px;
+  color: #a02d2d;
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 10px 12px;
 }
 
 fieldset {
-  border: 1px solid var(--border);
+  background: var(--color-light-bg);
+  border: 0;
   border-radius: 8px;
+  column-gap: 8px;
   grid-template-columns: 1fr 1fr;
   margin: 0;
-  padding: 12px;
+  padding: 10px;
+  width: 100%;
+}
+
+fieldset legend {
+  float: left;
+  grid-column: 1 / -1;
+  margin-bottom: 8px;
+  padding: 0;
+  width: 100%;
+}
+
+fieldset label {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 12px;
+  text-align: center;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+  width: 100%;
+}
+
+fieldset label:has(input:checked) {
+  background: white;
+  border-color: rgba(2, 89, 225, 0.24);
+  box-shadow: 0 3px 10px rgba(1, 28, 83, 0.07);
+  color: var(--blue);
+}
+
+fieldset input[type='radio'] {
+  accent-color: var(--blue);
+  height: 1px;
+  margin: -1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+}
+
+fieldset label:has(input:focus-visible) {
+  outline: 3px solid rgba(2, 89, 225, 0.18);
+  outline-offset: 2px;
+}
+
+.alert-actions {
+  border-top: 1px solid var(--border);
+  justify-content: flex-start;
+  padding-top: 16px;
+}
+
+.alert-actions button {
+  align-items: center;
+  border-color: var(--border);
+  display: inline-flex;
+  justify-content: center;
+  min-height: 42px;
+}
+
+.alert-actions .primary-action {
+  border-color: var(--blue);
+  box-shadow: 0 6px 14px rgba(2, 89, 225, 0.18);
+}
+
+.alert-actions .primary-action:hover {
+  background: var(--color-dark-blue);
+  border-color: var(--color-dark-blue);
+  color: white;
 }
 
 legend,
@@ -217,7 +366,11 @@ legend,
 }
 
 .session-note {
+  background: var(--soft-teal);
+  border-left: 3px solid var(--teal);
+  border-radius: 6px;
   margin: 0;
+  padding: 10px 12px;
 }
 
 @media (max-width: 980px) {
@@ -252,6 +405,16 @@ legend,
   }
 
   .login-alert {
+    padding: 20px;
     top: 72px;
+  }
+
+  .alert-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .alert-actions button {
+    width: 100%;
   }
 }

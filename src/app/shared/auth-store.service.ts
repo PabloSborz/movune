@@ -159,8 +159,8 @@ export class AuthStore {
   logout(): void {
     this.session.set(null);
 
-    if (this.isBrowser) {
-      localStorage.removeItem(SESSION_KEY);
+    if (this.isBrowser && globalThis.localStorage) {
+      globalThis.localStorage.removeItem(SESSION_KEY);
     }
   }
 
@@ -351,7 +351,7 @@ export class AuthStore {
       return null;
     }
 
-    const rawValue = localStorage.getItem(key);
+    const rawValue = globalThis.localStorage?.getItem(key);
 
     if (!rawValue) {
       return null;
@@ -365,10 +365,10 @@ export class AuthStore {
   }
 
   private persist<T>(key: string, value: T): void {
-    if (!this.isBrowser) {
+    if (!this.isBrowser || !globalThis.localStorage) {
       return;
     }
 
-    localStorage.setItem(key, JSON.stringify(value));
+    globalThis.localStorage.setItem(key, JSON.stringify(value));
   }
 }

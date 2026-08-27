@@ -86,9 +86,26 @@
       autocomplete="email"
       name="quickEmail"
       placeholder="email@exemplo.com"
+      required
       type="email"
     />
   </label>
+
+  <label>
+    <span>Senha</span>
+    <input
+      [(ngModel)]="loginDraft.senha"
+      autocomplete="current-password"
+      name="quickPassword"
+      placeholder="Digite sua senha"
+      required
+      type="password"
+    />
+  </label>
+
+  <button type="button" class="forgot-password" (click)="recuperarSenha()">
+    Esqueceu a senha?
+  </button>
 
   <fieldset>
     <legend>Tipo de conta</legend>
@@ -101,6 +118,8 @@
       ONG
     </label>
   </fieldset>
+
+  <p *ngIf="loginFeedback" class="login-feedback" role="alert">{{ loginFeedback }}</p>
 
   <div class="alert-actions">
     <button type="submit" class="primary-action">Entrar</button>

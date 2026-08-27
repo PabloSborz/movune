@@ -1,3 +1,63 @@
 :host {
   display: block;
 }
+
+.delivery-option,
+.email-preview {
+  grid-column: 1 / -1;
+}
+
+.delivery-option {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 0;
+  padding: 14px;
+}
+
+.delivery-option legend {
+  color: var(--ink);
+  font-weight: 800;
+  padding: 0 6px;
+}
+
+.delivery-option label {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+}
+
+.delivery-option input {
+  accent-color: var(--blue);
+  min-height: 18px;
+  width: 18px;
+}
+
+.delivery-option span,
+.email-preview {
+  display: grid;
+  gap: 4px;
+}
+
+.delivery-option small,
+.email-preview small,
+.email-preview span {
+  color: var(--muted);
+}
+
+.email-preview {
+  background: var(--soft-teal);
+  border: 1px solid rgba(5, 191, 151, 0.3);
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.email-preview a,
+.submit-row a {
+  color: var(--blue);
+  font-weight: 800;
+}
+
+.email-preview a {
+  margin-top: 8px;
+}
