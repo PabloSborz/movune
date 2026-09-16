@@ -418,3 +418,22 @@ legend,
     width: 100%;
   }
 }
+/* Variante da Home */
+.landing-header { position: sticky; top: 0; z-index: 30; background: rgba(255,255,255,.97); border-bottom: 1px solid #e9eef4; box-shadow: 0 2px 12px rgba(6,34,72,.04); }
+.landing-nav-inner { width: min(100% - 40px,1200px); min-height: 72px; margin-inline: auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.landing-brand { display: inline-flex; align-items: center; gap: 8px; color: #073f80; font-size: 23px; font-weight: 800; letter-spacing: -.05em; text-decoration: none; white-space: nowrap; }
+.landing-brand img { display: block; width: 39px; height: 33px; object-fit: contain; }
+.landing-desktop-nav { display: flex; align-items: center; gap: clamp(12px,1.65vw,24px); }
+.landing-desktop-nav a { color: #56677b; font-size: 12px; font-weight: 700; text-decoration: none; white-space: nowrap; }
+.landing-desktop-nav a:hover, .landing-mobile-nav a:hover { color: #0052cc; }
+.landing-header-actions { display: flex; gap: 8px; }
+.landing-button { min-height: 41px; display: inline-flex; align-items: center; justify-content: center; padding: 9px 16px; border: 1px solid transparent; border-radius: 8px; font-size: 12px; font-weight: 800; text-decoration: none; white-space: nowrap; }
+.landing-blue { background: #0052cc; color: white; }
+.landing-blue:hover { background: #003f9c; }
+.landing-outline-blue { border-color: #0052cc; color: #0052cc; }
+.landing-outline-blue:hover { background: #eef5ff; }
+.landing-menu-toggle { display: none; border: 0; background: none; color: #123c66; font-size: 25px; cursor: pointer; }
+.landing-mobile-nav { display: grid; gap: 2px; border-top: 1px solid #edf1f5; padding: 12px 20px 18px; background: white; }
+.landing-mobile-nav a { display: block; padding: 8px 12px; border-radius: 6px; color: #465b73; font-size: 14px; font-weight: 650; text-decoration: none; }
+@media (max-width: 1120px) { .landing-desktop-nav, .landing-header-actions { display: none; } .landing-menu-toggle { display: block; } }
+@media (max-width: 640px) { .landing-nav-inner { width: min(100% - 32px,1200px); min-height: 64px; } }

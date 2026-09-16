@@ -1,20 +1,38 @@
-<div id="inicio" class="home-anchor">
-  <app-feature-page class="metrics-centered" [page]="page" />
-</div>
-
+<!-- Template anterior da Home, preservado para referência:
+<div id="inicio" class="home-anchor"><app-feature-page class="metrics-centered" [page]="page" /></div>
 <section class="home-summary" aria-label="Principais caminhos da Movune">
   <article *ngFor="let summary of summaries" [id]="summary.id" class="summary-block">
-    <div class="summary-copy">
-      <span>{{ summary.eyebrow }}</span>
-      <h2>{{ summary.title }}</h2>
-      <p>{{ summary.description }}</p>
-      <a [attr.href]="summary.actionPath" [attr.aria-label]="summary.actionLabel + ': ' + summary.title">
-        {{ summary.actionLabel }}
-      </a>
-    </div>
-
-    <ul aria-label="Destaques do caminho">
-      <li *ngFor="let item of summary.highlights">{{ item }}</li>
-    </ul>
+    <div class="summary-copy"><span>{{ summary.eyebrow }}</span><h2>{{ summary.title }}</h2><p>{{ summary.description }}</p><a [attr.href]="summary.actionPath" [attr.aria-label]="summary.actionLabel + ': ' + summary.title">{{ summary.actionLabel }}</a></div>
+    <ul aria-label="Destaques do caminho"><li *ngFor="let item of summary.highlights">{{ item }}</li></ul>
   </article>
 </section>
+-->
+
+<div class="landing">
+<section id="inicio" class="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <span class="hero-eyebrow">● &nbsp; MOVER PESSOAS. UNIR CAUSAS.</span>
+        <h1>Uma nova era de <em>impacto social coletivo</em></h1>
+        <p>
+          A Movune é uma plataforma para aproximar pessoas, empresas e ONGs em projetos sociais com
+          total transparência, doações auditadas e voluntariado transformador.
+        </p>
+        <div class="hero-actions">
+          <a href="/doacoes" class="button button-white"
+            >Doar agora <span aria-hidden="true">→</span></a
+          ><a href="/voluntariado" class="button button-outline-white">Ser voluntário</a
+          ><a href="/cadastro-ong" class="button button-outline-white">Cadastrar ONG</a>
+        </div>
+      </div>
+      <div class="hero-media">
+        <img
+          src="/hero-image-frame.png"
+          alt="Grupo diverso de voluntários reunidos em um parque"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+<app-home-content></app-home-content>
+</div>

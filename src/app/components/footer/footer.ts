@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -9,6 +9,12 @@ import { RouterLink } from '@angular/router';
   styleUrl: './footer.css',
 })
 export class Footer {
+  @Input() home = false;
+  readonly homeGroups = [
+    { title: 'Institucional', links: [{ label: 'Sobre Nós', href: '/sobre' }, { label: 'Como funciona', href: '/#como-funciona' }, { label: 'Transparência', href: '/transparencia' }, { label: 'Contato', href: '/contato' }, { label: 'FAQ', href: '/perguntas-frequentes' }] },
+    { title: 'Para ONGs', links: [{ label: 'Cadastrar ONG', href: '/cadastro-ong' }, { label: 'Painel de Controle', href: '/ong/painel' }, { label: 'Guia de Recursos', href: '/como-funciona' }, { label: 'Portal de Voluntários', href: '/voluntariado' }] },
+    { title: 'Legal', links: [{ label: 'Privacidade', href: '/politica-privacidade' }, { label: 'Termos de Uso', href: '/termos-uso' }, { label: 'Cookies', href: '/politica-cookies' }, { label: 'Segurança de Doações', href: '/politica-doacoes' }] },
+  ];
   readonly publicLinks = [
     { label: 'Como funciona', path: '/como-funciona' },
     { label: 'Sobre', path: '/sobre' },

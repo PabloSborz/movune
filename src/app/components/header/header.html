@@ -1,3 +1,14 @@
+@if (home) {
+  <header class="landing-header">
+    <div class="landing-nav-inner">
+      <a href="/" class="landing-brand" aria-label="Movune, início"><img src="/logo-transparent.png" alt="" /><span>Movune</span></a>
+      <nav class="landing-desktop-nav" aria-label="Navegação principal"><a *ngFor="let link of homeLinks" [href]="link.href">{{ link.label }}</a></nav>
+      <div class="landing-header-actions"><a href="/login" class="landing-button landing-outline-blue">Login</a><a href="/cadastro-usuario" class="landing-button landing-blue">Cadastre-se</a></div>
+      <button class="landing-menu-toggle" type="button" [attr.aria-expanded]="homeMenuOpen" aria-controls="landing-mobile-menu" [attr.aria-label]="homeMenuOpen ? 'Fechar menu' : 'Abrir menu'" (click)="homeMenuOpen = !homeMenuOpen">{{ homeMenuOpen ? '✕' : '☰' }}</button>
+    </div>
+    <nav *ngIf="homeMenuOpen" id="landing-mobile-menu" class="landing-mobile-nav" aria-label="Navegação mobile"><a *ngFor="let link of homeLinks" [href]="link.href" (click)="homeMenuOpen = false">{{ link.label }}</a><a href="/login">Login</a><a href="/cadastro-usuario">Cadastre-se</a></nav>
+  </header>
+} @else {
 <header class="site-header">
   <div class="header-main">
     <button
@@ -138,3 +149,4 @@
     <button *ngIf="session()" type="button" (click)="sair()">Sair</button>
   </div>
 </form>
+}
