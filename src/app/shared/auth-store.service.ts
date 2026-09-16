@@ -24,6 +24,12 @@ export interface OngRegistrationInput {
   areaAtuacao: string;
   documentos: string;
   senha: string;
+  dataFundacao?: string;
+  site?: string;
+  cidade?: string;
+  estado?: string;
+  cep?: string;
+  cpfGestor?: string;
 }
 
 export interface MovuneUser extends UserRegistrationInput {

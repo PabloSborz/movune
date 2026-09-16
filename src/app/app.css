@@ -10,8 +10,11 @@
   padding: 0;
 }
 
+.app-main--login { max-width: none; min-height: 100vh; padding: 0; }
+
 @media (max-width: 680px) {
   .app-main {
     padding: 22px 14px 40px;
   }
+  .app-main--login { padding: 0; }
 }

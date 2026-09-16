@@ -1,0 +1,23 @@
+:host { display: block; font-family: Inter, sans-serif; }
+.choice-page { display: grid; min-height: 100vh; place-items: center; padding: 40px 24px; background: #f5fafc; }
+.choice-content { width: min(100%, 860px); }
+.brand { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 64px; color: #011c53; font-size: 27px; font-weight: 800; letter-spacing: -.05em; text-decoration: none; }
+.brand img { width: 40px; height: 40px; object-fit: contain; }
+.heading { margin-bottom: 32px; text-align: center; }
+.eyebrow { color: #0259e1; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.heading h1 { margin: 12px 0; color: #1e293b; font-size: clamp(30px, 4vw, 40px); font-weight: 800; letter-spacing: -.04em; }
+.heading p { margin: 0; color: #64748b; font-size: 16px; }
+.choices { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px; }
+.choice-card { display: flex; flex-direction: column; min-height: 300px; padding: 32px; border: 1px solid #d9eaf2; border-radius: 16px; background: #fff; color: #1e293b; text-decoration: none; box-shadow: 0 12px 30px rgba(1,28,83,.05); transition: border-color .2s, transform .2s, box-shadow .2s; }
+.choice-card:hover { transform: translateY(-3px); border-color: #0259e1; box-shadow: 0 18px 36px rgba(1,28,83,.1); }
+.icon { display: grid; width: 48px; height: 48px; place-items: center; border-radius: 12px; background: rgba(2,89,225,.09); color: #0259e1; font-size: 29px; }
+.icon--ong { background: rgba(5,191,151,.12); color: #05a583; }
+.choice-card h2 { margin: 24px 0 8px; font-size: 23px; font-weight: 800; }
+.choice-card p { margin: 0 0 24px; color: #64748b; font-size: 14px; line-height: 1.6; }
+.choice-action { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; color: #0259e1; font-size: 14px; font-weight: 700; }
+.choice-card:nth-child(2) .choice-action { color: #049d7d; }
+.login-link { margin: 30px 0 0; color: #64748b; font-size: 14px; text-align: center; }
+.login-link a { color: #0259e1; font-weight: 700; text-decoration: none; }
+.login-link a:hover { text-decoration: underline; }
+a:focus-visible { outline: 3px solid rgba(2,89,225,.35); outline-offset: 3px; }
+@media (max-width: 680px) { .choice-page { padding: 24px 16px; } .brand { margin-bottom: 40px; } .choices { grid-template-columns: 1fr; } .choice-card { min-height: 0; padding: 24px; } }

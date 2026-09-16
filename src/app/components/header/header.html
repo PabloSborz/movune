@@ -1,152 +1,178 @@
 @if (home) {
   <header class="landing-header">
     <div class="landing-nav-inner">
-      <a href="/" class="landing-brand" aria-label="Movune, início"><img src="/logo-transparent.png" alt="" /><span>Movune</span></a>
-      <nav class="landing-desktop-nav" aria-label="Navegação principal"><a *ngFor="let link of homeLinks" [href]="link.href">{{ link.label }}</a></nav>
-      <div class="landing-header-actions"><a href="/login" class="landing-button landing-outline-blue">Login</a><a href="/cadastro-usuario" class="landing-button landing-blue">Cadastre-se</a></div>
-      <button class="landing-menu-toggle" type="button" [attr.aria-expanded]="homeMenuOpen" aria-controls="landing-mobile-menu" [attr.aria-label]="homeMenuOpen ? 'Fechar menu' : 'Abrir menu'" (click)="homeMenuOpen = !homeMenuOpen">{{ homeMenuOpen ? '✕' : '☰' }}</button>
+      <a href="/" class="landing-brand" aria-label="Movune, início"
+        ><img src="/logo-transparent.png" alt="" /><span>Movune</span></a
+      >
+      <nav class="landing-desktop-nav" aria-label="Navegação principal">
+        <a *ngFor="let link of homeLinks" [href]="link.href">{{ link.label }}</a>
+      </nav>
+      <div class="landing-header-actions">
+        <a href="/login" class="landing-button landing-outline-blue">Login</a
+        ><a routerLink="/escolha" class="landing-button landing-blue">Cadastre-se</a>
+      </div>
+      <button
+        class="landing-menu-toggle"
+        type="button"
+        [attr.aria-expanded]="homeMenuOpen"
+        aria-controls="landing-mobile-menu"
+        [attr.aria-label]="homeMenuOpen ? 'Fechar menu' : 'Abrir menu'"
+        (click)="homeMenuOpen = !homeMenuOpen"
+      >
+        {{ homeMenuOpen ? '✕' : '☰' }}
+      </button>
     </div>
-    <nav *ngIf="homeMenuOpen" id="landing-mobile-menu" class="landing-mobile-nav" aria-label="Navegação mobile"><a *ngFor="let link of homeLinks" [href]="link.href" (click)="homeMenuOpen = false">{{ link.label }}</a><a href="/login">Login</a><a href="/cadastro-usuario">Cadastre-se</a></nav>
+    <nav
+      *ngIf="homeMenuOpen"
+      id="landing-mobile-menu"
+      class="landing-mobile-nav"
+      aria-label="Navegação mobile"
+    >
+      <a *ngFor="let link of homeLinks" [href]="link.href" (click)="homeMenuOpen = false">{{
+        link.label
+      }}</a
+      ><a href="/login">Login</a><a routerLink="/escolha">Cadastre-se</a>
+    </nav>
   </header>
 } @else {
-<header class="site-header">
-  <div class="header-main">
-    <button
-      type="button"
-      class="menu-button"
-      aria-label="Abrir menu"
-      aria-controls="secondary-sites"
-      (click)="abrirSidebar()"
-    >
-      <span class="menu-icon" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-      </span>
-    </button>
+  <header class="site-header">
+    <div class="header-main">
+      <button
+        type="button"
+        class="menu-button"
+        aria-label="Abrir menu"
+        aria-controls="secondary-sites"
+        (click)="abrirSidebar()"
+      >
+        <span class="menu-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
 
-    <a routerLink="/" class="brand" aria-label="Movune início">
-      <img src="/logo-transparent.png" alt="Movune" />
-    </a>
+      <a routerLink="/" class="brand" aria-label="Movune início">
+        <img src="/logo-transparent.png" alt="Movune" />
+      </a>
 
-    <button
-      type="button"
-      class="login-button"
-      aria-controls="quick-access"
-      aria-haspopup="dialog"
-      (click)="abrirLoginAlert()"
-    >
-      Login
-    </button>
-  </div>
+      <button
+        type="button"
+        class="login-button"
+        aria-controls="quick-access"
+        aria-haspopup="dialog"
+        (click)="abrirLoginAlert()"
+      >
+        Login
+      </button>
+    </div>
 
-  <nav class="nav" aria-label="Navegação principal">
-    <a
-      *ngFor="let link of primaryLinks"
-      [attr.href]="'/#' + link.fragment"
-      (click)="navegarParaAssunto($event, link.fragment)"
-      [class.is-active]="isActiveFragment(link.fragment)"
-    >
-      {{ link.label }}
-    </a>
-  </nav>
-</header>
+    <nav class="nav" aria-label="Navegação principal">
+      <a
+        *ngFor="let link of primaryLinks"
+        [attr.href]="'/#' + link.fragment"
+        (click)="navegarParaAssunto($event, link.fragment)"
+        [class.is-active]="isActiveFragment(link.fragment)"
+      >
+        {{ link.label }}
+      </a>
+    </nav>
+  </header>
 
-<div class="side-backdrop" *ngIf="sidebarOpen" (click)="fecharSidebar()"></div>
+  <div class="side-backdrop" *ngIf="sidebarOpen" (click)="fecharSidebar()"></div>
 
-<aside
-  id="secondary-sites"
-  class="side-drawer"
-  *ngIf="sidebarOpen"
-  aria-label="Sites secundarios"
-  aria-modal="true"
-  role="dialog"
->
-  <div class="drawer-header">
+  <aside
+    id="secondary-sites"
+    class="side-drawer"
+    *ngIf="sidebarOpen"
+    aria-label="Sites secundarios"
+    aria-modal="true"
+    role="dialog"
+  >
+    <div class="drawer-header">
       <strong>Menu</strong>
-    <button type="button" aria-label="Fechar menu" (click)="fecharSidebar()">Fechar</button>
-  </div>
+      <button type="button" aria-label="Fechar menu" (click)="fecharSidebar()">Fechar</button>
+    </div>
 
-  <app-side-bar (click)="fecharSidebarDepoisDeNavegar($event)"></app-side-bar>
-</aside>
+    <app-side-bar (click)="fecharSidebarDepoisDeNavegar($event)"></app-side-bar>
+  </aside>
 
-<div class="login-backdrop" *ngIf="loginAlertOpen" (click)="fecharLoginAlert()"></div>
+  <div class="login-backdrop" *ngIf="loginAlertOpen" (click)="fecharLoginAlert()"></div>
 
-<form
-  id="quick-access"
-  class="login-alert"
-  *ngIf="loginAlertOpen"
-  aria-labelledby="quick-access-title"
-  aria-modal="true"
-  role="dialog"
-  autocomplete="off"
-  (ngSubmit)="entrar()"
->
-  <div class="alert-header">
-    <strong id="quick-access-title">Acessar Movune</strong>
-    <button type="button" aria-label="Fechar acesso" (click)="fecharLoginAlert()">Fechar</button>
-  </div>
+  <form
+    id="quick-access"
+    class="login-alert"
+    *ngIf="loginAlertOpen"
+    aria-labelledby="quick-access-title"
+    aria-modal="true"
+    role="dialog"
+    autocomplete="off"
+    (ngSubmit)="entrar()"
+  >
+    <div class="alert-header">
+      <strong id="quick-access-title">Acessar Movune</strong>
+      <button type="button" aria-label="Fechar acesso" (click)="fecharLoginAlert()">Fechar</button>
+    </div>
 
-  <p *ngIf="session() as activeSession" class="session-note">
-    Sessão ativa: {{ activeSession.nome }}
-  </p>
+    <p *ngIf="session() as activeSession" class="session-note">
+      Sessão ativa: {{ activeSession.nome }}
+    </p>
 
-  <label>
-    <span>E-mail</span>
-    <input
-      [(ngModel)]="loginDraft.email"
-      [readOnly]="loginFieldLocked.email"
-      (pointerdown)="habilitarLoginField('email', $event)"
-      (focus)="habilitarLoginField('email', $event)"
-      autocomplete="off"
-      data-1p-ignore="true"
-      data-lpignore="true"
-      name="manualAccessIdentity"
-      placeholder="email@exemplo.com"
-      required
-      type="email"
-    />
-  </label>
-
-  <label>
-    <span>Senha</span>
-    <input
-      [(ngModel)]="loginDraft.senha"
-      [readOnly]="loginFieldLocked.senha"
-      (pointerdown)="habilitarLoginField('senha', $event)"
-      (focus)="habilitarLoginField('senha', $event)"
-      autocomplete="new-password"
-      data-1p-ignore="true"
-      data-lpignore="true"
-      name="manualAccessSecret"
-      placeholder="Digite sua senha"
-      required
-      type="password"
-    />
-  </label>
-
-  <button type="button" class="forgot-password" (click)="recuperarSenha()">
-    Esqueceu a senha?
-  </button>
-
-  <fieldset>
-    <legend>Tipo de conta</legend>
     <label>
-      <input [(ngModel)]="loginDraft.perfil" name="quickPerfil" type="radio" value="usuario" />
-      Usuário
+      <span>E-mail</span>
+      <input
+        [(ngModel)]="loginDraft.email"
+        [readOnly]="loginFieldLocked.email"
+        (pointerdown)="habilitarLoginField('email', $event)"
+        (focus)="habilitarLoginField('email', $event)"
+        autocomplete="off"
+        data-1p-ignore="true"
+        data-lpignore="true"
+        name="manualAccessIdentity"
+        placeholder="email@exemplo.com"
+        required
+        type="email"
+      />
     </label>
+
     <label>
-      <input [(ngModel)]="loginDraft.perfil" name="quickPerfil" type="radio" value="ong" />
-      ONG
+      <span>Senha</span>
+      <input
+        [(ngModel)]="loginDraft.senha"
+        [readOnly]="loginFieldLocked.senha"
+        (pointerdown)="habilitarLoginField('senha', $event)"
+        (focus)="habilitarLoginField('senha', $event)"
+        autocomplete="new-password"
+        data-1p-ignore="true"
+        data-lpignore="true"
+        name="manualAccessSecret"
+        placeholder="Digite sua senha"
+        required
+        type="password"
+      />
     </label>
-  </fieldset>
 
-  <p *ngIf="loginFeedback" class="login-feedback" role="alert">{{ loginFeedback }}</p>
+    <button type="button" class="forgot-password" (click)="recuperarSenha()">
+      Esqueceu a senha?
+    </button>
 
-  <div class="alert-actions">
-    <button type="submit" class="primary-action">Entrar</button>
-    <button type="button" (click)="criarConta()">Criar conta</button>
-    <button *ngIf="session()" type="button" (click)="sair()">Sair</button>
-  </div>
-</form>
+    <fieldset>
+      <legend>Tipo de conta</legend>
+      <label>
+        <input [(ngModel)]="loginDraft.perfil" name="quickPerfil" type="radio" value="usuario" />
+        Usuário
+      </label>
+      <label>
+        <input [(ngModel)]="loginDraft.perfil" name="quickPerfil" type="radio" value="ong" />
+        ONG
+      </label>
+    </fieldset>
+
+    <p *ngIf="loginFeedback" class="login-feedback" role="alert">{{ loginFeedback }}</p>
+
+    <div class="alert-actions">
+      <button type="submit" class="primary-action">Entrar</button>
+      <button type="button" (click)="criarConta()">Criar conta</button>
+      <button *ngIf="session()" type="button" (click)="sair()">Sair</button>
+    </div>
+  </form>
 }

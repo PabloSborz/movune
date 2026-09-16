@@ -10,15 +10,9 @@ import { DisableAutofillDirective } from '../../../shared/disable-autofill.direc
   selector: 'app-login',
   imports: [CommonModule, DisableAutofillDirective, FormsModule, RouterLink],
   templateUrl: './login.html',
-  styleUrls: ['../access-form.css', './login.css'],
+  styleUrl: './login.css',
 })
 export class Login {
-  readonly perfis: Array<{ label: string; value: AccessProfile }> = [
-    { label: 'Usuario', value: 'usuario' },
-    { label: 'ONG', value: 'ong' },
-    { label: 'Administrador', value: 'admin' },
-  ];
-
   readonly form = {
     perfil: 'usuario' as AccessProfile,
     identificador: '',
@@ -27,6 +21,8 @@ export class Login {
 
   feedback: 'error' | 'success' | null = null;
   message = '';
+  showPassword = false;
+  rememberAccess = false;
 
   private readonly returnUrl: string | null;
 
@@ -60,6 +56,12 @@ export class Login {
     this.message = result.message;
 
     void this.router.navigateByUrl(this.getDestination(result.route));
+  }
+
+  selectProfile(profile: AccessProfile): void {
+    this.form.perfil = profile;
+    this.feedback = null;
+    this.message = '';
   }
 
   private isAccessProfile(value: string | null): value is AccessProfile {

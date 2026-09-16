@@ -1,0 +1,41 @@
+<section class="registration-page">
+  <aside class="story-panel" aria-label="Sobre a Movune">
+    <div class="brand" aria-label="Movune"><img src="/logo-transparent.png" alt="" /><span>Movune</span></div>
+    <div class="story-content">
+      <span class="story-badge">PLANO DE IMPACTO INDIVIDUAL</span>
+      <h1>Sua energia pode curar o mundo.</h1>
+      <p>Encontre voluntariados compatíveis com as suas paixões e compartilhe o seu talento técnico ou braçal.</p>
+    </div>
+    <small>© 2026 Movune Plataforma de Impacto S/A.</small>
+  </aside>
+
+  <div class="form-panel">
+    <form class="registration-card" (ngSubmit)="cadastrar()" #registrationForm="ngForm">
+      <header class="card-header"><h2>Criar conta — Usuário</h2><p>Faça o seu cadastro rápido para começar a apoiar as causas.</p></header>
+
+      <div class="form-fields">
+        <label class="field"><span>Nome completo</span><input [(ngModel)]="form.nomeCompleto" name="nomeCompleto" autocomplete="name" placeholder="Digite seu nome completo" required /></label>
+        <label class="field"><span>E-mail</span><input [(ngModel)]="form.email" name="email" autocomplete="email" type="email" placeholder="exemplo@email.com" required /></label>
+        <label class="field"><span>Telefone com DDD</span><input [ngModel]="form.telefone" (ngModelChange)="formatPhone($event)" name="telefone" autocomplete="tel" inputmode="numeric" maxlength="15" placeholder="(11) 99999-9999" required /></label>
+
+        <div class="field-row">
+          <label class="field"><span>Senha</span><span class="password-control"><input [(ngModel)]="form.senha" name="senha" autocomplete="new-password" [type]="showPassword ? 'text' : 'password'" minlength="6" placeholder="Crie uma senha forte" required /><button type="button" [attr.aria-label]="showPassword ? 'Ocultar senha' : 'Mostrar senha'" (click)="showPassword = !showPassword"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></span></label>
+          <label class="field"><span>Confirmar senha</span><span class="password-control"><input [(ngModel)]="form.confirmarSenha" name="confirmarSenha" autocomplete="new-password" [type]="showConfirmation ? 'text' : 'password'" placeholder="Repita a senha" required /><button type="button" [attr.aria-label]="showConfirmation ? 'Ocultar confirmação' : 'Mostrar confirmação'" (click)="showConfirmation = !showConfirmation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></span></label>
+        </div>
+
+        <div class="field-row">
+          <label class="field"><span>Cidade</span><input [(ngModel)]="form.cidade" name="cidade" autocomplete="address-level2" placeholder="São Paulo" required /></label>
+          <label class="field"><span>Estado</span><input [(ngModel)]="form.estado" name="estado" autocomplete="address-level1" maxlength="2" placeholder="SP" required /></label>
+        </div>
+      </div>
+
+      <div class="tag-section"><h3>Causas de Interesse</h3><div class="tags"><button *ngFor="let causa of causas" type="button" class="tag" [class.selected]="selectedCausas.has(causa)" [attr.aria-pressed]="selectedCausas.has(causa)" (click)="toggleTag(selectedCausas, causa)">{{ causa }}<span *ngIf="selectedCausas.has(causa)" aria-hidden="true"> ✓</span></button></div></div>
+      <div class="tag-section skills"><h3>Minhas Habilidades / Especialidades</h3><div class="tags"><button *ngFor="let skill of especialidades" type="button" class="tag" [class.selected]="selectedEspecialidades.has(skill)" [attr.aria-pressed]="selectedEspecialidades.has(skill)" (click)="toggleTag(selectedEspecialidades, skill)">{{ skill }}<span *ngIf="selectedEspecialidades.has(skill)" aria-hidden="true"> ✓</span></button></div></div>
+
+      <label class="terms"><input [(ngModel)]="form.aceite" name="aceite" type="checkbox" required /><span>Li e concordo com os <a routerLink="/termos-uso" target="_blank">Termos de Uso</a> e <a routerLink="/politica-privacidade" target="_blank">Política de Privacidade</a> da Movune.</span></label>
+      <p *ngIf="message" class="form-message" [class.error]="feedback === 'error'" role="status">{{ message }}</p>
+      <button class="submit-button" type="submit">Criar minha conta de voluntário</button>
+      <p class="login-link">Já tem uma conta? <a routerLink="/login">Entrar agora</a></p>
+    </form>
+  </div>
+</section>

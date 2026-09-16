@@ -121,9 +121,7 @@ export class Header {
   }
 
   criarConta(): void {
-    const route = this.loginDraft.perfil === 'ong' ? '/cadastro-ong' : '/cadastro-usuario';
-
-    void this.router.navigate([route], {
+    void this.router.navigate(['/escolha'], {
       queryParams: this.accessQueryParams(),
     });
     this.fecharPaineis();

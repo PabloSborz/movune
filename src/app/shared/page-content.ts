@@ -563,7 +563,7 @@ export const PAGE_CONTENT = {
       'Entrada para usuarios, ONGs e administradores acompanharem doacoes, inscricoes, projetos e relatorios.',
     image: logoImage,
     actions: [
-      { label: 'Criar conta', href: '/cadastro-usuario' },
+      { label: 'Criar conta', href: '/escolha' },
       { label: 'Recuperar senha', href: '/recuperacao-senha', variant: 'secondary' },
     ],
     fields: ['E-mail', 'Senha', 'Perfil de acesso'],

@@ -96,10 +96,16 @@ export const routes: Routes = [
   {
     path: 'cadastro-usuario',
     loadComponent: () =>
-      import('./feats/pagina-acesso/cadastro-usuario/cadastro-usuario').then(
+      import('./feats/pagina-acesso/cadastro-usuario-voluntario/cadastro-usuario').then(
         (m) => m.CadastroUsuario,
       ),
   },
+  {
+    path: 'escolha',
+    loadComponent: () => import('./feats/pagina-acesso/escolha/escolha').then((m) => m.Escolha),
+  },
+  { path: 'cadastro', redirectTo: 'escolha', pathMatch: 'full' },
+  { path: 'escolher-cadastro', redirectTo: 'escolha', pathMatch: 'full' },
   {
     path: 'cadastro-ong',
     loadComponent: () =>

@@ -1,7 +1,11 @@
-<app-header [home]="isHome()" />
+@if (!isLogin() && !isAccessPage()) {
+  <app-header [home]="isHome()" />
+}
 
-<main class="app-main" [class.app-main--home]="isHome()">
+<main class="app-main" [class.app-main--home]="isHome()" [class.app-main--login]="isLogin() || isAccessPage()">
   <router-outlet />
 </main>
 
-<app-footer [home]="isHome()" />
+@if (!isLogin() && !isAccessPage()) {
+  <app-footer [home]="isHome()" />
+}
