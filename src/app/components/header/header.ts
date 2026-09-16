@@ -1,5 +1,5 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { Component, HostListener, inject } from '@angular/core';
+import { Component, HostListener, Input, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
@@ -13,6 +13,17 @@ import { AccessProfile, AuthStore } from '../../shared/auth-store.service';
   styleUrl: './header.css',
 })
 export class Header {
+  @Input() home = false;
+  homeMenuOpen = false;
+  readonly homeLinks = [
+    { label: 'Como funciona', href: '/#como-funciona' },
+    { label: 'ONGs', href: '/#ongs' },
+    { label: 'Projetos', href: '/#projetos' },
+    { label: 'Voluntariado', href: '/#voluntariado' },
+    { label: 'Eventos', href: '/eventos' },
+    { label: 'Empresas', href: '/empresas-parceiras' },
+    { label: 'Transparência', href: '/transparencia' },
+  ];
   private readonly auth = inject(AuthStore);
   private readonly router = inject(Router);
   private readonly document = inject(DOCUMENT);

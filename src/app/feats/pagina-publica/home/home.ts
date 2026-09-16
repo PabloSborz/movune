@@ -1,16 +1,15 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
-import { FeaturePage } from '../../../components/feature-page/feature-page';
-import { PAGE_CONTENT } from '../../../shared/page-content';
+import { HomeContent } from '../../../components/home-content/home-content';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, FeaturePage],
+  imports: [HomeContent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home {
+  /* Conteúdo da Home anterior, preservado para possível reutilização.
   readonly page = PAGE_CONTENT.home;
 
   readonly summaries = [
@@ -45,4 +44,5 @@ export class Home {
       actionPath: '/voluntariado',
     },
   ];
+  */
 }
