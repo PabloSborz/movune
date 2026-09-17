@@ -64,25 +64,6 @@ export class FeaturePage implements OnChanges {
       return;
     }
 
-    if (this.isPasswordRecoveryPage()) {
-      this.activity.save({
-        pageTitle: this.page.title,
-        pageEyebrow: this.page.eyebrow,
-        fields: this.formModel,
-        status: 'Solicitacao registrada',
-        session: this.auth.session(),
-      });
-      this.feedback = 'success';
-      this.message =
-        'Solicitacao registrada. Use a pagina de redefinicao para cadastrar a nova senha.';
-      return;
-    }
-
-    if (this.isPasswordResetPage()) {
-      this.redefinirSenha();
-      return;
-    }
-
     const record = this.activity.save({
       pageTitle: this.page.title,
       pageEyebrow: this.page.eyebrow,
@@ -114,14 +95,6 @@ export class FeaturePage implements OnChanges {
 
     if (normalizedTitle.includes('contato')) {
       return 'Enviar mensagem';
-    }
-
-    if (normalizedTitle.includes('recuperacao de senha')) {
-      return 'Solicitar recuperacao';
-    }
-
-    if (normalizedTitle.includes('redefinicao de senha')) {
-      return 'Atualizar senha';
     }
 
     if (normalizedTitle.includes('projeto')) {
@@ -162,6 +135,16 @@ export class FeaturePage implements OnChanges {
       void this.router?.navigate(['/login'], {
         queryParams: { perfil: 'usuario', retorno: returnUrl },
       });
+      return;
+    }
+
+    const alreadyEnrolled = this.activity
+      .byType('inscricao')
+      .some((record) => record.ownerId === session.id && record.pageTitle === this.page.title);
+
+    if (alreadyEnrolled) {
+      this.feedback = 'error';
+      this.message = 'Você já se inscreveu nesta atividade.';
       return;
     }
 
@@ -235,60 +218,8 @@ export class FeaturePage implements OnChanges {
     return this.activity.byPage(this.page.title).slice(0, 3);
   }
 
-  private redefinirSenha(): void {
-    const email = this.getFormValue('E-mail cadastrado', 'E-mail');
-    const senha = this.getFormValue('Nova senha', 'Senha');
-    const confirmacao = this.getFormValue('Confirmacao da senha', 'Confirmar senha');
-
-    if (senha !== confirmacao) {
-      this.feedback = 'error';
-      this.message = 'As senhas precisam ser iguais.';
-      return;
-    }
-
-    const result = this.auth.updatePassword(email, senha);
-
-    if (!result.ok) {
-      this.feedback = 'error';
-      this.message = result.message;
-      return;
-    }
-
-    this.activity.save({
-      type: 'seguranca',
-      pageTitle: this.page.title,
-      pageEyebrow: this.page.eyebrow,
-      fields: { 'E-mail cadastrado': email },
-      status: 'Senha atualizada',
-      session: this.auth.session(),
-    });
-
-    this.feedback = 'success';
-    this.message = result.message;
-  }
-
   private hasRequiredFields(): boolean {
     return (this.page.fields || []).every((field) => this.formModel[field]?.trim());
-  }
-
-  private isPasswordRecoveryPage(): boolean {
-    return this.normalize(this.page.title).includes('recuperacao de senha');
-  }
-
-  private isPasswordResetPage(): boolean {
-    return this.normalize(this.page.title).includes('redefinicao de senha');
-  }
-
-  private getFormValue(...labels: string[]): string {
-    for (const label of labels) {
-      const value = this.formModel[label];
-
-      if (value) {
-        return value.trim();
-      }
-    }
-
-    return '';
   }
 
   private normalize(value: string): string {

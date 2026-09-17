@@ -1,113 +1,127 @@
-﻿<section class="metrics" aria-label="Impacto da Movune"><div class="container metrics-inner"><div class="metric"><span class="metric-icon" aria-hidden="true">⌂</span><div><strong>128</strong><span>ONGs cadastradas</span></div></div><div class="metric"><span class="metric-icon" aria-hidden="true">♧</span><div><strong>3,4 mil</strong><span>Voluntários conectados</span></div></div><div class="metric"><span class="metric-icon" aria-hidden="true">♡</span><div><strong>R$ 860 mil</strong><span>Em apoio mobilizado</span></div></div></div></section>
+﻿<section class="metrics" aria-label="Impacto da Movune">
+  <div class="container metrics-inner">
+    <div class="metric">
+      <span class="metric-icon" aria-hidden="true">⌂</span>
+      <div><strong>128</strong><span>ONGs cadastradas</span></div>
+    </div>
+    <div class="metric">
+      <span class="metric-icon" aria-hidden="true">♧</span>
+      <div><strong>3,4 mil</strong><span>Voluntários conectados</span></div>
+    </div>
+    <div class="metric">
+      <span class="metric-icon" aria-hidden="true">♡</span>
+      <div><strong>R$ 860 mil</strong><span>Em apoio mobilizado</span></div>
+    </div>
+  </div>
+</section>
 
 <section id="como-funciona" class="section section-soft">
-    <div class="container">
-      <div class="section-heading center">
-        <span class="kicker">ESCOLHA SEU CAMINHO</span>
-        <h2>Como você deseja transformar o mundo?</h2>
-        <p>Existe um jeito de fazer a diferença que combina com você.</p>
-      </div>
-      <div class="three-grid path-grid">
-        <article *ngFor="let path of paths" class="card path-card">
-          <span class="path-icon" [class.green]="path.tone === 'green'" aria-hidden="true">{{
-            path.icon
-          }}</span>
-          <h3>{{ path.title }}</h3>
-          <p>{{ path.description }}</p>
-          <a [href]="path.href">{{ path.action }} <span aria-hidden="true">→</span></a>
-        </article>
-      </div>
+  <div class="container">
+    <div class="section-heading center">
+      <span class="kicker">ESCOLHA SEU CAMINHO</span>
+      <h2>Como você deseja transformar o mundo?</h2>
+      <p>Existe um jeito de fazer a diferença que combina com você.</p>
     </div>
-  </section>
+    <div class="three-grid path-grid">
+      <article *ngFor="let path of paths" class="card path-card">
+        <span class="path-icon" [class.green]="path.tone === 'green'" aria-hidden="true">{{
+          path.icon
+        }}</span>
+        <h3>{{ path.title }}</h3>
+        <p>{{ path.description }}</p>
+        <a [href]="path.href">{{ path.action }} <span aria-hidden="true">→</span></a>
+      </article>
+    </div>
+  </div>
+</section>
 
-  <section id="ongs" class="section">
-    <div class="container">
-      <div class="section-top">
-        <div class="section-heading">
-          <span class="kicker">ORGANIZAÇÕES QUE TRANSFORMAM</span>
-          <h2>ONGs em destaque</h2>
-        </div>
-        <a href="/ongs" class="section-link">Ver todas as ONGs <span aria-hidden="true">→</span></a>
+<section id="ongs" class="section">
+  <div class="container">
+    <div class="section-top">
+      <div class="section-heading">
+        <span class="kicker">ORGANIZAÇÕES QUE TRANSFORMAM</span>
+        <h2>ONGs em destaque</h2>
       </div>
-      <div class="three-grid">
-        <article *ngFor="let ong of featuredOngs" class="card image-card">
-          <img [src]="ong.image" [alt]="'Ação social da ' + ong.name" loading="lazy" />
-          <div class="image-card-body">
-            <div class="card-meta">
-              <span
-                class="tag"
-                [class.green]="ong.tone === 'green'"
-                [class.amber]="ong.tone === 'amber'"
-                >{{ ong.category }}</span
-              ><small>⌖ {{ ong.city }}</small>
-            </div>
-            <h3>{{ ong.name }}</h3>
-            <p>{{ ong.description }}</p>
-            <a href="/perfil-ong" class="card-button outline"
-              >Apoiar ONG <span aria-hidden="true">→</span></a
-            >
+      <a href="/ongs" class="section-link">Ver todas as ONGs <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="three-grid">
+      <article *ngFor="let ong of featuredOngs" class="card image-card">
+        <img [src]="ong.image" [alt]="'Ação social da ' + ong.name" loading="lazy" />
+        <div class="image-card-body">
+          <div class="card-meta">
+            <span
+              class="tag"
+              [class.green]="ong.tone === 'green'"
+              [class.amber]="ong.tone === 'amber'"
+              >{{ ong.category }}</span
+            ><small>⌖ {{ ong.city }}</small>
           </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="projetos" class="section section-soft">
-    <div class="container">
-      <div class="section-top">
-        <div class="section-heading">
-          <span class="kicker">AÇÃO EM TEMPO REAL</span>
-          <h2>Projetos que precisam de você</h2>
+          <h3>{{ ong.name }}</h3>
+          <p>{{ ong.description }}</p>
+          <a href="/perfil-ong" class="card-button outline"
+            >Apoiar ONG <span aria-hidden="true">→</span></a
+          >
         </div>
-        <a href="/projetos" class="section-link"
-          >Ver todos os projetos <span aria-hidden="true">→</span></a
-        >
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="projetos" class="section section-soft">
+  <div class="container">
+    <div class="section-top">
+      <div class="section-heading">
+        <span class="kicker">AÇÃO EM TEMPO REAL</span>
+        <h2>Projetos que precisam de você</h2>
       </div>
-      <div class="three-grid">
-        <article *ngFor="let project of featuredProjects" class="card image-card">
-          <img [src]="project.image" [alt]="'Projeto ' + project.name" loading="lazy" />
-          <div class="image-card-body">
-            <span class="project-ong">{{ project.ong }}</span>
-            <h3>{{ project.name }}</h3>
-            <div class="progress-label">
-              <div>
-                <small>Arrecadados</small><strong>{{ project.amount }}</strong>
-              </div>
-              <strong>{{ project.progress }}%</strong>
+      <a href="/projetos" class="section-link"
+        >Ver todos os projetos <span aria-hidden="true">→</span></a
+      >
+    </div>
+    <div class="three-grid">
+      <article *ngFor="let project of featuredProjects" class="card image-card">
+        <img [src]="project.image" [alt]="'Projeto ' + project.name" loading="lazy" />
+        <div class="image-card-body">
+          <span class="project-ong">{{ project.ong }}</span>
+          <h3>{{ project.name }}</h3>
+          <div class="progress-label">
+            <div>
+              <small>Arrecadados</small><strong>{{ project.amount }}</strong>
             </div>
-            <div
-              class="progress"
-              role="progressbar"
-              [attr.aria-label]="'Arrecadação de ' + project.name"
-              [attr.aria-valuenow]="project.progress"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            >
-              <span [style.width.%]="project.progress"></span>
-            </div>
-            <p class="volunteers">♧ {{ project.volunteers }} voluntários ativos</p>
-            <a href="/doacoes" class="card-button"
-              >Apoiar Financeiramente <span aria-hidden="true">→</span></a
-            >
+            <strong>{{ project.progress }}%</strong>
           </div>
-        </article>
-      </div>
+          <div
+            class="progress"
+            role="progressbar"
+            [attr.aria-label]="'Arrecadação de ' + project.name"
+            [attr.aria-valuenow]="project.progress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+            <span [style.width.%]="project.progress"></span>
+          </div>
+          <p class="volunteers">♧ {{ project.volunteers }} voluntários ativos</p>
+          <a href="/doacoes" class="card-button"
+            >Apoiar Financeiramente <span aria-hidden="true">→</span></a
+          >
+        </div>
+      </article>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="voluntariado" class="final-cta">
-    <div class="container final-cta-inner">
-      <span class="kicker">JUNTOS PODEMOS MAIS</span>
-      <h2>Faça parte da mudança hoje mesmo</h2>
-      <p>
-        Não importa o tamanho da sua contribuição: juntos criamos correntes indestrutíveis de
-        transformação e reerguemos vidas inteiras.
-      </p>
-      <div class="cta-actions">
-        <a href="/voluntariado" class="button button-white"
-          >Quero ser voluntário <span aria-hidden="true">→</span></a
-        ><a href="/doacoes" class="button button-outline-white">Realizar uma doação</a>
-      </div>
+<section id="voluntariado" class="final-cta">
+  <div class="container final-cta-inner">
+    <span class="kicker">JUNTOS PODEMOS MAIS</span>
+    <h2>Faça parte da mudança hoje mesmo</h2>
+    <p>
+      Não importa o tamanho da sua contribuição: juntos criamos correntes indestrutíveis de
+      transformação e reerguemos vidas inteiras.
+    </p>
+    <div class="cta-actions">
+      <a href="/voluntariado" class="button button-white"
+        >Quero ser voluntário <span aria-hidden="true">→</span></a
+      ><a href="/doacoes" class="button button-outline-white">Realizar uma doação</a>
     </div>
-  </section>
-
+  </div>
+</section>

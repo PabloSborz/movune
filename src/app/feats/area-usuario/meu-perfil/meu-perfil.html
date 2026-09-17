@@ -1,1 +1,273 @@
-<app-feature-page [page]="page" />
+<div class="profile-page">
+  <svg class="icon-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="profile-icon-user" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 21a8 8 0 0 1 16 0" />
+    </symbol>
+    <symbol id="profile-icon-calendar" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="16" rx="2" />
+      <path d="M7 3v4m10-4v4M3 10h18" />
+    </symbol>
+    <symbol id="profile-icon-heart" viewBox="0 0 24 24">
+      <path
+        d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 22l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"
+      />
+    </symbol>
+    <symbol id="profile-icon-gift" viewBox="0 0 24 24">
+      <rect x="3" y="8" width="18" height="13" rx="2" />
+      <path
+        d="M12 8v13M3 12h18M12 8c-4 0-5-2-4-4 1.5-2.5 4 0 4 4Zm0 0c4 0 5-2 4-4-1.5-2.5-4 0-4 4Z"
+      />
+    </symbol>
+    <symbol id="profile-icon-award" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="5" />
+      <path d="m8 12-1 9 5-3 5 3-1-9" />
+    </symbol>
+    <symbol id="profile-icon-exit" viewBox="0 0 24 24">
+      <path d="M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h5M14 7l5 5-5 5m5-5H9" />
+    </symbol>
+  </svg>
+
+  <header class="profile-header">
+    <button
+      type="button"
+      class="header-back"
+      (click)="voltar()"
+      aria-label="Voltar à página anterior"
+    >
+      ← <span>Voltar</span>
+    </button>
+    <a class="profile-brand" routerLink="/" aria-label="Movune, início"
+      ><img src="/logo-transparent.png" alt="" /><span>Movune</span></a
+    >
+    <nav class="global-nav" [class.is-open]="navOpen" aria-label="Navegação principal">
+      @for (link of navLinks; track link.path) {
+        <a [routerLink]="link.path">{{ link.label }}</a>
+      }
+    </nav>
+    <div class="header-actions">
+      <button
+        type="button"
+        class="notification-button"
+        aria-label="Notificações"
+        [attr.aria-expanded]="noticeOpen"
+        (click)="noticeOpen = !noticeOpen"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4" />
+        </svg>
+      </button>
+      @if (noticeOpen) {
+        <div class="notification-popover" role="status">Você não tem novas notificações.</div>
+      }
+      <span class="header-name">{{ form.nomeCompleto }}</span>
+      <span class="avatar avatar-small" aria-label="Foto de perfil">
+        @if (avatarPreview()) {
+          <img [src]="avatarPreview()" alt="" />
+        } @else {
+          {{ initials }}
+        }
+      </span>
+      <button
+        type="button"
+        class="header-menu"
+        aria-label="Abrir navegação"
+        [attr.aria-expanded]="navOpen"
+        (click)="navOpen = !navOpen"
+      >
+        ☰
+      </button>
+    </div>
+  </header>
+
+  <div class="profile-layout">
+    <aside class="profile-sidebar" [class.is-open]="sidebarOpen" aria-label="Área do usuário">
+      <nav class="side-nav">
+        <a routerLink="/usuario/meu-perfil" routerLinkActive="is-active"
+          ><svg><use href="#profile-icon-user" /></svg>Meu Perfil</a
+        >
+        <a routerLink="/usuario/minhas-inscricoes" routerLinkActive="is-active"
+          ><svg><use href="#profile-icon-calendar" /></svg>Minhas Inscrições</a
+        >
+        <a routerLink="/usuario/minhas-doacoes" routerLinkActive="is-active"
+          ><svg><use href="#profile-icon-gift" /></svg>Minhas Doações</a
+        >
+        <a routerLink="/usuario/favoritos" routerLinkActive="is-active"
+          ><svg><use href="#profile-icon-heart" /></svg>Favoritos</a
+        >
+        <a routerLink="/usuario/certificados" routerLinkActive="is-active"
+          ><svg><use href="#profile-icon-award" /></svg>Certificados</a
+        >
+      </nav>
+      <button type="button" class="logout-button" (click)="logout()">
+        <svg><use href="#profile-icon-exit" /></svg>Sair
+      </button>
+    </aside>
+
+    <div class="profile-content">
+      <div class="content-title">
+        <button
+          type="button"
+          class="sidebar-toggle"
+          aria-label="Abrir menu do usuário"
+          [attr.aria-expanded]="sidebarOpen"
+          (click)="sidebarOpen = !sidebarOpen"
+        >
+          ☰
+        </button>
+        <h1>Meu Perfil</h1>
+      </div>
+
+      <div class="top-grid">
+        <section class="card photo-card" aria-labelledby="photo-title">
+          <span class="avatar avatar-large" id="photo-title">
+            @if (avatarPreview()) {
+              <img [src]="avatarPreview()" alt="Foto de perfil" />
+            } @else {
+              {{ initials }}
+            }
+          </span>
+          <div class="photo-meta">
+            <strong>{{ form.nomeCompleto }}</strong
+            ><span>{{ form.cidade }}{{ form.estado ? ', ' + form.estado : '' }}</span>
+          </div>
+          <input
+            #photoInput
+            type="file"
+            accept="image/*"
+            class="visually-hidden"
+            (change)="changePhoto($event)"
+            aria-label="Selecionar foto de perfil"
+          />
+          <button type="button" class="photo-button" (click)="photoInput.click()">
+            Alterar foto
+          </button>
+        </section>
+
+        <section class="card information-card" aria-labelledby="information-title">
+          <h2 id="information-title">Informações Pessoais</h2>
+          <div class="form-row form-row-two">
+            <label
+              >Nome completo<input name="nome" [(ngModel)]="form.nomeCompleto" autocomplete="name"
+            /></label>
+            <label
+              >E-mail<input name="email" [(ngModel)]="form.email" type="email" autocomplete="email"
+            /></label>
+          </div>
+          <div class="form-row form-row-three">
+            <label
+              >Telefone<input
+                name="telefone"
+                [(ngModel)]="form.telefone"
+                (input)="formatPhone()"
+                type="tel"
+                inputmode="numeric"
+                autocomplete="tel"
+                maxlength="15"
+            /></label>
+            <label
+              >Cidade<input name="cidade" [(ngModel)]="form.cidade" autocomplete="address-level2"
+            /></label>
+            <label
+              >Estado<input
+                name="estado"
+                [(ngModel)]="form.estado"
+                autocomplete="address-level1"
+                maxlength="2"
+            /></label>
+          </div>
+        </section>
+      </div>
+
+      <div class="bottom-grid">
+        <section class="card detail-card" aria-labelledby="skills-title">
+          <h2 id="skills-title">Habilidades</h2>
+          <div class="tags">
+            @for (skill of skills; track skill) {
+              <span class="tag" [class.is-removing]="removingSkill === skill"
+                >{{ skill
+                }}<button
+                  type="button"
+                  [attr.aria-label]="'Remover ' + skill"
+                  (click)="removeSkill(skill)"
+                >
+                  ×
+                </button></span
+              >
+            }
+            <button
+              type="button"
+              class="add-button"
+              [attr.aria-expanded]="skillEditorOpen"
+              (click)="skillEditorOpen = !skillEditorOpen"
+            >
+              + Adicionar
+            </button>
+          </div>
+          @if (skillEditorOpen) {
+            <div class="skill-editor">
+              <input
+                [(ngModel)]="newSkill"
+                (keyup.enter)="addSkill()"
+                maxlength="40"
+                placeholder="Nova habilidade"
+                aria-label="Nova habilidade"
+              /><button type="button" (click)="addSkill()">Adicionar</button>
+            </div>
+          }
+        </section>
+
+        <section class="card detail-card" aria-labelledby="interests-title">
+          <h2 id="interests-title">Áreas de interesse</h2>
+          <div class="interest-list">
+            @for (interest of interests; track interest) {
+              <label
+                ><input
+                  type="checkbox"
+                  [checked]="selectedInterests.has(interest)"
+                  (change)="toggleInterest(interest)"
+                />{{ interest }}</label
+              >
+            }
+          </div>
+        </section>
+
+        <section class="card detail-card" aria-labelledby="notifications-title">
+          <h2 id="notifications-title">Preferências de notificação</h2>
+          <div class="switch-list">
+            <label
+              >E-mail<input type="checkbox" role="switch" [(ngModel)]="notifications.email" /><span
+                class="switch-track"
+              ></span
+            ></label>
+            <label
+              >Push<input type="checkbox" role="switch" [(ngModel)]="notifications.push" /><span
+                class="switch-track"
+              ></span
+            ></label>
+            <label
+              >SMS<input type="checkbox" role="switch" [(ngModel)]="notifications.sms" /><span
+                class="switch-track"
+              ></span
+            ></label>
+          </div>
+        </section>
+      </div>
+
+      <div class="save-row">
+        <button type="button" class="save-button" (click)="save()">Salvar alterações</button>
+      </div>
+      @if (toast || error) {
+        <p class="feedback-toast" [class.is-error]="!!error" role="status">{{ error || toast }}</p>
+      }
+    </div>
+  </div>
+</div>

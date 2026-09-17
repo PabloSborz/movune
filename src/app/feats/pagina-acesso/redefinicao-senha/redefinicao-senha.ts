@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -8,21 +7,51 @@ import { PasswordRecoveryService } from '../../../shared/password-recovery.servi
 
 @Component({
   selector: 'app-redefinicao-senha',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink],
   templateUrl: './redefinicao-senha.html',
-  styleUrls: ['../access-form.css', './redefinicao-senha.css'],
+  styleUrl: './redefinicao-senha.css',
 })
 export class RedefinicaoSenha {
   readonly form = {
     codigo: '',
     confirmacao: '',
+    email: '',
     senha: '',
     token: '',
   };
 
   feedback: 'error' | 'success' | null = null;
   codigoBloqueado = true;
+  showPassword = false;
+  showConfirmation = false;
+  confirmationTouched = false;
+  submitted = false;
   message = '';
+
+  get passwordStrength(): number {
+    const password = this.form.senha;
+    if (!password) return 0;
+    const score = [
+      password.length >= 8,
+      /[a-z]/.test(password) && /[A-Z]/.test(password),
+      /\d/.test(password),
+      /[^A-Za-z0-9]/.test(password),
+    ].filter(Boolean).length;
+    // Uma senha curta nunca recebe classificação suficiente para envio.
+    return password.length < 8 ? Math.min(score, 2) : score;
+  }
+
+  get strengthLabel(): string {
+    return ['', 'Fraca', 'Razoável', 'Forte e aceita', 'Muito forte'][this.passwordStrength];
+  }
+
+  get confirmationMismatch(): boolean {
+    return (
+      (this.confirmationTouched || this.submitted) &&
+      !!this.form.confirmacao &&
+      this.form.confirmacao !== this.form.senha
+    );
+  }
 
   constructor(
     private readonly auth: AuthStore,
@@ -31,23 +60,32 @@ export class RedefinicaoSenha {
     route: ActivatedRoute,
   ) {
     this.form.token = route.snapshot.queryParamMap.get('token') || '';
+    this.form.email = this.recovery.getEmail(this.form.token) || '';
   }
 
   redefinirSenha(): void {
-    if (this.form.senha.length < 6) {
-      this.setError('A nova senha precisa ter pelo menos 6 caracteres.');
+    this.submitted = true;
+    if (!this.form.email) {
+      this.setError('Link inválido ou expirado. Solicite uma nova recuperação.');
       return;
     }
-
-    if (this.form.senha !== this.form.confirmacao) {
-      this.setError('As senhas precisam ser iguais.');
+    if (!this.form.codigo.trim()) {
+      this.setError('Informe o código de verificação.');
+      return;
+    }
+    if (this.form.senha.length < 8 || this.passwordStrength < 3) {
+      this.setError('Crie uma senha de pelo menos 8 caracteres com força Forte ou Muito forte.');
+      return;
+    }
+    if (!this.form.confirmacao || this.form.senha !== this.form.confirmacao) {
+      this.setError('As senhas não coincidem.');
       return;
     }
 
     const request = this.recovery.validate(this.form.token.trim(), this.form.codigo.trim());
 
     if (!request) {
-      this.setError('Codigo ou link invalido ou expirado. Solicite uma nova recuperacao.');
+      this.setError('Código ou link inválido ou expirado. Solicite uma nova recuperação.');
       return;
     }
 
@@ -61,7 +99,10 @@ export class RedefinicaoSenha {
     this.recovery.clear();
     this.feedback = 'success';
     this.message = 'Senha atualizada. Redirecionando para o login...';
-    setTimeout(() => void this.router.navigate(['/login'], { queryParams: { email: request.email } }), 900);
+    setTimeout(
+      () => void this.router.navigate(['/login'], { queryParams: { email: request.email } }),
+      900,
+    );
   }
 
   habilitarCodigo(event: Event): void {

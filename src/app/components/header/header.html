@@ -1,14 +1,24 @@
 @if (home) {
   <header class="landing-header">
     <div class="landing-nav-inner">
-      <a href="/" class="landing-brand" aria-label="Movune, início"
+      <button
+        type="button"
+        class="header-back"
+        (click)="voltar()"
+        aria-label="Voltar à página anterior"
+      >
+        ← <span>Voltar</span>
+      </button>
+      <a routerLink="/" class="landing-brand" aria-label="Movune, início"
         ><img src="/logo-transparent.png" alt="" /><span>Movune</span></a
       >
       <nav class="landing-desktop-nav" aria-label="Navegação principal">
-        <a *ngFor="let link of homeLinks" [href]="link.href">{{ link.label }}</a>
+        <a *ngFor="let link of homeLinks" [routerLink]="link.path" routerLinkActive="is-active">{{
+          link.label
+        }}</a>
       </nav>
       <div class="landing-header-actions">
-        <a href="/login" class="landing-button landing-outline-blue">Login</a
+        <a routerLink="/login" class="landing-button landing-outline-blue">Login</a
         ><a routerLink="/escolha" class="landing-button landing-blue">Cadastre-se</a>
       </div>
       <button
@@ -28,28 +38,38 @@
       class="landing-mobile-nav"
       aria-label="Navegação mobile"
     >
-      <a *ngFor="let link of homeLinks" [href]="link.href" (click)="homeMenuOpen = false">{{
+      <a *ngFor="let link of homeLinks" [routerLink]="link.path" (click)="homeMenuOpen = false">{{
         link.label
       }}</a
-      ><a href="/login">Login</a><a routerLink="/escolha">Cadastre-se</a>
+      ><a routerLink="/login">Login</a><a routerLink="/escolha">Cadastre-se</a>
     </nav>
   </header>
 } @else {
   <header class="site-header">
     <div class="header-main">
-      <button
-        type="button"
-        class="menu-button"
-        aria-label="Abrir menu"
-        aria-controls="secondary-sites"
-        (click)="abrirSidebar()"
-      >
-        <span class="menu-icon" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-        </span>
-      </button>
+      <div class="header-leading">
+        <button
+          type="button"
+          class="header-back"
+          (click)="voltar()"
+          aria-label="Voltar à página anterior"
+        >
+          ← <span>Voltar</span>
+        </button>
+        <button
+          type="button"
+          class="menu-button"
+          aria-label="Abrir menu"
+          aria-controls="secondary-sites"
+          (click)="abrirSidebar()"
+        >
+          <span class="menu-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+      </div>
 
       <a routerLink="/" class="brand" aria-label="Movune início">
         <img src="/logo-transparent.png" alt="Movune" />
@@ -67,12 +87,7 @@
     </div>
 
     <nav class="nav" aria-label="Navegação principal">
-      <a
-        *ngFor="let link of primaryLinks"
-        [attr.href]="'/#' + link.fragment"
-        (click)="navegarParaAssunto($event, link.fragment)"
-        [class.is-active]="isActiveFragment(link.fragment)"
-      >
+      <a *ngFor="let link of homeLinks" [routerLink]="link.path" routerLinkActive="is-active">
         {{ link.label }}
       </a>
     </nav>
@@ -164,6 +179,10 @@
       <label>
         <input [(ngModel)]="loginDraft.perfil" name="quickPerfil" type="radio" value="ong" />
         ONG
+      </label>
+      <label>
+        <input [(ngModel)]="loginDraft.perfil" name="quickPerfil" type="radio" value="admin" />
+        Administrador
       </label>
     </fieldset>
 

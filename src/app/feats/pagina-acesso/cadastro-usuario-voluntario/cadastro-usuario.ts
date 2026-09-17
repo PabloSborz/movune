@@ -46,7 +46,13 @@ export class CadastroUsuario {
   }
 
   cadastrar(): void {
-    if (!this.form.nomeCompleto.trim() || !this.form.email.trim() || !this.form.cidade.trim() || !this.form.estado.trim() || !this.form.senha) {
+    if (
+      !this.form.nomeCompleto.trim() ||
+      !this.form.email.trim() ||
+      !this.form.cidade.trim() ||
+      !this.form.estado.trim() ||
+      !this.form.senha
+    ) {
       this.setError('Preencha todos os campos obrigatórios.');
       return;
     }

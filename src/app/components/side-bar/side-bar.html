@@ -1,5 +1,7 @@
 <aside class="side-bar">
-  <img src="/logo-transparent.png" alt="Movune" />
+  <a routerLink="/" aria-label="Movune, página inicial"
+    ><img src="/logo-transparent.png" alt="Movune"
+  /></a>
 
   <div class="access-context" *ngIf="session() as activeSession; else visitorAccess">
     <span>{{ profileLabel(activeSession.perfil) }}</span>

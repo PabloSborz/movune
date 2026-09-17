@@ -23,6 +23,17 @@ describe('Header', () => {
     expect(component).toBeTruthy();
   });
 
+  it('links Transparência and the logo to their current routes', () => {
+    fixture.componentRef.setInput('home', true);
+    fixture.detectChanges();
+
+    const links = Array.from(fixture.nativeElement.querySelectorAll('a')) as HTMLAnchorElement[];
+    expect(links.find((link) => link.textContent?.trim() === 'Transparência')?.pathname).toBe(
+      '/transparencia',
+    );
+    expect(fixture.nativeElement.querySelector('.landing-brand')?.getAttribute('href')).toBe('/');
+  });
+
   it('should toggle the secondary sites drawer', async () => {
     const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('.menu-button');
 

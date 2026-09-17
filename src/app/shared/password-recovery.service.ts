@@ -20,6 +20,7 @@ export class PasswordRecoveryService {
   }
 
   create(emailValue: string): RecoveryRequest {
+    // Fluxo local de demonstração; em produção, a recuperação precisa de um servidor.
     const request: RecoveryRequest = {
       code: Math.floor(100000 + Math.random() * 900000).toString(),
       email: emailValue.trim().toLowerCase(),
@@ -43,6 +44,14 @@ export class PasswordRecoveryService {
     }
 
     return request.token === token && request.code === code ? request : null;
+  }
+
+  getEmail(token: string): string | null {
+    const request = this.read();
+    if (!request || request.expiresAt < Date.now() || request.token !== token) {
+      return null;
+    }
+    return request.email;
   }
 
   clear(): void {

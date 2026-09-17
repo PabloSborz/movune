@@ -16,6 +16,7 @@ function requireProfile(profile: AccessProfile, returnUrl: string): boolean | Ur
     return true;
   }
 
+  // Guarda o destino para continuar a navegação após o login.
   return router.createUrlTree(['/login'], {
     queryParams: { perfil: profile, retorno: returnUrl },
   });

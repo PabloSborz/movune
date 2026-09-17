@@ -1,14 +1,16 @@
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, HostListener, Input, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 import { SideBar } from '../side-bar/side-bar';
 import { AccessProfile, AuthStore } from '../../shared/auth-store.service';
+import { ChoiceDialogService } from '../../feats/pagina-acesso/escolha/choice-dialog.service';
+import { NavigationHistoryService } from '../../shared/navigation-history.service';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, FormsModule, RouterLink, SideBar],
+  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive, SideBar],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
@@ -16,23 +18,24 @@ export class Header {
   @Input() home = false;
   homeMenuOpen = false;
   readonly homeLinks = [
-    { label: 'Como funciona', href: '/#como-funciona' },
-    { label: 'ONGs', href: '/#ongs' },
-    { label: 'Projetos', href: '/#projetos' },
-    { label: 'Voluntariado', href: '/#voluntariado' },
-    { label: 'Eventos', href: '/eventos' },
-    { label: 'Empresas', href: '/empresas-parceiras' },
-    { label: 'Transparência', href: '/transparencia' },
+    { label: 'Como funciona', path: '/como-funciona' },
+    { label: 'ONGs', path: '/ongs' },
+    { label: 'Projetos', path: '/projetos' },
+    { label: 'Voluntariado', path: '/voluntariado' },
+    { label: 'Eventos', path: '/eventos' },
+    { label: 'Empresas', path: '/empresas-parceiras' },
+    { label: 'Transparência', path: '/transparencia' },
   ];
   private readonly auth = inject(AuthStore);
   private readonly router = inject(Router);
-  private readonly document = inject(DOCUMENT);
+  private readonly navigationHistory = inject(NavigationHistoryService);
+  private readonly choiceDialog = inject(ChoiceDialogService);
 
   readonly session = this.auth.session;
   sidebarOpen = false;
   loginAlertOpen = false;
 
-  readonly loginDraft: { email: string; senha: string; perfil: Exclude<AccessProfile, 'admin'> } = {
+  readonly loginDraft: { email: string; senha: string; perfil: AccessProfile } = {
     email: '',
     senha: '',
     perfil: 'usuario',
@@ -41,12 +44,10 @@ export class Header {
   loginFeedback = '';
   readonly loginFieldLocked = { email: true, senha: true };
 
-  readonly primaryLinks = [
-    { label: 'Inicio', fragment: 'inicio' },
-    { label: 'ONGs', fragment: 'ongs' },
-    { label: 'Projetos', fragment: 'projetos' },
-    { label: 'Voluntariado', fragment: 'voluntariado' },
-  ];
+  voltar(): void {
+    this.fecharPaineis();
+    this.navigationHistory.back();
+  }
 
   abrirSidebar(): void {
     this.sidebarOpen = !this.sidebarOpen;
@@ -72,15 +73,6 @@ export class Header {
 
   fecharLoginAlert(): void {
     this.loginAlertOpen = false;
-  }
-
-  navegarParaAssunto(event: Event, fragment: string): void {
-    event.preventDefault();
-    this.fecharPaineis();
-
-    void this.router.navigate(['/'], { fragment }).then(() => {
-      this.scrollToAssunto(fragment);
-    });
   }
 
   entrar(): void {
@@ -121,20 +113,8 @@ export class Header {
   }
 
   criarConta(): void {
-    void this.router.navigate(['/escolha'], {
-      queryParams: this.accessQueryParams(),
-    });
     this.fecharPaineis();
-  }
-
-  isActiveFragment(fragment: string): boolean {
-    const urlTree = this.router.parseUrl(this.router.url);
-    const primaryRoute = urlTree.root.children['primary'];
-    const segments = primaryRoute?.segments.map((segment) => segment.path) || [];
-    const isHome = segments.length === 0;
-    const activeFragment = urlTree.fragment || 'inicio';
-
-    return isHome && activeFragment === fragment;
+    this.choiceDialog.open(this.accessQueryParams()['email'] || '');
   }
 
   sair(): void {
@@ -158,17 +138,5 @@ export class Header {
     this.sidebarOpen = false;
     this.loginAlertOpen = false;
     this.loginFeedback = '';
-  }
-
-  private scrollToAssunto(fragment: string): void {
-    const scroll = () => {
-      this.document.getElementById(fragment)?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    };
-
-    scroll();
-    this.document.defaultView?.setTimeout(scroll, 50);
   }
 }

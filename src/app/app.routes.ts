@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { adminGuard, ongGuard, userGuard } from './shared/auth.guard';
 
 export const routes: Routes = [
+  // Páginas públicas.
   {
     path: '',
     loadComponent: () => import('./feats/pagina-publica/home/home').then((m) => m.Home),
@@ -125,6 +126,7 @@ export const routes: Routes = [
         (m) => m.RedefinicaoSenha,
       ),
   },
+  // Áreas privadas; cada grupo exige o perfil correspondente.
   { path: 'usuario', redirectTo: 'usuario/meu-perfil', pathMatch: 'full' },
   { path: 'painel-usuario', redirectTo: 'usuario/meu-perfil', pathMatch: 'full' },
   {

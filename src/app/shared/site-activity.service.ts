@@ -38,6 +38,7 @@ export interface ActivityInput {
 
 const ACTIVITY_KEY = 'movune:atividades';
 
+// Reúne registros usados pelos painéis de usuário, ONG e administração.
 @Injectable({ providedIn: 'root' })
 export class SiteActivityStore {
   readonly records = signal<ActivityRecord[]>([]);
@@ -86,6 +87,7 @@ export class SiteActivityStore {
   }
 
   private inferType(pageTitle: string, pageEyebrow: string): ActivityType {
+    // Remove acentos para classificar títulos escritos de formas diferentes.
     const text = `${pageTitle} ${pageEyebrow}`
       .normalize('NFD')
       .replace(/\p{Diacritic}/gu, '')

@@ -12,12 +12,32 @@ import { AuthStore, OngRegistrationInput } from '../../../shared/auth-store.serv
   styleUrl: './cadastro-ong.css',
 })
 export class CadastroOng {
-  readonly areasAtuacao = ['Educação e Alfabetização', 'Saúde e Bem-Estar', 'Preservação do Meio Ambiente', 'Assistência e Proteção Social', 'Cultura e Direitos Artísticos', 'Defesa dos Direitos Humanos'];
-  readonly selectedAreas = new Set(['Educação e Alfabetização', 'Assistência e Proteção Social', 'Defesa dos Direitos Humanos']);
+  readonly areasAtuacao = [
+    'Educação e Alfabetização',
+    'Saúde e Bem-Estar',
+    'Preservação do Meio Ambiente',
+    'Assistência e Proteção Social',
+    'Cultura e Direitos Artísticos',
+    'Defesa dos Direitos Humanos',
+  ];
+  readonly selectedAreas = new Set([
+    'Educação e Alfabetização',
+    'Assistência e Proteção Social',
+    'Defesa dos Direitos Humanos',
+  ]);
   estatuto: File | null = null;
   ata: File | null = null;
 
-  readonly form: OngRegistrationInput & { dataFundacao: string; site: string; cidade: string; estado: string; cep: string; cpfGestor: string; confirmarSenha: string; aceite: boolean } = {
+  readonly form: OngRegistrationInput & {
+    dataFundacao: string;
+    site: string;
+    cidade: string;
+    estado: string;
+    cep: string;
+    cpfGestor: string;
+    confirmarSenha: string;
+    aceite: boolean;
+  } = {
     razaoSocial: '',
     nomeFantasia: '',
     cnpj: '',
@@ -56,12 +76,18 @@ export class CadastroOng {
   cadastrar(): void {
     if (!this.selectedAreas.size) return this.setError('Selecione ao menos uma área de atuação.');
     if (!this.estatuto || !this.ata) return this.setError('Selecione os dois documentos em PDF.');
-    if (!this.validDate(this.form.dataFundacao)) return this.setError('Informe uma data de fundação válida.');
-    if (!/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/.test(this.form.cnpj)) return this.setError('Informe um CNPJ no formato correto.');
-    if (!/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(this.form.cpfGestor)) return this.setError('Informe um CPF no formato correto.');
-    if (!/^\d{5}-\d{3}$/.test(this.form.cep)) return this.setError('Informe um CEP no formato correto.');
-    if (!/^\(\d{2}\) \d{5}-\d{4}$/.test(this.form.telefone)) return this.setError('Informe um telefone com DDD.');
-    if (this.form.senha.length < 6) return this.setError('A senha precisa ter ao menos 6 caracteres.');
+    if (!this.validDate(this.form.dataFundacao))
+      return this.setError('Informe uma data de fundação válida.');
+    if (!/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/.test(this.form.cnpj))
+      return this.setError('Informe um CNPJ no formato correto.');
+    if (!/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(this.form.cpfGestor))
+      return this.setError('Informe um CPF no formato correto.');
+    if (!/^\d{5}-\d{3}$/.test(this.form.cep))
+      return this.setError('Informe um CEP no formato correto.');
+    if (!/^\(\d{2}\) \d{5}-\d{4}$/.test(this.form.telefone))
+      return this.setError('Informe um telefone com DDD.');
+    if (this.form.senha.length < 6)
+      return this.setError('A senha precisa ter ao menos 6 caracteres.');
     if (this.form.senha !== this.form.confirmarSenha) {
       return this.setError('As senhas precisam ser iguais.');
     }
@@ -136,7 +162,12 @@ export class CadastroOng {
     const match = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(value);
     if (!match) return false;
     const date = new Date(+match[3], +match[2] - 1, +match[1]);
-    return date.getFullYear() === +match[3] && date.getMonth() === +match[2] - 1 && date.getDate() === +match[1] && date <= new Date();
+    return (
+      date.getFullYear() === +match[3] &&
+      date.getMonth() === +match[2] - 1 &&
+      date.getDate() === +match[1] &&
+      date <= new Date()
+    );
   }
 
   private setError(message: string): void {

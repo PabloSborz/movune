@@ -1,3 +1,4 @@
+// Conteúdo declarativo das páginas que usam o componente FeaturePage.
 export interface PageAction {
   label: string;
   href: string;
@@ -598,26 +599,6 @@ export const PAGE_CONTENT = {
       'Area de atuacao',
       'Documentos',
     ],
-  },
-  recuperacaoSenha: {
-    eyebrow: 'Seguranca da conta',
-    title: 'Recuperacao de Senha',
-    description:
-      'Solicite um link seguro para recuperar o acesso a conta cadastrada na plataforma.',
-    image: logoImage,
-    actions: [
-      { label: 'Redefinir senha', href: '/redefinicao-senha' },
-      { label: 'Voltar ao login', href: '/login', variant: 'secondary' },
-    ],
-    fields: ['E-mail cadastrado'],
-  },
-  redefinicaoSenha: {
-    eyebrow: 'Seguranca da conta',
-    title: 'Redefinicao de Senha',
-    description: 'Crie uma nova senha e confirme a alteracao para retomar o acesso com seguranca.',
-    image: logoImage,
-    actions: [{ label: 'Acessar login', href: '/login', variant: 'secondary' }],
-    fields: ['E-mail cadastrado', 'Nova senha', 'Confirmacao da senha'],
   },
   meuPerfil: {
     eyebrow: 'Area do usuario',

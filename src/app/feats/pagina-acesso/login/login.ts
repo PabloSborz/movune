@@ -69,6 +69,7 @@ export class Login {
   }
 
   private getDestination(defaultRoute?: string): string {
+    // Aceita apenas caminhos internos ao voltar para a página solicitada antes do login.
     if (this.returnUrl?.startsWith('/') && !this.returnUrl.startsWith('//')) {
       return this.returnUrl;
     }

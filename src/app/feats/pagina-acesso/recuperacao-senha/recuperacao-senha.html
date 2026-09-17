@@ -1,41 +1,90 @@
-<section class="access-page recovery-page">
-  <div class="access-copy">
-    <span class="eyebrow">Seguranca da conta</span>
-    <h1>Esqueceu a senha?</h1>
-    <p>Enviaremos um codigo e um link de redefinicao para o e-mail cadastrado.</p>
-    <img class="brand-mark" src="/logo-transparent.png" alt="Movune" />
-  </div>
-
-  <form class="access-card" (ngSubmit)="enviarCodigo()">
-    <div class="form-grid">
-      <label class="field field--full">
-        <span>E-mail cadastrado</span>
-        <input [(ngModel)]="email" autocomplete="email" name="email" required type="email" />
-      </label>
-
-      <fieldset class="delivery-option">
-        <legend>Como deseja receber?</legend>
-        <label>
-          <input checked name="delivery" type="radio" value="email" />
-          <span><strong>Enviar por e-mail</strong><small>Codigo de 6 digitos e link seguro</small></span>
-        </label>
-      </fieldset>
-
-      <p *ngIf="message" class="message" [class.message--error]="!resetLink" [class.message--success]="resetLink">
-        {{ message }}
+<section class="recovery-page">
+  <aside class="story-panel" aria-label="Sobre a segurança da Movune">
+    <a class="brand" routerLink="/" aria-label="Movune, página inicial"
+      ><img src="/logo-transparent.png" alt="" /><span>Movune</span></a
+    >
+    <div class="story-content">
+      <span class="story-badge">Proteção Garantida</span>
+      <h1>A segurança das doações é prioridade.</h1>
+      <p>
+        Garantimos criptografia e proteção total de dados para todas as transações de fundos e
+        comunicações institucionais.
       </p>
-
-      <div *ngIf="resetLink" class="email-preview">
-        <span>E-mail de demonstracao</span>
-        <strong>Seu codigo: {{ sentCode }}</strong>
-        <small>O codigo expira em 15 minutos.</small>
-        <a [attr.href]="resetLink">Criar nova senha</a>
-      </div>
-
-      <div class="submit-row">
-        <button type="submit">Enviar codigo</button>
-        <a routerLink="/login">Voltar ao login</a>
-      </div>
     </div>
-  </form>
+    <small>© 2026 Movune Plataforma de Impacto S/A.</small>
+  </aside>
+
+  <div class="recovery-panel">
+    @if (state !== 'success') {
+      <form
+        class="recovery-card recovery-form-card"
+        [class.is-leaving]="state === 'leaving'"
+        (ngSubmit)="enviarLink()"
+        novalidate
+      >
+        <div class="heading">
+          <h2>Recuperar senha</h2>
+          <p>
+            Insira o seu e-mail abaixo. Enviaremos um link seguro para criar sua nova credencial de
+            acesso.
+          </p>
+        </div>
+        <div class="field">
+          <label for="recovery-email">Seu e-mail cadastrado</label>
+          <input
+            id="recovery-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="exemplo@email.com"
+            [(ngModel)]="email"
+            (ngModelChange)="error = ''"
+            [class.is-invalid]="!!error"
+            [attr.aria-invalid]="!!error"
+            [attr.aria-describedby]="error ? 'recovery-error' : null"
+          />
+          @if (error) {
+            <p id="recovery-error" class="field-error" role="alert">{{ error }}</p>
+          }
+        </div>
+        <button class="primary-button" type="submit" [disabled]="state === 'leaving'">
+          Enviar link de recuperação
+        </button>
+        <a class="return-link" routerLink="/login">Voltar para login</a>
+      </form>
+    } @else {
+      <div class="recovery-card recovery-success-card" role="status">
+        <div class="success-icon" aria-hidden="true">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M21 11V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h9" />
+            <path d="m3 7 9 6 9-6" />
+            <path d="m17 17 2 2 4-4" />
+          </svg>
+        </div>
+        <div class="heading">
+          <h2>E-mail enviado!</h2>
+          <p>
+            Verifique a sua caixa de entrada no e-mail cadastrado para prosseguir com a redefinição
+            de segurança.
+          </p>
+        </div>
+        <div class="email-preview">
+          <span>Prévia de demonstração</span>
+          <strong>Seu código: {{ sentCode }}</strong>
+          <small>O código expira em 15 minutos.</small>
+          <a [attr.href]="resetLink">Criar nova senha</a>
+        </div>
+        <a class="primary-button" routerLink="/login">Voltar para o Login</a>
+      </div>
+    }
+  </div>
 </section>

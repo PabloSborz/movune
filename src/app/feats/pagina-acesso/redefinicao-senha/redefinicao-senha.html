@@ -1,48 +1,179 @@
-<section class="access-page reset-page">
-  <div class="access-copy">
-    <span class="eyebrow">Seguranca da conta</span>
-    <h1>Crie uma nova senha</h1>
-    <p>Informe o codigo recebido e escolha uma senha com pelo menos 6 caracteres.</p>
-    <img class="brand-mark" src="/logo-transparent.png" alt="Movune" />
-  </div>
-
-  <form class="access-card" (ngSubmit)="redefinirSenha()">
-    <div class="form-grid">
-      <label class="field field--full">
-        <span>Codigo de verificacao</span>
-        <input
-          [(ngModel)]="form.codigo"
-          [readOnly]="codigoBloqueado"
-          (pointerdown)="habilitarCodigo($event)"
-          (focus)="habilitarCodigo($event)"
-          autocomplete="new-password"
-          data-1p-ignore="true"
-          data-lpignore="true"
-          inputmode="numeric"
-          maxlength="6"
-          name="manualVerificationValue"
-          required
-        />
-      </label>
-
-      <label class="field field--full">
-        <span>Nova senha</span>
-        <input [(ngModel)]="form.senha" autocomplete="new-password" minlength="6" name="senha" required type="password" />
-      </label>
-
-      <label class="field field--full">
-        <span>Confirmar nova senha</span>
-        <input [(ngModel)]="form.confirmacao" autocomplete="new-password" minlength="6" name="confirmacao" required type="password" />
-      </label>
-
-      <p *ngIf="message" class="message" [class.message--error]="feedback === 'error'" [class.message--success]="feedback === 'success'">
-        {{ message }}
+<section class="reset-page">
+  <aside class="story-panel" aria-label="Sobre a segurança da Movune">
+    <a class="brand" routerLink="/" aria-label="Movune, página inicial"
+      ><img src="/logo-transparent.png" alt="" /><span>Movune</span></a
+    >
+    <div class="story-content">
+      <span class="story-badge">Redefinição Segura</span>
+      <h1>Segurança reforçada para sua tranquilidade.</h1>
+      <p>
+        Altere suas credenciais periodicamente para garantir que o seu perfil de apoio permaneça
+        blindado e auditado.
       </p>
-
-      <div class="submit-row">
-        <button type="submit">Atualizar senha</button>
-        <a routerLink="/recuperacao-senha">Solicitar outro codigo</a>
-      </div>
     </div>
-  </form>
+    <small>© 2026 Movune Plataforma de Impacto S/A.</small>
+  </aside>
+
+  <div class="reset-panel">
+    <form class="reset-card" (ngSubmit)="redefinirSenha()" novalidate>
+      <div class="heading">
+        <h2>Redefinir senha</h2>
+        <p>Por favor, crie uma senha que contenha números, letras e símbolos especiais.</p>
+      </div>
+
+      <div class="fields">
+        <div class="field">
+          <label for="reset-email">E-mail</label>
+          <input
+            id="reset-email"
+            name="email"
+            type="email"
+            [value]="form.email"
+            readonly
+            [class.is-invalid]="submitted && !form.email"
+            aria-readonly="true"
+          />
+          @if (submitted && !form.email) {
+            <small class="field-error">E-mail indisponível. Solicite um novo link.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="reset-code">Código de verificação</label>
+          <input
+            id="reset-code"
+            name="manualVerificationValue"
+            [(ngModel)]="form.codigo"
+            [readOnly]="codigoBloqueado"
+            (pointerdown)="habilitarCodigo($event)"
+            (focus)="habilitarCodigo($event)"
+            autocomplete="new-password"
+            data-1p-ignore="true"
+            data-lpignore="true"
+            inputmode="numeric"
+            maxlength="6"
+            placeholder="Digite o código recebido"
+            [class.is-invalid]="submitted && !form.codigo.trim()"
+          />
+          @if (submitted && !form.codigo.trim()) {
+            <small class="field-error">Informe o código de verificação.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="reset-password">Nova senha</label>
+          <div class="password-field">
+            <input
+              id="reset-password"
+              name="senha"
+              [(ngModel)]="form.senha"
+              [type]="showPassword ? 'text' : 'password'"
+              autocomplete="new-password"
+              placeholder="Crie sua nova senha"
+              [class.is-invalid]="submitted && (form.senha.length < 8 || passwordStrength < 3)"
+            />
+            <button
+              type="button"
+              class="visibility-button"
+              [attr.aria-label]="showPassword ? 'Ocultar nova senha' : 'Mostrar nova senha'"
+              [attr.aria-pressed]="showPassword"
+              (click)="showPassword = !showPassword"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" />
+                <circle cx="12" cy="12" r="3" />
+                <path [attr.d]="showPassword ? 'M3 3 21 21' : null" />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="strength"
+            [class.weak]="passwordStrength === 1"
+            [class.fair]="passwordStrength === 2"
+            [class.strong]="passwordStrength >= 3"
+            aria-live="polite"
+          >
+            <div class="strength-bars" aria-hidden="true">
+              @for (bar of [1, 2, 3, 4]; track bar) {
+                <span [class.active]="passwordStrength >= bar"></span>
+              }
+            </div>
+            <span class="strength-label">{{
+              passwordStrength
+                ? 'Força da senha: ' + strengthLabel + '.'
+                : 'Use 8 caracteres, maiúsculas e minúsculas, números e símbolos.'
+            }}</span>
+          </div>
+          @if (submitted && (form.senha.length < 8 || passwordStrength < 3)) {
+            <small class="field-error"
+              >A senha precisa ter pelo menos 8 caracteres e força Forte.</small
+            >
+          }
+        </div>
+
+        <div class="field">
+          <label for="reset-confirmation">Confirmar nova senha</label>
+          <div class="password-field">
+            <input
+              id="reset-confirmation"
+              name="confirmacao"
+              [(ngModel)]="form.confirmacao"
+              (ngModelChange)="confirmationTouched = true"
+              [type]="showConfirmation ? 'text' : 'password'"
+              autocomplete="new-password"
+              placeholder="Repita a nova senha"
+              [class.is-invalid]="confirmationMismatch || (submitted && !form.confirmacao)"
+              [attr.aria-invalid]="confirmationMismatch || (submitted && !form.confirmacao)"
+              [attr.aria-describedby]="confirmationMismatch ? 'confirmation-error' : null"
+            />
+            <button
+              type="button"
+              class="visibility-button"
+              [attr.aria-label]="
+                showConfirmation ? 'Ocultar confirmação de senha' : 'Mostrar confirmação de senha'
+              "
+              [attr.aria-pressed]="showConfirmation"
+              (click)="showConfirmation = !showConfirmation"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" />
+                <circle cx="12" cy="12" r="3" />
+                <path [attr.d]="showConfirmation ? 'M3 3 21 21' : null" />
+              </svg>
+            </button>
+          </div>
+          @if (confirmationMismatch) {
+            <small id="confirmation-error" class="field-error">As senhas não coincidem</small>
+          }
+          @if (submitted && !form.confirmacao) {
+            <small class="field-error">Confirme a nova senha.</small>
+          }
+        </div>
+      </div>
+
+      @if (message) {
+        <p class="form-message" [class.is-error]="feedback === 'error'" role="status">
+          {{ message }}
+        </p>
+      }
+      <button class="primary-button" type="submit">Salvar nova senha</button>
+      <a class="return-link" routerLink="/login">Voltar para o Login</a>
+    </form>
+  </div>
 </section>

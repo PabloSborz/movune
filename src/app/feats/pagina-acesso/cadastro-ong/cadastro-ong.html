@@ -1,43 +1,253 @@
 <section class="ong-page">
   <aside class="story-panel" aria-label="Sobre a Movune">
-    <div class="brand" aria-label="Movune"><img src="/logo-transparent.png" alt="" /><span>Movune</span></div>
-    <div class="story-content"><span class="story-badge">Inscrição de Organização</span><h1>Transforme a sua causa com mais visibilidade, recursos e engajamento.</h1><p>Ao se cadastrar na Movune, sua ONG ganha um canal mais simples para receber doações, mobilizar voluntários qualificados e compartilhar resultados com total transparência.</p></div>
+    <a class="brand" routerLink="/" aria-label="Movune, página inicial">
+      <img src="/logo-transparent.png" alt="" /><span>Movune</span>
+    </a>
+    <div class="story-content">
+      <span class="story-badge">Inscrição de Organização</span>
+      <h1>Transforme a sua causa com mais visibilidade, recursos e engajamento.</h1>
+      <p>
+        Ao se cadastrar na Movune, sua ONG ganha um canal mais simples para receber doações,
+        mobilizar voluntários qualificados e compartilhar resultados com total transparência.
+      </p>
+    </div>
     <small>© 2026 Movune Plataforma de Impacto S/A.</small>
   </aside>
 
   <div class="form-panel">
     <form class="ong-card" (ngSubmit)="cadastrar()">
-      <section class="form-section"><h2>1. Identificação Institucional</h2><div class="form-grid two">
-        <label class="field"><span>Nome Razão Social da ONG</span><input [(ngModel)]="form.razaoSocial" name="razaoSocial" placeholder="Nome oficial" required /></label>
-        <label class="field"><span>CNPJ Ativo</span><input [ngModel]="form.cnpj" (ngModelChange)="form.cnpj = mask($event, '00.000.000/0000-00')" name="cnpj" inputmode="numeric" maxlength="18" placeholder="00.000.000/0001-00" required /></label>
-        <label class="field"><span>Data de Fundação</span><input [ngModel]="form.dataFundacao" (ngModelChange)="form.dataFundacao = mask($event, '00/00/0000')" name="dataFundacao" inputmode="numeric" maxlength="10" placeholder="DD/MM/AAAA" required /></label>
-        <label class="field"><span>Site ou Portal Oficial</span><input [(ngModel)]="form.site" name="site" type="url" placeholder="https://suaong.org.br" required /></label>
-      </div></section>
+      <section class="form-section">
+        <h2>1. Identificação Institucional</h2>
+        <div class="form-grid two">
+          <label class="field"
+            ><span>Nome Razão Social da ONG</span
+            ><input
+              [(ngModel)]="form.razaoSocial"
+              name="razaoSocial"
+              placeholder="Nome oficial"
+              required
+          /></label>
+          <label class="field"
+            ><span>CNPJ Ativo</span
+            ><input
+              [ngModel]="form.cnpj"
+              (ngModelChange)="form.cnpj = mask($event, '00.000.000/0000-00')"
+              name="cnpj"
+              inputmode="numeric"
+              maxlength="18"
+              placeholder="00.000.000/0001-00"
+              required
+          /></label>
+          <label class="field"
+            ><span>Data de Fundação</span
+            ><input
+              [ngModel]="form.dataFundacao"
+              (ngModelChange)="form.dataFundacao = mask($event, '00/00/0000')"
+              name="dataFundacao"
+              inputmode="numeric"
+              maxlength="10"
+              placeholder="DD/MM/AAAA"
+              required
+          /></label>
+          <label class="field"
+            ><span>Site ou Portal Oficial</span
+            ><input
+              [(ngModel)]="form.site"
+              name="site"
+              type="url"
+              placeholder="https://suaong.org.br"
+              required
+          /></label>
+        </div>
+      </section>
 
-      <section class="form-section"><h2>2. Área Principal de Atuação</h2><p class="section-note">Selecione todas as categorias que refletem o trabalho da sua instituição:</p><div class="area-grid">
-        <label *ngFor="let area of areasAtuacao" class="check-option"><input type="checkbox" [checked]="selectedAreas.has(area)" (change)="toggleArea(area)" /><span>{{ area }}</span></label>
-      </div></section>
+      <section class="form-section">
+        <h2>2. Área Principal de Atuação</h2>
+        <p class="section-note">
+          Selecione todas as categorias que refletem o trabalho da sua instituição:
+        </p>
+        <div class="area-grid">
+          <label *ngFor="let area of areasAtuacao" class="check-option"
+            ><input
+              type="checkbox"
+              [checked]="selectedAreas.has(area)"
+              (change)="toggleArea(area)"
+            /><span>{{ area }}</span></label
+          >
+        </div>
+      </section>
 
-      <section class="form-section"><h2>3. Sede e Localização</h2><div class="form-grid">
-        <label class="field"><span>Endereço Completo</span><input [(ngModel)]="form.endereco" name="endereco" autocomplete="street-address" placeholder="Rua, Número, Bloco, Bairro" required /></label>
-        <div class="form-grid three"><label class="field"><span>Cidade</span><input [(ngModel)]="form.cidade" name="cidade" autocomplete="address-level2" placeholder="Cidade Sede" required /></label><label class="field"><span>Estado</span><input [(ngModel)]="form.estado" name="estado" autocomplete="address-level1" maxlength="2" placeholder="UF" required /></label><label class="field"><span>CEP</span><input [ngModel]="form.cep" (ngModelChange)="form.cep = mask($event, '00000-000')" name="cep" inputmode="numeric" maxlength="9" placeholder="00000-000" required /></label></div>
-      </div></section>
+      <section class="form-section">
+        <h2>3. Sede e Localização</h2>
+        <div class="form-grid">
+          <label class="field"
+            ><span>Endereço Completo</span
+            ><input
+              [(ngModel)]="form.endereco"
+              name="endereco"
+              autocomplete="street-address"
+              placeholder="Rua, Número, Bloco, Bairro"
+              required
+          /></label>
+          <div class="form-grid three">
+            <label class="field"
+              ><span>Cidade</span
+              ><input
+                [(ngModel)]="form.cidade"
+                name="cidade"
+                autocomplete="address-level2"
+                placeholder="Cidade Sede"
+                required /></label
+            ><label class="field"
+              ><span>Estado</span
+              ><input
+                [(ngModel)]="form.estado"
+                name="estado"
+                autocomplete="address-level1"
+                maxlength="2"
+                placeholder="UF"
+                required /></label
+            ><label class="field"
+              ><span>CEP</span
+              ><input
+                [ngModel]="form.cep"
+                (ngModelChange)="form.cep = mask($event, '00000-000')"
+                name="cep"
+                inputmode="numeric"
+                maxlength="9"
+                placeholder="00000-000"
+                required
+            /></label>
+          </div>
+        </div>
+      </section>
 
-      <section class="form-section"><h2>4. Gestor / Responsável Legal</h2><div class="form-grid two">
-        <label class="field"><span>Nome do Gestor</span><input [(ngModel)]="form.responsavel" name="responsavel" autocomplete="name" placeholder="Nome Completo" required /></label>
-        <label class="field"><span>CPF do Gestor</span><input [ngModel]="form.cpfGestor" (ngModelChange)="form.cpfGestor = mask($event, '000.000.000-00')" name="cpfGestor" inputmode="numeric" maxlength="14" placeholder="000.000.000-00" required /></label>
-        <label class="field"><span>E-mail de Contato</span><input [(ngModel)]="form.email" name="email" type="email" autocomplete="email" placeholder="gestor@ong.org" required /></label>
-        <label class="field"><span>Telefone Celular</span><input [ngModel]="form.telefone" (ngModelChange)="form.telefone = mask($event, '(00) 00000-0000')" name="telefone" inputmode="numeric" autocomplete="tel" maxlength="15" placeholder="(00) 90000-0000" required /></label>
-      </div></section>
+      <section class="form-section">
+        <h2>4. Gestor / Responsável Legal</h2>
+        <div class="form-grid two">
+          <label class="field"
+            ><span>Nome do Gestor</span
+            ><input
+              [(ngModel)]="form.responsavel"
+              name="responsavel"
+              autocomplete="name"
+              placeholder="Nome Completo"
+              required
+          /></label>
+          <label class="field"
+            ><span>CPF do Gestor</span
+            ><input
+              [ngModel]="form.cpfGestor"
+              (ngModelChange)="form.cpfGestor = mask($event, '000.000.000-00')"
+              name="cpfGestor"
+              inputmode="numeric"
+              maxlength="14"
+              placeholder="000.000.000-00"
+              required
+          /></label>
+          <label class="field"
+            ><span>E-mail de Contato</span
+            ><input
+              [(ngModel)]="form.email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="gestor@ong.org"
+              required
+          /></label>
+          <label class="field"
+            ><span>Telefone Celular</span
+            ><input
+              [ngModel]="form.telefone"
+              (ngModelChange)="form.telefone = mask($event, '(00) 00000-0000')"
+              name="telefone"
+              inputmode="numeric"
+              autocomplete="tel"
+              maxlength="15"
+              placeholder="(00) 90000-0000"
+              required
+          /></label>
+        </div>
+      </section>
 
-      <section class="form-section"><h2>5. Upload de Documentos para Auditoria</h2><div class="upload-list">
-        <div class="upload-item"><span class="document-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2h8l4 4v16H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"/><path d="M14 2v5h5M8 12h8M8 16h8"/></svg></span><div class="upload-copy"><strong>Estatuto Social Atualizado</strong><small>{{ estatuto ? estatuto.name : 'PDF de até 15MB' }}</small></div><input #estatutoInput type="file" accept="application/pdf,.pdf" class="file-input" aria-label="Selecionar Estatuto Social Atualizado" (change)="selectFile($event, 'estatuto')" /><button type="button" (click)="estatutoInput.click()">Selecionar arquivo</button></div>
-        <div class="upload-item"><span class="document-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2h8l4 4v16H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"/><path d="M14 2v5h5M8 12h8M8 16h8"/></svg></span><div class="upload-copy"><strong>Ata de Eleição da Diretoria Vigente</strong><small>{{ ata ? ata.name : 'PDF de até 10MB' }}</small></div><input #ataInput type="file" accept="application/pdf,.pdf" class="file-input" aria-label="Selecionar Ata de Eleição da Diretoria Vigente" (change)="selectFile($event, 'ata')" /><button type="button" (click)="ataInput.click()">Selecionar arquivo</button></div>
-      </div></section>
+      <section class="form-section">
+        <h2>5. Upload de Documentos para Auditoria</h2>
+        <div class="upload-list">
+          <div class="upload-item">
+            <span class="document-icon" aria-hidden="true"
+              ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M6 2h8l4 4v16H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z" />
+                <path d="M14 2v5h5M8 12h8M8 16h8" /></svg
+            ></span>
+            <div class="upload-copy">
+              <strong>Estatuto Social Atualizado</strong
+              ><small>{{ estatuto ? estatuto.name : 'PDF de até 15MB' }}</small>
+            </div>
+            <input
+              #estatutoInput
+              type="file"
+              accept="application/pdf,.pdf"
+              class="file-input"
+              aria-label="Selecionar Estatuto Social Atualizado"
+              (change)="selectFile($event, 'estatuto')"
+            /><button type="button" (click)="estatutoInput.click()">Selecionar arquivo</button>
+          </div>
+          <div class="upload-item">
+            <span class="document-icon" aria-hidden="true"
+              ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M6 2h8l4 4v16H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z" />
+                <path d="M14 2v5h5M8 12h8M8 16h8" /></svg
+            ></span>
+            <div class="upload-copy">
+              <strong>Ata de Eleição da Diretoria Vigente</strong
+              ><small>{{ ata ? ata.name : 'PDF de até 10MB' }}</small>
+            </div>
+            <input
+              #ataInput
+              type="file"
+              accept="application/pdf,.pdf"
+              class="file-input"
+              aria-label="Selecionar Ata de Eleição da Diretoria Vigente"
+              (change)="selectFile($event, 'ata')"
+            /><button type="button" (click)="ataInput.click()">Selecionar arquivo</button>
+          </div>
+        </div>
+      </section>
 
-      <div class="access-fields"><p>Dados de acesso</p><div class="form-grid two"><label class="field"><span>Senha</span><input [(ngModel)]="form.senha" name="senha" type="password" autocomplete="new-password" minlength="6" placeholder="Crie uma senha" required /></label><label class="field"><span>Confirmar senha</span><input [(ngModel)]="form.confirmarSenha" name="confirmarSenha" type="password" autocomplete="new-password" placeholder="Repita a senha" required /></label></div></div>
-      <label class="certification"><input [(ngModel)]="form.aceite" name="aceite" type="checkbox" required /><span>Certifico que todas as informações acima são verdadeiras e estou ciente da verificação e triagem pela equipe Movune.</span></label>
-      <p *ngIf="message" class="form-message" [class.error]="feedback === 'error'" role="status">{{ message }}</p>
+      <div class="access-fields">
+        <p>Dados de acesso</p>
+        <div class="form-grid two">
+          <label class="field"
+            ><span>Senha</span
+            ><input
+              [(ngModel)]="form.senha"
+              name="senha"
+              type="password"
+              autocomplete="new-password"
+              minlength="6"
+              placeholder="Crie uma senha"
+              required /></label
+          ><label class="field"
+            ><span>Confirmar senha</span
+            ><input
+              [(ngModel)]="form.confirmarSenha"
+              name="confirmarSenha"
+              type="password"
+              autocomplete="new-password"
+              placeholder="Repita a senha"
+              required
+          /></label>
+        </div>
+      </div>
+      <label class="certification"
+        ><input [(ngModel)]="form.aceite" name="aceite" type="checkbox" required /><span
+          >Certifico que todas as informações acima são verdadeiras e estou ciente da verificação e
+          triagem pela equipe Movune.</span
+        ></label
+      >
+      <p *ngIf="message" class="form-message" [class.error]="feedback === 'error'" role="status">
+        {{ message }}
+      </p>
       <button class="submit-button" type="submit">Enviar meu cadastro para análise</button>
       <p class="login-link">Já tem uma conta? <a routerLink="/login">Entrar agora</a></p>
     </form>

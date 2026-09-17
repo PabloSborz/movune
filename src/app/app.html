@@ -2,9 +2,17 @@
   <app-header [home]="isHome()" />
 }
 
-<main class="app-main" [class.app-main--home]="isHome()" [class.app-main--login]="isLogin() || isAccessPage()">
+<main
+  class="app-main"
+  [class.app-main--home]="isHome()"
+  [class.app-main--login]="isLogin() || isAccessPage()"
+>
   <router-outlet />
 </main>
+
+@if (choiceDialog.isOpen()) {
+  <app-escolha [modal]="true" />
+}
 
 @if (!isLogin() && !isAccessPage()) {
   <app-footer [home]="isHome()" />

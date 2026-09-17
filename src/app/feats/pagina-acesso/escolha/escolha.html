@@ -1,17 +1,34 @@
-<section class="choice-page">
-  <div class="choice-content">
-    <a class="brand" routerLink="/" aria-label="Movune, início"><img src="/logo-transparent.png" alt="" /><span>Movune</span></a>
+<div class="choice-overlay">
+  <button
+    class="choice-backdrop"
+    type="button"
+    aria-label="Fechar escolha de cadastro"
+    (click)="close()"
+  ></button>
+  <section
+    class="choice-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="choice-title"
+    aria-describedby="choice-description"
+  >
+    <button class="close-button" type="button" aria-label="Fechar" (click)="close()">×</button>
     <div class="heading">
       <span class="eyebrow">Faça parte da Movune</span>
-      <h1>Como você quer participar?</h1>
-      <p>Escolha o tipo de conta para criar seu cadastro.</p>
+      <h1 id="choice-title" #dialogTitle tabindex="-1">Como você quer participar?</h1>
+      <p id="choice-description">Escolha o tipo de conta para criar seu cadastro.</p>
     </div>
     <div class="choices">
       <a class="choice-card" routerLink="/cadastro-usuario" [queryParams]="queryParams">
         <span class="icon" aria-hidden="true">♡</span>
         <h2>Sou voluntário</h2>
-        <p>Encontre causas, projetos e oportunidades para contribuir com seu tempo e suas habilidades.</p>
-        <span class="choice-action">Criar conta de voluntário <span aria-hidden="true">→</span></span>
+        <p>
+          Encontre causas, projetos e oportunidades para contribuir com seu tempo e suas
+          habilidades.
+        </p>
+        <span class="choice-action"
+          >Criar conta de voluntário <span aria-hidden="true">→</span></span
+        >
       </a>
       <a class="choice-card" routerLink="/cadastro-ong" [queryParams]="queryParams">
         <span class="icon icon--ong" aria-hidden="true">✦</span>
@@ -21,7 +38,5 @@
       </a>
     </div>
     <p class="login-link">Já tem uma conta? <a routerLink="/login">Entrar agora</a></p>
-  </div>
-</section>
-
-<app-footer></app-footer>
+  </section>
+</div>

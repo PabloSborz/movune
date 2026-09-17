@@ -38,6 +38,8 @@ export interface MovuneUser extends UserRegistrationInput {
   status: 'Ativo' | 'Bloqueado';
   criadoEm: string;
   ultimoAcesso?: string;
+  avatar?: string;
+  notificacoes?: { email: boolean; push: boolean; sms: boolean };
 }
 
 export interface MovuneOng extends OngRegistrationInput {
@@ -71,9 +73,13 @@ export interface LoginInput {
 const USERS_KEY = 'movune:usuarios';
 const ONGS_KEY = 'movune:ongs';
 const SESSION_KEY = 'movune:sessao';
-const ADMIN_USER = 'admin';
-const ADMIN_PASSWORD = '09876';
+const ADMIN_USER = 'admin@gmail.com';
+const ADMIN_PASSWORD = '123456';
+const DEMO_PASSWORD = '123456';
+const DEMO_VOLUNTEER_EMAIL = 'voluntario@gmail.com';
+const DEMO_ONG_EMAIL = 'ong@gmail.com';
 
+// Estado de autenticação mantido no navegador para o protótipo da plataforma.
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
   readonly users = signal<MovuneUser[]>([]);
@@ -89,6 +95,51 @@ export class AuthStore {
       this.users.set(this.readArray<MovuneUser>(USERS_KEY));
       this.ongs.set(this.readArray<MovuneOng>(ONGS_KEY));
       this.session.set(this.readValue<AuthSession>(SESSION_KEY));
+      this.seedDemoAccounts();
+    }
+  }
+
+  private seedDemoAccounts(): void {
+    // Cria contas de exemplo uma única vez, preservando alterações já salvas.
+    if (!this.emailInUse(DEMO_VOLUNTEER_EMAIL)) {
+      const volunteer: MovuneUser = {
+        id: 'demo-voluntario',
+        perfil: 'usuario',
+        status: 'Ativo',
+        criadoEm: new Date().toISOString(),
+        nomeCompleto: 'Ana Silva',
+        email: DEMO_VOLUNTEER_EMAIL,
+        telefone: '(11) 98765-4321',
+        cidadeEstado: 'São Paulo, SP',
+        interesses: 'Educação, Saúde',
+        habilidades: 'Comunicação, Design, Ensino',
+        senha: DEMO_PASSWORD,
+      };
+      this.users.set([...this.users(), volunteer]);
+      this.persist(USERS_KEY, this.users());
+    }
+
+    if (!this.emailInUse(DEMO_ONG_EMAIL)) {
+      const ong: MovuneOng = {
+        id: 'demo-ong',
+        perfil: 'ong',
+        status: 'Aprovada',
+        criadoEm: new Date().toISOString(),
+        razaoSocial: 'Instituto Movune',
+        nomeFantasia: 'Instituto Movune',
+        cnpj: '00.000.000/0001-00',
+        responsavel: 'Equipe Movune',
+        email: DEMO_ONG_EMAIL,
+        telefone: '(11) 98765-4321',
+        endereco: 'São Paulo, SP',
+        areaAtuacao: 'Educação, Saúde',
+        documentos: 'Conta de demonstração',
+        senha: DEMO_PASSWORD,
+        cidade: 'São Paulo',
+        estado: 'SP',
+      };
+      this.ongs.set([...this.ongs(), ong]);
+      this.persist(ONGS_KEY, this.ongs());
     }
   }
 
@@ -237,6 +288,43 @@ export class AuthStore {
     return { ok: false, message: 'Nenhuma conta foi encontrada com este e-mail.' };
   }
 
+  updateUserProfile(
+    id: string,
+    changes: Pick<
+      MovuneUser,
+      | 'nomeCompleto'
+      | 'email'
+      | 'telefone'
+      | 'cidadeEstado'
+      | 'interesses'
+      | 'habilidades'
+      | 'avatar'
+      | 'notificacoes'
+    >,
+  ): AuthResult {
+    const user = this.users().find((item) => item.id === id);
+    if (!user) return { ok: false, message: 'Usuário não encontrado.' };
+    const email = this.normalize(changes.email);
+    if (
+      this.users().some((item) => item.id !== id && item.email === email) ||
+      this.ongs().some((item) => item.email === email)
+    ) {
+      return { ok: false, message: 'Este e-mail já está cadastrado.' };
+    }
+    const updated = this.users().map((item) =>
+      item.id === id ? { ...item, ...changes, email } : item,
+    );
+    this.users.set(updated);
+    this.persist(USERS_KEY, updated);
+    const session = this.session();
+    if (session?.id === id) {
+      const nextSession = { ...session, nome: changes.nomeCompleto, email };
+      this.session.set(nextSession);
+      this.persist(SESSION_KEY, nextSession);
+    }
+    return { ok: true, message: 'Alterações salvas com sucesso!' };
+  }
+
   private loginAdmin(input: LoginInput): AuthResult {
     const usuario = input.identificador.trim().toLowerCase();
 
@@ -245,7 +333,7 @@ export class AuthStore {
         id: 'admin',
         perfil: 'admin',
         nome: 'Administrador',
-        email: 'admin@movune.local',
+        email: ADMIN_USER,
         iniciadoEm: new Date().toISOString(),
       });
 
@@ -366,6 +454,7 @@ export class AuthStore {
     try {
       return JSON.parse(rawValue) as T;
     } catch {
+      // Dados antigos ou corrompidos não devem impedir a abertura da aplicação.
       return null;
     }
   }

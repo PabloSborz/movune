@@ -1,37 +1,132 @@
 <section class="login-page">
   <aside class="story-panel" aria-label="Sobre a Movune">
-    <div class="brand" aria-label="Movune"><img src="/logo-transparent.png" alt="" /><span>Movune</span></div>
+    <a class="brand" routerLink="/" aria-label="Movune, página inicial">
+      <img src="/logo-transparent.png" alt="" /><span>Movune</span>
+    </a>
     <div class="story-content">
       <span class="story-badge">Juntos por um futuro melhor</span>
       <h1>Uma nova era de impacto social coletivo.</h1>
-      <p>Conectando pessoas e organizações para impulsionar causas urgentes com total auditoria de ponta a ponta.</p>
+      <p>
+        Conectando pessoas e organizações para impulsionar causas urgentes com total auditoria de
+        ponta a ponta.
+      </p>
     </div>
     <small>© 2026 Movune Plataforma de Impacto S/A.</small>
   </aside>
 
   <div class="login-panel">
     <div class="login-card">
-      <header class="login-heading"><h2>Entrar na Movune</h2><p>Escolha o seu perfil de acesso e inicie suas conversões</p></header>
+      <header class="login-heading">
+        <h2>Entrar na Movune</h2>
+        <p>Escolha o seu perfil de acesso e inicie suas conversões</p>
+      </header>
       <div class="profile-tabs" role="group" aria-label="Perfil de acesso">
-        <button type="button" [class.active]="form.perfil === 'usuario'" [attr.aria-pressed]="form.perfil === 'usuario'" (click)="selectProfile('usuario')">Sou Usuário / Voluntário</button>
-        <button type="button" [class.active]="form.perfil === 'ong'" [attr.aria-pressed]="form.perfil === 'ong'" (click)="selectProfile('ong')">Sou ONG / Instituição</button>
-        <button *ngIf="form.perfil === 'admin'" type="button" class="active" aria-pressed="true">Administrador</button>
+        <button
+          type="button"
+          [class.active]="form.perfil === 'usuario'"
+          [attr.aria-pressed]="form.perfil === 'usuario'"
+          (click)="selectProfile('usuario')"
+        >
+          Sou Usuário / Voluntário
+        </button>
+        <button
+          type="button"
+          [class.active]="form.perfil === 'ong'"
+          [attr.aria-pressed]="form.perfil === 'ong'"
+          (click)="selectProfile('ong')"
+        >
+          Sou ONG / Instituição
+        </button>
+        <button
+          type="button"
+          [class.active]="form.perfil === 'admin'"
+          [attr.aria-pressed]="form.perfil === 'admin'"
+          (click)="selectProfile('admin')"
+        >
+          Administrador
+        </button>
       </div>
       <form (ngSubmit)="entrar()">
         <div class="fields">
-          <label for="login-identity">{{ form.perfil === 'admin' ? 'Usuário administrador' : 'E-mail cadastrado' }}</label>
-          <input id="login-identity" appDisableAutofill [(ngModel)]="form.identificador" name="manualLoginIdentity" [type]="form.perfil === 'admin' ? 'text' : 'email'" [placeholder]="form.perfil === 'admin' ? 'admin' : 'voluntario.silva@gmail.com'" required />
+          <label for="login-identity">E-mail cadastrado</label>
+          <input
+            id="login-identity"
+            appDisableAutofill
+            [(ngModel)]="form.identificador"
+            name="manualLoginIdentity"
+            type="email"
+            [placeholder]="
+              form.perfil === 'admin'
+                ? 'admin@gmail.com'
+                : form.perfil === 'ong'
+                  ? 'ong@gmail.com'
+                  : 'voluntario@gmail.com'
+            "
+            required
+          />
           <label for="login-password">Sua senha</label>
           <div class="password-field">
-            <input id="login-password" appDisableAutofill [(ngModel)]="form.senha" name="manualLoginSecret" [type]="showPassword ? 'text' : 'password'" placeholder="Digite sua senha" required />
-            <button type="button" class="visibility-button" [attr.aria-label]="showPassword ? 'Ocultar senha' : 'Mostrar senha'" [attr.aria-pressed]="showPassword" (click)="showPassword = !showPassword">
-              <svg *ngIf="!showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
-              <svg *ngIf="showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 3 18 18M10.6 6.1A11 11 0 0 1 12 6c6.5 0 10 6 10 6a13 13 0 0 1-3.1 3.5M6.2 6.2C3.5 8 2 12 2 12s3.5 6 10 6c1.5 0 2.8-.3 4-.8"/><path d="M10 10a3 3 0 0 0 4 4"/></svg>
+            <input
+              id="login-password"
+              appDisableAutofill
+              [(ngModel)]="form.senha"
+              name="manualLoginSecret"
+              [type]="showPassword ? 'text' : 'password'"
+              placeholder="Digite sua senha"
+              required
+            />
+            <button
+              type="button"
+              class="visibility-button"
+              [attr.aria-label]="showPassword ? 'Ocultar senha' : 'Mostrar senha'"
+              [attr.aria-pressed]="showPassword"
+              (click)="showPassword = !showPassword"
+            >
+              <svg
+                *ngIf="!showPassword"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              <svg
+                *ngIf="showPassword"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="m3 3 18 18M10.6 6.1A11 11 0 0 1 12 6c6.5 0 10 6 10 6a13 13 0 0 1-3.1 3.5M6.2 6.2C3.5 8 2 12 2 12s3.5 6 10 6c1.5 0 2.8-.3 4-.8"
+                />
+                <path d="M10 10a3 3 0 0 0 4 4" />
+              </svg>
             </button>
           </div>
         </div>
-        <div class="login-options"><label class="remember"><input type="checkbox" [(ngModel)]="rememberAccess" name="rememberAccess" /> Lembrar acesso</label><a routerLink="/recuperacao-senha">Esqueceu a senha?</a></div>
-        <p *ngIf="message" class="login-message" [class.login-message--error]="feedback === 'error'" role="status">{{ message }}</p>
+        <div class="login-options">
+          <label class="remember"
+            ><input type="checkbox" [(ngModel)]="rememberAccess" name="rememberAccess" /> Lembrar
+            acesso</label
+          ><a routerLink="/recuperacao-senha">Esqueceu a senha?</a>
+        </div>
+        <p
+          *ngIf="message"
+          class="login-message"
+          [class.login-message--error]="feedback === 'error'"
+          role="status"
+        >
+          {{ message }}
+        </p>
         <button class="primary-button" type="submit">Entrar na plataforma</button>
       </form>
       <div class="divider"><span>ou</span></div>

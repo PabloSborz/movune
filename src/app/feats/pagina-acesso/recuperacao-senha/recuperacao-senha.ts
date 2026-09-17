@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -8,15 +7,16 @@ import { PasswordRecoveryService } from '../../../shared/password-recovery.servi
 
 @Component({
   selector: 'app-recuperacao-senha',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink],
   templateUrl: './recuperacao-senha.html',
-  styleUrls: ['../access-form.css', './recuperacao-senha.css'],
+  styleUrl: './recuperacao-senha.css',
 })
 export class RecuperacaoSenha {
   email = '';
-  message = '';
+  error = '';
   resetLink = '';
   sentCode = '';
+  state: 'form' | 'leaving' | 'success' = 'form';
 
   constructor(
     private readonly auth: AuthStore,
@@ -26,21 +26,33 @@ export class RecuperacaoSenha {
     this.email = route.snapshot.queryParamMap.get('email') || '';
   }
 
-  enviarCodigo(): void {
+  enviarLink(): void {
     const normalizedEmail = this.email.trim().toLowerCase();
+    if (!normalizedEmail) {
+      this.error = 'Informe seu e-mail cadastrado.';
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
+      this.error = 'Informe um e-mail válido.';
+      return;
+    }
+
     const exists =
       this.auth.users().some((user) => user.email === normalizedEmail) ||
       this.auth.ongs().some((ong) => ong.email === normalizedEmail);
 
     if (!exists) {
-      this.message = 'Nenhuma conta foi encontrada com este e-mail.';
-      this.resetLink = '';
+      this.error = 'Nenhuma conta foi encontrada com este e-mail.';
       return;
     }
 
     const request = this.recovery.create(normalizedEmail);
     this.sentCode = request.code;
     this.resetLink = `/redefinicao-senha?token=${encodeURIComponent(request.token)}`;
-    this.message = 'Codigo enviado. Verifique o e-mail cadastrado.';
+    this.error = '';
+    this.state = 'leaving';
+
+    // Mantém o formulário na tela até a animação de saída terminar.
+    setTimeout(() => (this.state = 'success'), 300);
   }
 }
