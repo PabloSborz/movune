@@ -107,16 +107,29 @@ export class AuthStore {
         perfil: 'usuario',
         status: 'Ativo',
         criadoEm: new Date().toISOString(),
-        nomeCompleto: 'Ana Silva',
+        nomeCompleto: 'Voluntário',
         email: DEMO_VOLUNTEER_EMAIL,
-        telefone: '(11) 98765-4321',
-        cidadeEstado: 'São Paulo, SP',
+        telefone: '(99) 99999-9999',
+        cidadeEstado: 'Blumenau, Santa Catarina',
         interesses: 'Educação, Saúde',
         habilidades: 'Comunicação, Design, Ensino',
         senha: DEMO_PASSWORD,
       };
       this.users.set([...this.users(), volunteer]);
       this.persist(USERS_KEY, this.users());
+    }
+
+    const previousDemo = this.users().find(user => user.id === 'demo-voluntario' && user.nomeCompleto === 'Ana Silva');
+    if (previousDemo) {
+      this.users.update(users => users.map(user => user.id === previousDemo.id
+        ? { ...user, nomeCompleto: 'Voluntário', telefone: '(99) 99999-9999', cidadeEstado: 'Blumenau, Santa Catarina' }
+        : user));
+      this.persist(USERS_KEY, this.users());
+    }
+    const activeSession = this.session();
+    if (activeSession?.id === 'demo-voluntario' && activeSession.nome === 'Ana Silva') {
+      this.session.set({ ...activeSession, nome: 'Voluntário' });
+      this.persist(SESSION_KEY, this.session());
     }
 
     if (!this.emailInUse(DEMO_ONG_EMAIL)) {

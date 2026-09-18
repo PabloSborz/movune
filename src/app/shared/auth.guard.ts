@@ -21,3 +21,11 @@ function requireProfile(profile: AccessProfile, returnUrl: string): boolean | Ur
     queryParams: { perfil: profile, retorno: returnUrl },
   });
 }
+
+export const authGuard: CanActivateFn = (_route, state) => {
+  const auth = inject(AuthStore);
+  const router = inject(Router);
+  return auth.session() ? true : router.createUrlTree(['/login'], {
+    queryParams: { retorno: state.url },
+  });
+};

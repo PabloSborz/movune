@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { BackButton } from '../../../components/back-button/back-button';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -8,7 +9,7 @@ import { DisableAutofillDirective } from '../../../shared/disable-autofill.direc
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, DisableAutofillDirective, FormsModule, RouterLink],
+  imports: [CommonModule, DisableAutofillDirective, FormsModule, RouterLink, BackButton],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -55,7 +56,7 @@ export class Login {
     this.feedback = 'success';
     this.message = result.message;
 
-    void this.router.navigateByUrl(this.getDestination(result.route));
+    void this.router.navigateByUrl(this.getDestination());
   }
 
   selectProfile(profile: AccessProfile): void {
@@ -68,12 +69,12 @@ export class Login {
     return value === 'usuario' || value === 'ong' || value === 'admin';
   }
 
-  private getDestination(defaultRoute?: string): string {
+  private getDestination(): string {
     // Aceita apenas caminhos internos ao voltar para a página solicitada antes do login.
     if (this.returnUrl?.startsWith('/') && !this.returnUrl.startsWith('//')) {
       return this.returnUrl;
     }
 
-    return defaultRoute || '/';
+    return '/inicio';
   }
 }

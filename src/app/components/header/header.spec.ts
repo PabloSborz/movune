@@ -32,6 +32,33 @@ describe('Header', () => {
       '/transparencia',
     );
     expect(fixture.nativeElement.querySelector('.landing-brand')?.getAttribute('href')).toBe('/');
+    expect(fixture.nativeElement.querySelector('.header-back')).toBeFalsy();
+  });
+
+  it('keeps the back button outside the home page', () => {
+    expect(fixture.nativeElement.querySelector('.header-back')).toBeTruthy();
+  });
+
+  it('keeps public home actions even with an active session', () => {
+    fixture.componentRef.setInput('home', true);
+    component.session.set({ id: 'test', perfil: 'usuario', nome: 'Teste', email: 'teste@example.com', iniciadoEm: '' });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('a[href="/login"]')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('a[href="/escolha"]')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.landing-brand').getAttribute('href')).toBe('/inicio');
+  });
+
+  it('shows account actions only on the access home', () => {
+    fixture.componentRef.setInput('home', true);
+    fixture.componentRef.setInput('authenticatedHome', true);
+    component.session.set({ id: 'test', perfil: 'usuario', nome: 'Teste', email: 'teste@example.com', iniciadoEm: '' });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('a[href="/login"]')).toBeNull();
+    expect(fixture.nativeElement.querySelector('a[href="/escolha"]')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.landing-brand').getAttribute('href')).toBe('/inicio');
+    expect(fixture.nativeElement.querySelector('.home-profile')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.home-notifications')).toBeTruthy();
+    expect(fixture.nativeElement.textContent).not.toContain('Sair');
   });
 
   it('should toggle the secondary sites drawer', async () => {

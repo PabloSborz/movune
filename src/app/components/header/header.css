@@ -512,6 +512,53 @@ legend,
   display: flex;
   gap: 8px;
 }
+@media (min-width: 1121px) {
+  .landing-nav-inner.landing-nav-authenticated {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+  .landing-nav-authenticated .landing-brand {
+    justify-self: start;
+  }
+  .landing-nav-authenticated .landing-desktop-nav {
+    justify-self: center;
+  }
+  .landing-nav-authenticated .authenticated-actions {
+    justify-self: end;
+    margin-left: 0;
+  }
+}
+.landing-header-actions.authenticated-actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.home-notifications {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #f4f8fe;
+  color: #0259e1;
+  cursor: pointer;
+}
+.home-notifications svg { width: 20px; height: 20px; }
+.home-notifications:hover { background: #e8f1ff; }
+.home-profile { display: flex; align-items: center; gap: 16px; text-decoration: none; color: #011c53; }
+.home-profile-name { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 500; }
+.home-profile-avatar { display: grid; place-items: center; width: 40px; height: 40px; border: 2px solid #0259e1; border-radius: 50%; background: #f4f8fe; color: #0259e1; font-size: 13px; font-weight: 700; }
+.home-notifications-panel { position: absolute; z-index: 10; top: 50px; right: 0; width: 240px; max-width: calc(100vw - 32px); padding: 16px; border: 1px solid #d9eaf2; border-radius: 12px; background: #fff; box-shadow: 0 8px 24px rgb(1 28 83 / 10%); color: #64748b; font-size: 13px; }
+.home-notifications:focus-visible, .home-profile:focus-visible { outline: 2px solid #0259e1; outline-offset: 3px; }
+@media (max-width: 640px) {
+  .home-profile-name { display: none; }
+  .landing-header-actions.authenticated-actions { gap: 10px; }
+}
 .landing-button {
   min-height: 41px;
   display: inline-flex;
@@ -580,9 +627,6 @@ legend,
 }
 
 @media (max-width: 560px) {
-  .header-back span {
-    display: none;
-  }
   .header-main {
     grid-template-columns: minmax(92px, 1fr) auto minmax(70px, 1fr);
   }

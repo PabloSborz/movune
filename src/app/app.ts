@@ -21,6 +21,7 @@ export class App implements OnDestroy {
     this.interceptRegistration(event as MouseEvent);
   protected readonly choiceDialog = inject(ChoiceDialogService);
   protected readonly isHome = signal(true);
+  protected readonly isAuthenticatedHome = signal(false);
   protected readonly isLogin = signal(false);
   protected readonly isAccessPage = signal(false);
 
@@ -30,7 +31,8 @@ export class App implements OnDestroy {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.choiceDialog.close();
-        this.isHome.set(event.urlAfterRedirects.split(/[?#]/)[0] === '/');
+        this.isAuthenticatedHome.set(event.urlAfterRedirects.split(/[?#]/)[0] === '/inicio');
+        this.isHome.set(['/', '/inicio'].includes(event.urlAfterRedirects.split(/[?#]/)[0]));
         this.isLogin.set(event.urlAfterRedirects.split(/[?#]/)[0] === '/login');
         this.isAccessPage.set(
           [
@@ -42,6 +44,8 @@ export class App implements OnDestroy {
             '/usuario/meu-perfil',
             '/usuario/minhas-inscricoes',
             '/usuario/minhas-doacoes',
+            '/usuario/favoritos',
+            '/usuario/certificados',
           ].includes(event.urlAfterRedirects.split(/[?#]/)[0]),
         );
       }

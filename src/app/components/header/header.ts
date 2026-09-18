@@ -1,3 +1,4 @@
+import { ProfileMenu } from '../profile-menu/profile-menu';
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, Input, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -10,13 +11,19 @@ import { NavigationHistoryService } from '../../shared/navigation-history.servic
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive, SideBar],
+  imports: [ProfileMenu, CommonModule, FormsModule, RouterLink, RouterLinkActive, SideBar],
   templateUrl: './header.html',
-  styleUrl: './header.css',
+  styleUrls: ['./header.css', '../back-button/back-button.css'],
 })
 export class Header {
   @Input() home = false;
+  @Input() authenticatedHome = false;
   homeMenuOpen = false;
+  notificationsOpen = false;
+  get initials(): string {
+    const names = this.session()?.nome.trim().split(/\s+/) || [];
+    return ((names[0]?.[0] || '') + (names.length > 1 ? names.at(-1)![0] : '')).toUpperCase();
+  }
   readonly homeLinks = [
     { label: 'Como funciona', path: '/como-funciona' },
     { label: 'ONGs', path: '/ongs' },
@@ -32,6 +39,13 @@ export class Header {
   private readonly choiceDialog = inject(ChoiceDialogService);
 
   readonly session = this.auth.session;
+  get profilePhoto(): string {
+    return this.auth.users().find(user => user.id === this.session()?.id)?.avatar || '';
+  }
+  get accountRoute(): string {
+    return this.session()?.perfil === 'ong' ? '/ong/painel'
+      : this.session()?.perfil === 'admin' ? '/admin/painel' : '/usuario/meu-perfil';
+  }
   sidebarOpen = false;
   loginAlertOpen = false;
 
@@ -135,6 +149,7 @@ export class Header {
   }
 
   fecharPaineis(): void {
+    this.notificationsOpen = false;
     this.sidebarOpen = false;
     this.loginAlertOpen = false;
     this.loginFeedback = '';

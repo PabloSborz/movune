@@ -35,9 +35,9 @@
       (click)="voltar()"
       aria-label="Voltar à página anterior"
     >
-      ← <span>Voltar</span>
+      <span>Voltar</span>
     </button>
-    <a class="profile-brand" routerLink="/" aria-label="Movune, início"
+    <a class="profile-brand" [routerLink]="session() ? '/inicio' : '/'" aria-label="Movune, início"
       ><img src="/logo-transparent.png" alt="" /><span>Movune</span></a
     >
     <nav class="global-nav" [class.is-open]="navOpen" aria-label="Navegação principal">
@@ -69,13 +69,7 @@
         <div class="notification-popover" role="status">Você não tem novas notificações.</div>
       }
       <span class="header-name">{{ form.nomeCompleto }}</span>
-      <span class="avatar avatar-small" aria-label="Foto de perfil">
-        @if (avatarPreview()) {
-          <img [src]="avatarPreview()" alt="" />
-        } @else {
-          {{ initials }}
-        }
-      </span>
+      <app-profile-menu [initials]="initials" [photo]="avatarPreview()" />
       <button
         type="button"
         class="header-menu"
@@ -181,7 +175,7 @@
                 name="estado"
                 [(ngModel)]="form.estado"
                 autocomplete="address-level1"
-                maxlength="2"
+                maxlength="30"
             /></label>
           </div>
         </section>

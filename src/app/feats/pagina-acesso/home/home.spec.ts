@@ -18,6 +18,17 @@ describe('Home', () => {
     await fixture.whenStable();
   });
 
+  it('renders the volunteer dashboard and its navigation', () => {
+    const page: HTMLElement = fixture.nativeElement;
+    expect(page.querySelectorAll('.stat').length).toBe(4);
+    expect(page.querySelectorAll('.project').length).toBe(3);
+    expect(page.querySelectorAll('.event').length).toBe(2);
+    expect(page.querySelectorAll('.job').length).toBe(3);
+    expect(page.querySelectorAll('[role="progressbar"]').length).toBe(2);
+    expect(page.querySelector('a[href="/doacoes"]')).toBeTruthy();
+    expect(page.querySelectorAll('footer').length).toBe(1);
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

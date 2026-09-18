@@ -1,8 +1,14 @@
 import { Routes } from '@angular/router';
 
-import { adminGuard, ongGuard, userGuard } from './shared/auth.guard';
+import { adminGuard, ongGuard, userGuard, authGuard } from './shared/auth.guard';
 
 export const routes: Routes = [
+  {
+    path: 'inicio',
+    canActivate: [authGuard],
+    loadComponent: () => import('./feats/pagina-acesso/home/home').then((m) => m.Home),
+  },
+  { path: 'pagina-acesso/home', redirectTo: 'inicio', pathMatch: 'full' },
   // Páginas públicas.
   {
     path: '',

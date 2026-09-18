@@ -52,7 +52,7 @@ describe('Login', () => {
 
     expect(result.ok).toBe(true);
     expect(result.route).toBe('/usuario/meu-perfil');
-    expect(auth.session()?.nome).toBe('Ana Silva');
+    expect(auth.session()?.nome).toBe('Voluntário');
   });
 
   it('allows the demo ONG to access its panel', () => {
