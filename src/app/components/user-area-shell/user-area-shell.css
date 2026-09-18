@@ -347,7 +347,6 @@ a:focus-visible {
   }
 }
 @media (max-width: 480px) {
-  .header-back span,
   .brand span,
   .header-name {
     display: none;

@@ -35,9 +35,9 @@
       (click)="voltar()"
       aria-label="Voltar à página anterior"
     >
-      ← <span>Voltar</span>
+      <span>Voltar</span>
     </button>
-    <a class="brand" routerLink="/" aria-label="Movune, início"
+    <a class="brand" [routerLink]="session() ? '/inicio' : '/'" aria-label="Movune, início"
       ><img src="/logo-transparent.png" alt="" /><span>Movune</span></a
     >
     <nav class="global-nav" [class.is-open]="navOpen" aria-label="Navegação principal">
@@ -69,13 +69,7 @@
         <div class="notification-popover" role="status">Você não tem novas notificações.</div>
       }
       <span class="header-name">{{ session()?.nome }}</span>
-      <span class="avatar" aria-label="Foto de perfil">
-        @if (user()?.avatar) {
-          <img [src]="user()?.avatar" alt="" />
-        } @else {
-          {{ initials }}
-        }
-      </span>
+      <app-profile-menu [initials]="initials" [photo]="user()?.avatar || ''" />
       <button
         type="button"
         class="header-menu"

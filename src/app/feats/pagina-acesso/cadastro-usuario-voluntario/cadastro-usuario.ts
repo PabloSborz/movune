@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { BackButton } from '../../../components/back-button/back-button';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -7,7 +8,7 @@ import { AuthStore } from '../../../shared/auth-store.service';
 
 @Component({
   selector: 'app-cadastro-usuario',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, BackButton],
   templateUrl: './cadastro-usuario.html',
   styleUrl: './cadastro-usuario.css',
 })

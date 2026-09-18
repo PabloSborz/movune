@@ -1,1 +1,51 @@
-<app-feature-page [page]="page()" />
+<app-user-area-shell title="Favoritos">
+  <div page-body class="favorites">
+    <div class="tabs" role="tablist" aria-label="Categorias de favoritos">
+      @for (tab of tabs; track tab.id; let i = $index) {
+        <button type="button" role="tab" [id]="'tab-' + tab.id" [attr.aria-selected]="activeTab() === tab.id"
+          [attr.tabindex]="activeTab() === tab.id ? 0 : -1" aria-controls="favorites-panel"
+          [class.active]="activeTab() === tab.id" (click)="activeTab.set(tab.id)" (keydown)="changeTab($event, i)">{{ tab.label }}</button>
+      }
+    </div>
+    <div id="favorites-panel" role="tabpanel" [attr.aria-labelledby]="'tab-' + activeTab()" tabindex="0" class="sections">
+      @for (section of sections(); track section.type) {
+        <section [attr.aria-labelledby]="'heading-' + section.type">
+          <h2 [id]="'heading-' + section.type">{{ section.title }}</h2>
+          <div class="cards">
+            @for (card of section.cards; track card.id) {
+              <article class="card" [class.removing]="removing().includes(card.id)">
+                <img class="cover" [src]="card.image" [alt]="card.name" />
+                <div class="card-body">
+                  @if (card.type === 'ongs') {
+                    <div class="metadata"><span class="badge">{{ card.category }}</span><span>{{ card.location }}</span></div>
+                  } @else if (card.ong) {
+                    <p class="byline">Por {{ card.ong }}</p>
+                  }
+                  <h3>{{ card.name }}</h3>
+                  @if (card.progress !== undefined) {
+                    <div class="fundraising">
+                      <div class="progress-label"><span>Arrecadado: {{ card.amount }}</span><strong>{{ card.progress }}%</strong></div>
+                      <div class="progress" role="progressbar" [attr.aria-label]="'Arrecadação de ' + card.name" [attr.aria-valuenow]="card.progress" aria-valuemin="0" aria-valuemax="100">
+                        <span [style.width.%]="card.progress"></span>
+                      </div>
+                    </div>
+                  }
+                  <div class="actions">
+                    <a [routerLink]="card.href">{{ card.type === 'ongs' ? 'Acessar ONG' : card.type === 'projetos' ? 'Apoiar Projeto' : 'Ver detalhes' }}
+                    </a>
+                    <button type="button" class="remove" [disabled]="removing().includes(card.id)" [attr.aria-label]="'Remover ' + card.name + ' dos favoritos'" (click)="remove(card)">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5C7-1 0 6 4 11l8 9 8-9c4-5-3-12-8-6.5Z" /><path d="m12 4.5-2 5 4 3-2 3" /></svg>
+                    </button>
+                  </div>
+                </div>
+              </article>
+            } @empty {
+              <div class="empty"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" /></svg><p>{{ section.empty }}</p></div>
+            }
+          </div>
+        </section>
+      }
+    </div>
+    <p class="sr-only" role="status">{{ announcement() }}</p>
+  </div>
+</app-user-area-shell>

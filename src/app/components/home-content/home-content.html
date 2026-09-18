@@ -29,7 +29,7 @@
         }}</span>
         <h3>{{ path.title }}</h3>
         <p>{{ path.description }}</p>
-        <a [href]="path.href">{{ path.action }} <span aria-hidden="true">→</span></a>
+        <a [href]="authenticated && path.href === '/cadastro-ong' ? accountRoute : path.href">{{ authenticated && path.href === '/cadastro-ong' ? 'Acessar minha conta' : path.action }}</a>
       </article>
     </div>
   </div>
@@ -42,7 +42,7 @@
         <span class="kicker">ORGANIZAÇÕES QUE TRANSFORMAM</span>
         <h2>ONGs em destaque</h2>
       </div>
-      <a href="/ongs" class="section-link">Ver todas as ONGs <span aria-hidden="true">→</span></a>
+      <a href="/ongs" class="section-link">Ver todas as ONGs</a>
     </div>
     <div class="three-grid">
       <article *ngFor="let ong of featuredOngs" class="card image-card">
@@ -59,7 +59,7 @@
           <h3>{{ ong.name }}</h3>
           <p>{{ ong.description }}</p>
           <a href="/perfil-ong" class="card-button outline"
-            >Apoiar ONG <span aria-hidden="true">→</span></a
+            >Apoiar ONG</a
           >
         </div>
       </article>
@@ -75,7 +75,7 @@
         <h2>Projetos que precisam de você</h2>
       </div>
       <a href="/projetos" class="section-link"
-        >Ver todos os projetos <span aria-hidden="true">→</span></a
+        >Ver todos os projetos</a
       >
     </div>
     <div class="three-grid">
@@ -102,7 +102,7 @@
           </div>
           <p class="volunteers">♧ {{ project.volunteers }} voluntários ativos</p>
           <a href="/doacoes" class="card-button"
-            >Apoiar Financeiramente <span aria-hidden="true">→</span></a
+            >Apoiar Financeiramente</a
           >
         </div>
       </article>
@@ -110,7 +110,7 @@
   </div>
 </section>
 
-<section id="voluntariado" class="final-cta">
+<section *ngIf="!authenticated" id="voluntariado" class="final-cta">
   <div class="container final-cta-inner">
     <span class="kicker">JUNTOS PODEMOS MAIS</span>
     <h2>Faça parte da mudança hoje mesmo</h2>
@@ -120,7 +120,7 @@
     </p>
     <div class="cta-actions">
       <a href="/voluntariado" class="button button-white"
-        >Quero ser voluntário <span aria-hidden="true">→</span></a
+        >Quero ser voluntário</a
       ><a href="/doacoes" class="button button-outline-white">Realizar uma doação</a>
     </div>
   </div>

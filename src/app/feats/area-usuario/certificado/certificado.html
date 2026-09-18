@@ -1,1 +1,58 @@
-<app-feature-page [page]="page" />
+<app-user-area-shell title="Certificados">
+  <div page-body class="certificates">
+    <svg class="icon-definitions" aria-hidden="true">
+      <defs>
+        <symbol id="certificate-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6" /><path d="m8.2 13-1.2 9 5-3 5 3-1.2-9" /></symbol>
+        <symbol id="certificate-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></symbol>
+        <symbol id="certificate-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4" /></symbol>
+      </defs>
+    </svg>
+    <section aria-labelledby="available-title">
+      <h2 id="available-title">Certificados Disponíveis</h2>
+      <div class="certificate-grid">
+        @for (certificate of available(); track certificate.code) {
+          <article class="certificate-card">
+            <div class="card-top">
+              <span class="status-icon"><svg aria-hidden="true"><use href="#certificate-award" /></svg></span>
+              <span class="badge">Validado</span>
+            </div>
+            <div class="information">
+              <h3>{{ certificate.title }}</h3>
+              <p>Emitido em {{ certificate.date }}</p>
+              <p class="code">Código: {{ certificate.code }}</p>
+            </div>
+            <button type="button" class="download" (click)="download(certificate)" [attr.aria-label]="'Baixar PDF de ' + certificate.title">
+              <svg aria-hidden="true"><use href="#certificate-download" /></svg>Baixar PDF
+            </button>
+          </article>
+        } @empty {
+          <div class="empty"><svg aria-hidden="true"><use href="#certificate-award" /></svg><p>Nenhum certificado disponível ainda. Complete uma atividade para receber seu primeiro certificado!</p></div>
+        }
+      </div>
+    </section>
+    <section aria-labelledby="pending-title">
+      <h2 id="pending-title">Aguardando Validação</h2>
+      <div class="certificate-grid pending-grid">
+        @for (certificate of pending(); track certificate.title) {
+          <article class="certificate-card pending-card">
+            <div class="card-top">
+              <span class="status-icon"><svg aria-hidden="true"><use href="#certificate-clock" /></svg></span>
+              <span class="badge" title="A ONG organizadora precisa confirmar sua presença para liberar o certificado.">Em validação</span>
+            </div>
+            <div class="information">
+              <h3>{{ certificate.title }}</h3>
+              <p>Finalizado em {{ certificate.date }}</p>
+            </div>
+            <p class="pending-message">Aguardando confirmação de presença da ONG organizadora para liberação do certificado.</p>
+          </article>
+        } @empty {
+          <div class="empty"><svg aria-hidden="true"><use href="#certificate-award" /></svg><p>Nenhum certificado disponível ainda. Complete uma atividade para receber seu primeiro certificado!</p></div>
+        }
+      </div>
+    </section>
+    <div class="toast" [class.visible]="toast()" role="status" aria-live="polite">
+      {{ toast() }}
+      @if (toast()) { <button type="button" aria-label="Fechar aviso" (click)="toast.set('')">×</button> }
+    </div>
+  </div>
+</app-user-area-shell>

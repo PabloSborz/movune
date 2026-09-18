@@ -1,3 +1,4 @@
+import { ProfileMenu } from '../../../components/profile-menu/profile-menu';
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -7,9 +8,9 @@ import { NavigationHistoryService } from '../../../shared/navigation-history.ser
 
 @Component({
   selector: 'app-meu-perfil',
-  imports: [FormsModule, RouterLink, RouterLinkActive],
+  imports: [ProfileMenu, FormsModule, RouterLink, RouterLinkActive],
   templateUrl: './meu-perfil.html',
-  styleUrl: './meu-perfil.css',
+  styleUrls: ['./meu-perfil.css', '../../../components/back-button/back-button.css'],
 })
 export class MeuPerfil {
   readonly navLinks = [
@@ -142,7 +143,7 @@ export class MeuPerfil {
       nomeCompleto: this.form.nomeCompleto.trim(),
       email: this.form.email.trim(),
       telefone: this.form.telefone,
-      cidadeEstado: `${this.form.cidade.trim()}, ${this.form.estado.trim().toUpperCase()}`,
+      cidadeEstado: `${this.form.cidade.trim()}, ${this.form.estado.trim()}`,
       habilidades: this.skills.join(', '),
       interesses: [...this.selectedInterests].join(', '),
       avatar: this.avatarPreview(),

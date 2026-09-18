@@ -1,0 +1,60 @@
+.header-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 9px 16px;
+  border: 1px solid #cbdcf8;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #f5f9ff, #eaf2ff);
+  color: #0259e1;
+  box-shadow: 0 2px 5px rgb(2 89 225 / 6%);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease,
+    box-shadow 180ms ease, transform 180ms ease;
+}
+
+.header-back .back-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform 180ms ease;
+}
+
+@media (hover: hover) {
+  .header-back:hover {
+    border-color: #0259e1;
+    background: #0259e1;
+    color: #fff;
+    box-shadow: 0 4px 12px rgb(2 89 225 / 18%);
+    transform: translateY(-1px);
+  }
+
+  .header-back:hover .back-icon {
+    transform: translateX(-2px);
+  }
+}
+
+.header-back:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: none;
+}
+
+.header-back:focus-visible {
+  outline: 3px solid rgb(2 89 225 / 40%);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-back,
+  .header-back .back-icon {
+    transition: none;
+  }
+}

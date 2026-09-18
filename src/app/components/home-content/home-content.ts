@@ -1,5 +1,5 @@
 ﻿import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-home-content',
@@ -8,6 +8,8 @@ import { Component } from '@angular/core';
   styleUrl: './home-content.css',
 })
 export class HomeContent {
+  @Input() authenticated = false;
+  @Input() accountRoute = '/usuario/meu-perfil';
   readonly paths = [
     {
       icon: '♥',

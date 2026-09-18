@@ -1,5 +1,5 @@
 @if (!isLogin() && !isAccessPage()) {
-  <app-header [home]="isHome()" />
+  <app-header [home]="isHome()" [authenticatedHome]="isAuthenticatedHome()" />
 }
 
 <main
@@ -15,5 +15,7 @@
 }
 
 @if (!isLogin() && !isAccessPage()) {
-  <app-footer [home]="isHome()" />
+  @if (!isAuthenticatedHome()) {
+    <app-footer [home]="isHome()" />
+  }
 }

@@ -1,3 +1,35 @@
 :host {
   display: block;
+  font-family: Inter, sans-serif;
 }
+.certificates { display: flex; flex-direction: column; gap: 40px; }
+.icon-definitions { position: absolute; width: 0; height: 0; overflow: hidden; }
+h2 { margin: 0 0 24px; color: #1e293b; font-size: 18px; font-weight: 700; }
+.certificate-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.certificate-card { display: flex; flex-direction: column; gap: 20px; padding: 24px; border: 1px solid #d9eaf2; border-radius: 16px; background: #fff; transition: box-shadow 200ms; }
+.certificate-card:hover { box-shadow: 0 4px 12px rgb(0 0 0 / 5%); }
+.card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.status-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 12px; background: rgb(5 191 151 / 8%); color: #05bf97; }
+.status-icon svg { width: 22px; height: 22px; }
+.badge { padding: 4px 12px; border-radius: 100px; background: rgb(5 191 151 / 8%); color: #05bf97; font-size: 13px; font-weight: 700; white-space: nowrap; }
+.information { display: flex; flex-direction: column; gap: 6px; }
+h3 { margin: 0; color: #1e293b; font-size: 16px; font-weight: 800; line-height: 1.4; overflow-wrap: anywhere; }
+p { margin: 0; color: #64748b; font-size: 13px; line-height: 1.5; }
+.code { color: #94a3b8; font-size: 12px; }
+.download { display: inline-flex; align-items: center; justify-content: center; gap: 8px; align-self: flex-start; margin-top: auto; min-height: 41px; padding: 10px 16px; border: 0; border-radius: 10px; background: #0259e1; color: #fff; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+.download svg { width: 16px; height: 16px; }
+.download:hover { background: #0149bc; }
+.pending-grid { grid-template-columns: repeat(auto-fit, minmax(0, 400px)); }
+.pending-card .badge, .pending-card .status-icon { background: rgb(255 184 0 / 8%); color: #d99b00; }
+.pending-message { color: #94a3b8; }
+.empty { grid-column: 1 / -1; display: grid; justify-items: center; gap: 16px; padding: 40px 24px; border: 1px dashed #d9eaf2; border-radius: 16px; text-align: center; }
+.empty svg { width: 48px; height: 48px; color: #94a3b8; }
+.empty p { max-width: 420px; }
+.toast { display: none; }
+.toast.visible { position: fixed; z-index: 40; right: 24px; bottom: 24px; display: flex; align-items: center; gap: 16px; width: min(420px, calc(100vw - 32px)); padding: 16px; border: 1px solid #d9eaf2; border-radius: 12px; background: #fff; box-shadow: 0 4px 20px rgb(1 28 83 / 12%); color: #011c53; font-size: 14px; }
+.toast button { border: 0; background: transparent; color: #64748b; font-size: 24px; cursor: pointer; }
+button:focus-visible { outline: 3px solid rgb(2 89 225 / 40%); outline-offset: 3px; }
+@media (max-width: 1023px) { .certificate-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 767px) { .certificate-card { padding: 16px; } .toast.visible { right: 16px; bottom: 16px; } }
+@media (prefers-reduced-motion: reduce) { .certificate-card { transition: none; } }

@@ -313,7 +313,7 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .form-row-three {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(100px, 0.55fr);
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr) minmax(160px, 1fr);
 }
 .form-row label {
   display: grid;
@@ -640,7 +640,6 @@
   }
 }
 @media (max-width: 480px) {
-  .header-back span,
   .profile-brand span,
   .header-name {
     display: none;
