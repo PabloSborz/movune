@@ -826,7 +826,7 @@ export const PAGE_CONTENT = {
     table: {
       columns: ['Origem', 'Tipo', 'Destino', 'Status'],
       rows: [
-        ['Maria S.', 'Pix', 'Biblioteca', 'Confirmada'],
+        ['Voluntário', 'Pix', 'Biblioteca', 'Confirmada'],
         ['Empresa Parceira', 'Materiais', 'Cozinha', 'Em triagem'],
         ['Doacao externa', 'Servico', 'Comunicacao', 'Registrada'],
       ],

@@ -1,10 +1,11 @@
 import { Component, ElementRef, afterNextRender, inject, DestroyRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Footer } from '../../../components/footer/footer';
 import { AuthStore } from '../../../shared/auth-store.service';
 
 @Component({
   selector: 'app-access-home',
-  imports: [RouterLink],
+  imports: [Footer, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -31,17 +32,6 @@ export class Home {
     { mode: 'Remoto', title: 'Mentor de Inclusão Digital', description: 'Ensine conceitos básicos de informática e navegação na internet para idosos. 2 horas semanais.', tags: ['Tecnologia', 'Ensino', 'Inclusão digital'] },
     { mode: 'São Paulo - SP', title: 'Apoio em Triagem Médica', description: 'Ajuda na recepção e organização de fichas médicas para mutirão comunitário aos sábados.', tags: ['Saúde', 'Organização', 'Atendimento'] },
     { mode: 'Híbrido', title: 'Produtor de Conteúdo Eco', description: 'Desenvolvimento de posts informativos para conscientização sobre reciclagem local.', tags: ['Comunicação', 'Design', 'Meio ambiente'] },
-  ];
-  readonly footerGroups = [
-    { title: 'Institucional', links: [
-      { label: 'Sobre Nós', path: '/sobre' }, { label: 'Como funciona', path: '/como-funciona' }, { label: 'Transparência', path: '/transparencia' }, { label: 'Contato', path: '/contato' }, { label: 'FAQ', path: '/perguntas-frequentes' },
-    ] },
-    { title: 'Para ONGs', links: [
-      { label: 'Cadastrar ONG', path: '/cadastro-ong' }, { label: 'Painel de Controle', path: '/ong/painel' }, { label: 'Guia de Recursos', path: '/como-funciona' }, { label: 'Portal de Voluntários', path: '/voluntariado' },
-    ] },
-    { title: 'Legal', links: [
-      { label: 'Privacidade', path: '/politica-privacidade' }, { label: 'Termos de Uso', path: '/termos-uso' }, { label: 'Cookies', path: '/politica-cookies' }, { label: 'Segurança de Doações', path: '/politica-doacoes' },
-    ] },
   ];
   constructor() {
     afterNextRender(() => {

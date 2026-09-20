@@ -15,7 +15,7 @@ export class Footer {
       title: 'Institucional',
       links: [
         { label: 'Sobre Nós', href: '/sobre' },
-        { label: 'Como funciona', href: '/#como-funciona' },
+        { label: 'Como funciona', href: '/como-funciona' },
         { label: 'Transparência', href: '/transparencia' },
         { label: 'Contato', href: '/contato' },
         { label: 'FAQ', href: '/perguntas-frequentes' },

@@ -3,30 +3,75 @@
     <div class="hero">
       <div class="hero-copy">
         <span class="eyebrow">PAINEL DO VOLUNTÁRIO</span>
-        <h1 id="welcome-title">Olá, {{ session()?.nome?.split(' ')?.[0] || 'voluntário' }}! Que bom ver você novamente.</h1>
-        <p>Suas últimas contribuições ajudaram a alimentar mais de 250 famílias em São Paulo. Cada minuto e doação sua fazem a diferença real em nossa rede de impacto.</p>
+        <h1 id="welcome-title">
+          Olá, {{ session()?.nome?.split(' ')?.[0] || 'voluntário' }}! Que bom ver você novamente.
+        </h1>
+        <p>
+          Suas últimas contribuições ajudaram a alimentar mais de 250 famílias em São Paulo. Cada
+          minuto e doação sua fazem a diferença real em nossa rede de impacto.
+        </p>
         <a routerLink="/doacoes" class="quick-donation">Fazer Doação Rápida</a>
       </div>
-      <img src="/hero-image-frame.png" alt="Grupo de voluntários sorridentes reunidos em um parque" fetchpriority="high" />
+      <img
+        src="/hero-image-frame.png"
+        alt="Grupo de voluntários sorridentes reunidos em um parque"
+        fetchpriority="high"
+      />
     </div>
   </section>
   <section class="section" aria-labelledby="impact-title">
-    <header class="section-heading"><div><h2 id="impact-title">Seu impacto acumulado</h2><p>Veja o reflexo das suas escolhas e atitudes no mundo</p></div></header>
+    <header class="section-heading">
+      <div>
+        <h2 id="impact-title">Seu impacto acumulado</h2>
+        <p>Veja o reflexo das suas escolhas e atitudes no mundo</p>
+      </div>
+    </header>
     <div class="stats">
       @for (stat of stats; track stat.label) {
-        <article class="stat"><span class="stat-icon" aria-hidden="true">{{ stat.icon }}</span><div><strong>{{ stat.value }}</strong><p>{{ stat.label }}</p></div></article>
+        <article class="stat">
+          <span class="stat-icon" aria-hidden="true">{{ stat.icon }}</span>
+          <div>
+            <strong>{{ stat.value }}</strong>
+            <p>{{ stat.label }}</p>
+          </div>
+        </article>
       }
     </div>
   </section>
   <section class="section" aria-labelledby="projects-title">
-    <header class="section-heading"><div><h2 id="projects-title">Meus Projetos</h2><p>Iniciativas que você apoia de forma direta</p></div><a routerLink="/usuario/minhas-inscricoes">Gerenciar Projetos</a></header>
+    <header class="section-heading">
+      <div>
+        <h2 id="projects-title">Meus Projetos</h2>
+        <p>Iniciativas que você apoia de forma direta</p>
+      </div>
+      <a routerLink="/usuario/minhas-inscricoes">Gerenciar Projetos</a>
+    </header>
     <div class="three-grid">
       @for (project of projects; track project.name) {
         <article class="card project">
-          <img [src]="project.image" [alt]="'Atividade social do projeto ' + project.name" loading="lazy" />
-          <div class="project-copy"><span class="ong">{{ project.ong }}</span><h3>{{ project.name }}</h3><p>{{ project.description }}</p>
+          <img
+            [src]="project.image"
+            [alt]="'Atividade social do projeto ' + project.name"
+            loading="lazy"
+          />
+          <div class="project-copy">
+            <span class="ong">{{ project.ong }}</span>
+            <h3>{{ project.name }}</h3>
+            <p>{{ project.description }}</p>
             @if (project.progress !== null) {
-              <div class="fundraising"><span>{{ project.progress }}% concluído</span><div class="progress" role="progressbar" [attr.aria-label]="'Progresso de ' + project.name" [attr.aria-valuenow]="project.progress" aria-valuemin="0" aria-valuemax="100"><span [style.width.%]="project.progress"></span></div></div>
+              <div class="fundraising">
+                <span>{{ project.progress }}% concluído</span>
+                <div
+                  class="progress"
+                  role="progressbar"
+                  [attr.aria-label]="'Progresso de ' + project.name"
+                  [attr.aria-valuenow]="project.progress"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  <span [style.width.%]="project.progress"></span>
+                </div>
+              </div>
             }
           </div>
         </article>
@@ -34,28 +79,52 @@
     </div>
   </section>
   <section class="section" aria-labelledby="events-title">
-    <header class="section-heading"><div><h2 id="events-title">Próximos Eventos</h2><p>Sua agenda de solidariedade para os próximos dias</p></div></header>
+    <header class="section-heading">
+      <div>
+        <h2 id="events-title">Próximos Eventos</h2>
+        <p>Sua agenda de solidariedade para os próximos dias</p>
+      </div>
+    </header>
     <div class="events">
       @for (event of events; track event.title) {
-        <a class="card event" routerLink="/eventos"><div class="date" [class.green]="event.green"><strong>{{ event.day }}</strong><span>{{ event.month }}</span></div><div><h3>{{ event.title }}</h3><p>📍 {{ event.location }} • {{ event.time }}</p></div></a>
+        <a class="card event" routerLink="/eventos"
+          ><div class="date" [class.green]="event.green">
+            <strong>{{ event.day }}</strong
+            ><span>{{ event.month }}</span>
+          </div>
+          <div>
+            <h3>{{ event.title }}</h3>
+            <p>📍 {{ event.location }} • {{ event.time }}</p>
+          </div></a
+        >
       }
     </div>
   </section>
   <section class="section jobs-section" aria-labelledby="jobs-title">
-    <header class="section-heading"><div><h2 id="jobs-title">Vagas Recomendadas para Você</h2><p>Oportunidades que combinam com seu perfil e habilidades</p></div><a routerLink="/voluntariado">Ver mais vagas</a></header>
+    <header class="section-heading">
+      <div>
+        <h2 id="jobs-title">Vagas Recomendadas para Você</h2>
+        <p>Oportunidades que combinam com seu perfil e habilidades</p>
+      </div>
+      <a routerLink="/voluntariado">Ver mais vagas</a>
+    </header>
     <div class="three-grid">
       @for (job of jobs; track job.title) {
-        <article class="card job"><span class="mode">{{ job.mode }}</span><h3>{{ job.title }}</h3><p>{{ job.description }}</p><ul class="tags" aria-label="Habilidades">@for (tag of job.tags; track tag) { <li>{{ tag }}</li> }</ul><a class="apply" routerLink="/detalhe-vaga-voluntario" [queryParams]="{ vaga: job.title }">Inscrever-se</a></article>
+        <article class="card job">
+          <span class="mode">{{ job.mode }}</span>
+          <h3>{{ job.title }}</h3>
+          <p>{{ job.description }}</p>
+          <ul class="tags" aria-label="Habilidades">
+            @for (tag of job.tags; track tag) {
+              <li>{{ tag }}</li>
+            }
+          </ul>
+          <a class="apply" routerLink="/detalhe-vaga-voluntario" [queryParams]="{ vaga: job.title }"
+            >Inscrever-se</a
+          >
+        </article>
       }
     </div>
   </section>
 </div>
-<footer class="dashboard-footer">
-  <div class="footer-upper">
-    <div class="footer-brand"><a routerLink="/inicio">movune</a><p>Conectando corações dispostos a transformar realidades locais através do poder coletivo do voluntariado e de doações auditadas e transparentes.</p></div>
-    @for (group of footerGroups; track group.title) {
-      <nav [attr.aria-label]="group.title"><h2>{{ group.title }}</h2>@for (link of group.links; track link.label) { <a [routerLink]="link.path">{{ link.label }}</a> }</nav>
-    }
-  </div>
-  <div class="footer-bottom"><p>© 2026 Movune. Mover pessoas. Unir causas.</p><div class="socials" aria-label="Redes sociais"><a href="https://www.instagram.com/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">◎</a><a href="https://www.facebook.com/" aria-label="Facebook" target="_blank" rel="noopener noreferrer">f</a><a href="https://www.linkedin.com/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">in</a></div></div>
-</footer>
+<app-footer [home]="true" />
