@@ -135,6 +135,20 @@ export const routes: Routes = [
   // Áreas privadas; cada grupo exige o perfil correspondente.
   { path: 'usuario', redirectTo: 'usuario/meu-perfil', pathMatch: 'full' },
   { path: 'painel-usuario', redirectTo: 'usuario/meu-perfil', pathMatch: 'full' },
+  { path: 'area-usuario', redirectTo: 'area-usuario/perfil', pathMatch: 'full' },
+  {
+    path: 'area-usuario/perfil',
+    canActivate: [userGuard],
+    loadComponent: () =>
+      import('./feats/area-usuario/perfil/perfil').then((m) => m.Perfil),
+  },
+  {
+    path: 'area-usuario/meu-perfil',
+    canActivate: [userGuard],
+    loadComponent: () =>
+      import('./feats/area-usuario/meu-perfil/meu-perfil').then((m) => m.MeuPerfil),
+  },
+  { path: 'usuario/perfil', redirectTo: 'area-usuario/perfil', pathMatch: 'full' },
   {
     path: 'usuario/meu-perfil',
     canActivate: [userGuard],

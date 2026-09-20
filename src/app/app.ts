@@ -41,6 +41,8 @@ export class App implements OnDestroy {
             '/escolha',
             '/recuperacao-senha',
             '/redefinicao-senha',
+            '/area-usuario/perfil',
+            '/area-usuario/meu-perfil',
             '/usuario/meu-perfil',
             '/usuario/minhas-inscricoes',
             '/usuario/minhas-doacoes',

@@ -1,41 +1,25 @@
-@if (home) {
-  <footer class="landing-footer">
-    <div class="landing-footer-grid">
-      <div class="landing-footer-about">
-        <a href="/" class="landing-brand" aria-label="Movune, início"
-          ><img src="/logo-transparent.png" alt="" /><span>Movune</span></a
-        >
-        <p>
-          Conectando corações dispostos a transformar realidades locais através do poder coletivo.
-        </p>
-      </div>
-      <nav *ngFor="let group of homeGroups" [attr.aria-label]="group.title">
-        <h3>{{ group.title }}</h3>
-        <a *ngFor="let link of group.links" [href]="link.href">{{ link.label }}</a>
-      </nav>
-    </div>
-    <div class="landing-copyright">
-      <div>
-        <span>© 2026 Movune. Mover pessoas. Unir causas.</span
-        ><span>Feito para gerar impacto real.</span>
-      </div>
-    </div>
-  </footer>
-} @else {
-  <footer class="site-footer">
-    <div class="footer-brand">
-      <img src="/slogan-transparent.png" alt="Movune: Mover pessoas. Unir causas." />
-      <p>Plataforma para conectar doações, voluntariado, projetos sociais e transparência.</p>
+<footer class="movune-footer">
+  <div class="footer-grid">
+    <div class="footer-about">
+      <a routerLink="/" class="footer-brand" aria-label="Movune, início">
+        <img src="/logo-transparent.png" alt="" />
+        <span>Movune</span>
+      </a>
+      <p>
+        Conectando corações dispostos a transformar realidades locais através do poder coletivo.
+      </p>
     </div>
 
-    <nav aria-label="Links publicos">
-      <strong>Institucional</strong>
-      <a *ngFor="let link of publicLinks" [routerLink]="link.path">{{ link.label }}</a>
+    <nav *ngFor="let group of homeGroups" [attr.aria-label]="group.title">
+      <h2>{{ group.title }}</h2>
+      <a *ngFor="let link of group.links" [routerLink]="link.href">{{ link.label }}</a>
     </nav>
+  </div>
 
-    <nav aria-label="Links legais">
-      <strong>Legal</strong>
-      <a *ngFor="let link of legalLinks" [routerLink]="link.path">{{ link.label }}</a>
-    </nav>
-  </footer>
-}
+  <div class="footer-bottom">
+    <div>
+      <span>© 2026 Movune. Mover pessoas. Unir causas.</span>
+      <span>Feito para gerar impacto real.</span>
+    </div>
+  </div>
+</footer>

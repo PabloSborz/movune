@@ -11,7 +11,7 @@ import { AuthStore } from '../../shared/auth-store.service';
     </button>
     @if (open) {
       <nav class="popover" aria-label="Opções do perfil">
-        <button type="button" (click)="go(false)">Ver perfil</button>
+        <button type="button" (click)="go(false)">Ver meu perfil</button>
         <button type="button" (click)="go(true)">Editar perfil</button>
         <button type="button" class="logout" (click)="logout()">Sair</button>
       </nav>
@@ -51,7 +51,13 @@ export class ProfileMenu {
   async go(edit: boolean): Promise<void> {
     this.open = false;
     const profile = this.auth.session()?.perfil;
-    const route = profile === 'ong' ? (edit ? '/ong/editar-perfil' : '/ong/painel') : profile === 'admin' ? '/admin/painel' : '/usuario/meu-perfil';
+    const route = profile === 'ong'
+      ? (edit ? '/ong/editar-perfil' : '/ong/painel')
+      : profile === 'admin'
+        ? '/admin/painel'
+        : edit
+          ? '/area-usuario/meu-perfil'
+          : '/area-usuario/perfil';
     await this.router.navigateByUrl(route);
     if (edit && profile === 'usuario') {
       setTimeout(() => {
