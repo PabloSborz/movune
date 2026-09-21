@@ -48,7 +48,11 @@ export class App implements OnDestroy {
             '/usuario/minhas-doacoes',
             '/usuario/favoritos',
             '/usuario/certificados',
-          ].includes(event.urlAfterRedirects.split(/[?#]/)[0]),
+            '/ong/painel',
+            '/ong/editar-perfil',
+            '/ong/projetos',
+            '/perfil-ong',
+          ].includes(event.urlAfterRedirects.split(/[?#]/)[0]) || /^\/ong\/projetos\/[^/]+\/editar$/.test(event.urlAfterRedirects.split(/[?#]/)[0]),
         );
       }
     });

@@ -34,6 +34,9 @@ export const routes: Routes = [
     path: 'perfil-ong',
     loadComponent: () => import('./feats/ong/perfil-ong/perfil-ong').then((m) => m.PerfilOng),
   },
+  { path: 'ong/perfil-ong', redirectTo: 'perfil-ong', pathMatch: 'full' },
+  { path: 'doar/rede-cuidar', redirectTo: 'doacoes?ong=rede-cuidar', pathMatch: 'full' },
+  { path: 'voluntariado/rede-cuidar', redirectTo: 'voluntariado?ong=rede-cuidar', pathMatch: 'full' },
   {
     path: 'projetos',
     loadComponent: () =>
@@ -184,9 +187,11 @@ export const routes: Routes = [
     canActivate: [ongGuard],
     loadComponent: () => import('./feats/ong/painel-ong/painel-ong').then((m) => m.PainelOng),
   },
+  { path: 'ong/painel-ong', redirectTo: 'ong/painel', pathMatch: 'full' },
   {
     path: 'ong/editar-perfil',
     canActivate: [ongGuard],
+    canDeactivate: [(component: { canLeave: () => boolean | Promise<boolean> }) => component.canLeave()],
     loadComponent: () => import('./feats/ong/editar-ong/editar-ong').then((m) => m.EditarOng),
   },
   {
@@ -204,6 +209,12 @@ export const routes: Routes = [
       import('./feats/ong/gerenciar-projeto-ong/gerenciar-projeto-ong').then(
         (m) => m.GerenciarProjetoOng,
       ),
+  },
+  { path: 'ong/gerenciar-projeto-ong', redirectTo: 'ong/projetos', pathMatch: 'full' },
+  {
+    path: 'ong/projetos/:id/editar',
+    canActivate: [ongGuard],
+    loadComponent: () => import('./feats/ong/gerenciar-projeto-ong/gerenciar-projeto-ong').then(m => m.GerenciarProjetoOng),
   },
   {
     path: 'ong/vagas',
