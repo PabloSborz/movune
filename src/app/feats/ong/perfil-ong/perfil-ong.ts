@@ -1,14 +1,20 @@
-import { Component } from '@angular/core';
-
-import { FeaturePage } from '../../../components/feature-page/feature-page';
-import { PAGE_CONTENT } from '../../../shared/page-content';
+import { Component, DestroyRef, ElementRef, afterNextRender, inject } from '@angular/core';
+import { initializePublicProfile } from '../../../../../public/ong/perfil-ong/profile.js';
 
 @Component({
   selector: 'app-perfil-ong',
-  imports: [FeaturePage],
   templateUrl: './perfil-ong.html',
   styleUrl: './perfil-ong.css',
 })
 export class PerfilOng {
-  readonly page = PAGE_CONTENT.perfilOng;
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly destroy = inject(DestroyRef);
+
+  constructor() {
+    // Angular only mounts the page; all interactions live in the vanilla JS module.
+    afterNextRender(() => {
+      const cleanup = initializePublicProfile(this.host.nativeElement);
+      this.destroy.onDestroy(cleanup);
+    });
+  }
 }

@@ -1,16 +1,20 @@
-import { Component, ElementRef, DestroyRef, afterNextRender, inject } from '@angular/core';
+import { Component, ElementRef, DestroyRef, afterNextRender, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthStore } from '../../../shared/auth-store.service';
+import { AuthStore } from '../../shared/auth-store.service';
 
 @Component({
-  selector: 'app-painel-ong',
-  templateUrl: './painel-ong.html',
-  styleUrl: './painel-ong.css',
+  selector: 'app-ong-shell',
+  templateUrl: './ong-shell.html',
+  styleUrl: './ong-shell.css',
 })
-export class PainelOng {
+export class OngShell {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly router = inject(Router);
   private readonly auth = inject(AuthStore);
+  protected readonly organization = computed(() => {
+    const ong = this.auth.ongs().find(item => item.id === this.auth.session()?.id);
+    return ong && (ong.id !== 'demo-ong' || ong.descricao !== undefined) ? ong : undefined;
+  });
   private readonly destroy = inject(DestroyRef);
 
   constructor() {
@@ -21,6 +25,12 @@ export class PainelOng {
     const root = this.host.nativeElement;
     const controller = new AbortController();
     const options = { signal: controller.signal };
+    root.querySelectorAll<HTMLAnchorElement>('#desktop-menu .nav-item').forEach(link => {
+      const active = this.router.url.split(/[?#]/)[0].startsWith(link.pathname);
+      link.classList.toggle('active', active);
+      if (active) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
     const drawer = root.querySelector<HTMLDialogElement>('#mobile-navigation')!;
     const logout = root.querySelector<HTMLDialogElement>('#logout-dialog')!;
     let returnFocus: HTMLElement | null = null;
@@ -51,18 +61,15 @@ export class PainelOng {
       if (target.closest('[data-cancel-logout]') || target === logout) logout.close();
       if (target.closest('[data-confirm-logout]')) {
         logout.close();
-        this.auth.logout();
-        void this.router.navigateByUrl('/login');
+        void this.router.navigateByUrl('/login').then(left => {
+          if (left) this.auth.logout();
+        });
       }
       const link = target.closest<HTMLAnchorElement>('a[data-route]');
       const mouse = event as MouseEvent;
       if (link && !mouse.ctrlKey && !mouse.metaKey && !mouse.shiftKey && !mouse.altKey && mouse.button === 0) {
         event.preventDefault();
-        root.querySelectorAll('.nav-item').forEach(item => {
-          item.classList.toggle('active', item.getAttribute('href') === link.getAttribute('href'));
-          item.removeAttribute('aria-current');
-        });
-        link.setAttribute('aria-current', 'page');
+
         drawer.close();
         void this.router.navigateByUrl(link.getAttribute('href')!);
       }
@@ -85,19 +92,6 @@ export class PainelOng {
     drawer.querySelector('[data-mobile-menu]')!.append(mobileMenu);
     const media = window.matchMedia('(min-width: 1025px)');
     media.addEventListener('change', () => { if (media.matches) drawer.close(); }, options);
-    const counters = root.querySelectorAll<HTMLElement>('[data-count]');
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const start = performance.now();
-    let frame = 0;
-    const animate = (now: number) => {
-      const progress = reduced ? 1 : Math.min((now - start) / 1000, 1);
-      counters.forEach(counter => {
-        const value = Math.round(Number(counter.dataset['count']) * progress);
-        counter.textContent = (counter.dataset['currency'] ? 'R$ ' : '') + value.toLocaleString('pt-BR');
-      });
-      if (progress < 1) frame = requestAnimationFrame(animate);
-    };
-    frame = requestAnimationFrame(animate);
-    this.destroy.onDestroy(() => { controller.abort(); cancelAnimationFrame(frame); drawer.close(); logout.close(); });
+    this.destroy.onDestroy(() => { controller.abort(); drawer.close(); logout.close(); });
   }
 }

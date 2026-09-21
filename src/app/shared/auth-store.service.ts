@@ -43,6 +43,14 @@ export interface MovuneUser extends UserRegistrationInput {
 }
 
 export interface MovuneOng extends OngRegistrationInput {
+  descricao?: string;
+  areasImpacto?: string[];
+  contatoEmail?: string;
+  instagram?: string;
+  cargoResponsavel?: string;
+  emailResponsavel?: string;
+  logo?: string;
+  banner?: string;
   id: string;
   perfil: 'ong';
   status: 'Em analise' | 'Aprovada' | 'Suspensa';
@@ -249,6 +257,28 @@ export class AuthStore {
 
     if (this.session()?.id === id) {
       this.logout();
+    }
+  }
+
+  updateOngProfile(id: string, changes: Partial<Pick<MovuneOng,
+    'nomeFantasia' | 'cnpj' | 'dataFundacao' | 'areaAtuacao' | 'descricao' |
+    'areasImpacto' | 'endereco' | 'cidade' | 'estado' | 'cep' | 'telefone' |
+    'contatoEmail' | 'site' | 'instagram' | 'responsavel' | 'cargoResponsavel' |
+    'emailResponsavel' | 'logo' | 'banner'>>): AuthResult {
+    if (this.session()?.id !== id || this.session()?.perfil !== 'ong') {
+      return { ok: false, message: 'Entre novamente para salvar seu perfil.' };
+    }
+    if (!this.ongs().some(ong => ong.id === id)) {
+      return { ok: false, message: 'Organização não encontrada.' };
+    }
+    const updated = this.ongs().map(ong => ong.id === id ? { ...ong, ...changes } : ong);
+    try {
+      if (!this.isBrowser || !globalThis.localStorage) throw new Error('Storage unavailable');
+      this.persist(ONGS_KEY, updated);
+      this.ongs.set(updated);
+      return { ok: true, message: 'Perfil atualizado com sucesso!' };
+    } catch {
+      return { ok: false, message: 'Não foi possível salvar. Tente imagens menores ou verifique o armazenamento do navegador.' };
     }
   }
 

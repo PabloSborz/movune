@@ -1,0 +1,1860 @@
+Crie a página "Cadastrar Novo Projeto" do painel da ONG na plataforma Movune em HTML, CSS e JavaScript puros (sem frameworks). A página é um formulário para ONGs cadastrarem novos projetos sociais. Dimensão de referência desktop: 1440×1250px. Segue o padrão de layout do dashboard ONG: header global + sidebar esquerda + conteúdo principal.
+
+=== DESIGN TOKENS GLOBAIS ===
+- Fonte: Inter (Google Fonts), pesos: 400 (Regular), 500 (Medium), 600 (Semi Bold), 700 (Bold), 800 (Extra Bold)
+- Cores principais:
+  - Azul primário: #0259E1
+  - Navy: #011C53
+  - Verde: #16A34A
+  - Vermelho erro/remover: #EF4444
+  - Texto escuro: #1E293B
+  - Texto médio: #64748B
+  - Texto claro: #94A3B8
+  - Cinza label: #808C99
+  - Fundo input: #F5FAFC
+  - Borda input/card: #D9EAF2
+  - Branco: #FFFFFF
+  - Fundo badge número: rgba(2,89,225,0.08)
+  - Azul hover: #0148B8
+
+=== SEÇÃO 1 — HEADER GLOBAL ONG (80px altura) ===
+(Reutilizar o mesmo header do painel ONG)
+- Largura 100%, altura 80px, fundo branco
+- Padding horizontal 40px
+- Flex horizontal, justify space-between, align center
+- Esquerda: Logo Movune (ícone + "Movune" 20px Extra Bold azul) + badge "PAINEL DA ONG" (pill, fundo rgba(2,89,225,0.08), texto 11px Bold #0259E1, padding 4px 12px, radius 100px)
+- Direita: ícone sino notificação (40×40px, fundo rgba(2,89,225,0.04), radius 20, ícone bell 20px stroke #64748B) + info do usuário (nome "Rede Cuidar" 14px Semi Bold #1E293B, email "ong@redecuidar.org" 12px Regular #64748B) + avatar circular (44px, borda 2px azul #0259E1, iniciais "RC" 16px Bold azul)
+- Borda inferior: 1px solid #D9EAF2
+
+=== SEÇÃO 2 — LEFT SIDEBAR (280px largura × 100% altura) ===
+(Reutilizar a mesma sidebar do painel ONG com "Projetos" como item ativo)
+- Largura 280px, fundo branco, borda direita 1px solid #D9EAF2
+- Padding: 32px 20px
+- Layout vertical, gap 8px entre itens do menu
+
+**menu-section (11 itens, gap 4px):**
+Cada item: altura 42px, border-radius 12px, padding 12px 16px, flex horizontal, gap 12px
+- Ícone 18×18px (stroke) + texto 15px
+- Estado normal: fundo transparente, ícone stroke #64748B, texto Medium #64748B
+- Estado ativo ("Projetos"): fundo rgba(2,89,225,0.08), ícone stroke #0259E1, texto Semi Bold #0259E1
+
+Itens na ordem:
+1. Painel (grid icon)
+2. Editar Perfil (user icon)
+3. **Projetos** (folder icon) ← ATIVO
+4. Vagas (briefcase icon)
+5. Voluntários (users icon)
+6. Eventos (calendar icon)
+7. Doações (heart icon)
+8. Prestação de Contas (file-text icon)
+9. Relatórios (bar-chart icon)
+10. Documentos (folder icon)
+11. Configurações (settings icon)
+
+**Botão "Sair do painel" (no rodapé da sidebar):**
+- Posicionado no final (margin-top auto ou position absolute bottom)
+- Ícone log-out 18px stroke #EF4444 + texto "Sair do painel" 15px Medium #EF4444
+- Sem fundo, padding 12px 16px
+
+=== SEÇÃO 3 — MAIN CONTENT (1160px largura) ===
+- Largura: calc(100% - 280px), ou 1160px
+- Padding: 40px
+- Layout vertical, gap 32px
+- Fundo implícito (cinza muito claro, ~#F8FAFB)
+
+**3.1 — Título da página:**
+- Layout vertical, gap 6px
+- Título: "Cadastrar Novo Projeto" — 28px Extra Bold #011C53
+- Subtítulo: "Preencha os dados abaixo para publicar uma nova iniciativa social na plataforma Movune." — 15px Regular #64748B
+
+**3.2 — Card do formulário (1080×960px):**
+- Fundo branco #FFFFFF, border-radius 16px, borda 1px solid #D9EAF2
+- Padding 32px
+- Layout vertical, gap 32px
+
+  **3.2.1 — Seção "Informações do Projeto":**
+  - Layout vertical, gap 20px
+  - Título da seção: "Informações do Projeto" — 18px Extra Bold #011C53
+
+  **Campo "Nome do Projeto *" (obrigatório):**
+  - Label: "Nome do Projeto" 14px Semi Bold #1E293B + asterisco "*" 14px Regular #EF4444
+  - Gap entre label e input: 8px
+  - Input: largura 100% (1016px), altura 42px
+    - Fundo #F5FAFC, border 1px solid #D9EAF2, border-radius 10px
+    - Padding 12px 16px
+    - Placeholder: "Ex: Mutirão de Reflorestamento Urbano" — 15px Regular #64748B
+
+  **Linha de 3 campos (flex horizontal, gap 20px):**
+  Cada campo ocupa ~325px (1/3 da largura)
+
+  - Campo "Categoria":
+    - Label: "Categoria" 14px Semi Bold #1E293B
+    - Select (dropdown): mesma estilização do input
+      - Texto: "Selecione uma categoria" 15px Regular #64748B
+      - Ícone chevron-down 14px à direita, stroke #64748B
+      - Opções: Educação, Saúde, Meio Ambiente, Assistência Social, Cultura, Direitos Humanos (para implementar)
+
+  - Campo "Meta Financeira (R$)":
+    - Label: "Meta Financeira (R$)" 14px Semi Bold #1E293B
+    - Input numérico: placeholder "Ex: 15000"
+
+  - Campo "Prazo (Dias)":
+    - Label: "Prazo (Dias)" 14px Semi Bold #1E293B
+    - Input numérico: placeholder "Ex: 45"
+
+  **Campo "Descrição Completa *" (obrigatório):**
+  - Label: "Descrição Completa" 14px Semi Bold #1E293B + asterisco "*" #EF4444
+  - Textarea: largura 100% (1016px), altura 120px
+    - Mesma estilização do input (fundo #F5FAFC, borda, radius 10)
+    - Padding 16px (vertical e horizontal)
+    - Placeholder: "Descreva os objetivos, impacto esperado e como o projeto será executado..." 15px Regular #64748B
+    - resize: vertical
+
+  **3.2.2 — Seção "Metas e Resultados Esperados":**
+  - Layout vertical, gap 16px
+  - Título: "Metas e Resultados Esperados" — 18px Extra Bold #011C53
+
+  **Lista de metas (layout vertical, gap 12px):**
+  Cada meta é um item flex horizontal, gap 12px, padding 6px
+
+  - Número circular: 18×18px, border-radius 9px (círculo), fundo rgba(2,89,225,0.08), borda 1px solid #0259E1
+    - Número dentro: 11px Extra Bold #0259E1, centralizado
+  - Texto da meta: 14px Medium #1E293B
+  - Botão remover (X): 14×14px, ícone X com stroke #EF4444 — visível à direita
+
+  3 metas pré-preenchidas:
+  1. "Comprar 200 kits escolares"
+  2. "Reformar a sala de leitura"
+  3. "Atender 50 crianças da comunidade"
+
+  **Botão adicionar:**
+  - "+ Adicionar nova meta" — 14px Semi Bold #0259E1
+  - Padding 6px, sem fundo
+  - Hover: underline
+
+  **3.2.3 — Seção "Imagem de Capa":**
+  - Layout vertical, gap 16px
+  - Título: "Imagem de Capa" — 18px Extra Bold #011C53
+
+  **Área de upload (drop zone):**
+  - Largura 100% (1016px), altura 162px
+  - Fundo #F5FAFC, border 1px dashed #D9EAF2 (ou solid como no design), border-radius 12px
+  - Padding 40px, layout vertical centralizado, gap 12px
+  - Ícone imagem: 32×32px, stroke #0259E1
+  - Texto principal: "Arraste uma imagem ou clique para fazer upload" — 15px Bold #1E293B
+  - Texto secundário: "JPG, PNG de até 5MB. Proporção recomendada: 16:9" — 13px Regular #64748B
+  - Cursor pointer
+  - Input type="file" hidden, ativado ao clicar
+
+  **3.2.4 — Botões de ação (actions):**
+  - Flex horizontal, gap 16px, justify-content flex-end (alinhados à direita)
+
+  - Botão "Salvar Rascunho":
+    - Outline: border 1px solid #D9EAF2, fundo transparente, border-radius 24px
+    - Padding 14px 32px
+    - Texto: "Salvar Rascunho" 15px Bold #64748B
+    - Hover: fundo #F5FAFC
+
+  - Botão "Publicar Projeto":
+    - Filled: fundo #0259E1, border-radius 24px
+    - Padding 14px 32px
+    - Texto: "Publicar Projeto" 15px Bold #FFFFFF
+    - Hover: fundo #0148B8
+
+=== RESPONSIVIDADE ===
+
+**Breakpoint 1200px:**
+- Main content: padding reduzido para 24px
+- Linha de 3 campos: empilha em 1 coluna (cada campo 100%)
+- Card formulário: padding 24px
+
+**Breakpoint 1024px:**
+- Sidebar colapsa: ícone hambúrguer no header para abrir/fechar
+- Main content ocupa 100% da largura
+
+**Breakpoint 768px:**
+- Header: simplificado, menu hambúrguer
+- Card formulário: padding 20px
+- Botões de ação: empilham verticalmente, largura 100%
+- Drop zone de imagem: altura auto, padding 24px
+
+**Breakpoint 480px:**
+- Tudo em coluna única
+- Padding geral: 16px
+- Inputs e textareas: largura 100%
+- Botões: largura 100%, empilhados
+- Metas: texto trunca com ellipsis se necessário
+
+=== INTERATIVIDADE (JavaScript) ===
+
+1. **Validação de formulário:**
+   - Campos obrigatórios (Nome do Projeto, Descrição): borda vermelha #EF4444 e mensagem de erro se vazio ao submeter
+   - Campo Meta Financeira: aceitar apenas números
+   - Campo Prazo: aceitar apenas números inteiros
+   - Validação em tempo real (on blur) e ao submeter
+
+2. **Select de Categoria:**
+   - Dropdown customizado ou <select> nativo estilizado
+   - Opções: Educação, Saúde, Meio Ambiente, Assistência Social, Cultura, Direitos Humanos
+   - Ícone chevron gira 180° ao abrir
+
+3. **Metas dinâmicas:**
+   - Clicar "+ Adicionar nova meta" → adiciona novo item editável (input inline) com número sequencial
+   - Clicar no X vermelho → remove a meta (com confirmação opcional)
+   - Renumerar automaticamente após remoção
+   - Máximo sugerido: 10 metas
+
+4. **Upload de imagem:**
+   - Clicar na drop zone abre file picker (accept="image/jpeg,image/png")
+   - Suportar drag & drop (dragenter/dragover/drop events)
+   - Validar: tipo (JPG, PNG), tamanho máximo 5MB
+   - Após upload: mostrar preview da imagem dentro da drop zone
+   - Botão para remover imagem carregada
+
+5. **Botão "Salvar Rascunho":**
+   - Salvar dados do formulário em localStorage (para não perder progresso)
+   - Feedback visual: "Rascunho salvo!" (toast notification ou texto temporário)
+   - Redirecionar para /ong/projetos com status "Rascunho"
+
+6. **Botão "Publicar Projeto":**
+   - Validar todos os campos obrigatórios antes de publicar
+   - Se válido: feedback "Projeto publicado com sucesso!" + redirecionar para /ong/projetos
+   - Se inválido: scroll até o primeiro campo com erro, destacar campos problemáticos
+
+7. **Textarea auto-expand (opcional):**
+   - Descrição Completa pode crescer conforme o texto (min-height 120px)
+
+8. **Sidebar:** item "Projetos" ativo com destaque visual, demais clicáveis
+
+=== STACK TECNOLÓGICO ===
+- HTML5 semântico (form, fieldset, label, input, select, textarea, button)
+- CSS3 puro (Flexbox, Grid, variáveis CSS, transitions, media queries)
+- JavaScript vanilla (FormData, FileReader, localStorage, drag & drop API, validação)
+- Google Fonts: Inter (400, 500, 600, 700, 800)
+- Ícones: Lucide Icons (image, chevron-down, x, plus, log-out, bell, grid, user, folder, briefcase, users, calendar, heart, file-text, bar-chart, settings)
+
+
+---------------------------------------------------------------------------------
+
+
+Crie a página "Gerenciar Vagas" do painel da ONG na plataforma Movune em HTML, CSS e JavaScript puros (sem frameworks). A página lista as vagas de voluntariado publicadas pela ONG em formato de tabela com filtros e ações. Dimensão de referência desktop: 1440×920px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
+
+=== DESIGN TOKENS GLOBAIS ===
+- Fonte: Inter (Google Fonts), pesos: 400 (Regular), 500 (Medium), 600 (Semi Bold), 700 (Bold), 800 (Extra Bold)
+- Cores principais:
+  - Azul primário: #0259E1
+  - Navy: #011C53
+  - Verde impacto: #05BF97
+  - Texto escuro: #1E293B
+  - Texto médio: #64748B
+  - Texto cinza escuro: #475569
+  - Cinza slate: #E2E8F0
+  - Fundo input/header tabela: #F5FAFC
+  - Borda: #D9EAF2
+  - Vermelho: #EF4444
+  - Branco: #FFFFFF
+  - Fundo badge azul: rgba(2,89,225,0.08)
+  - Fundo badge verde: rgba(5,191,151,0.08)
+  - Azul hover: #0148B8
+
+=== SEÇÃO 1 — HEADER GLOBAL ONG (80px altura) ===
+(Reutilizar o mesmo header do painel ONG)
+- Largura 100%, altura 80px, fundo branco
+- Padding horizontal 40px
+- Flex horizontal, justify space-between, align center
+- Esquerda: Logo Movune (ícone + "Movune" 20px Extra Bold azul) + badge "PAINEL DA ONG" (pill, fundo rgba(2,89,225,0.08), texto 11px Bold #0259E1, padding 4px 12px, radius 100px)
+- Direita: ícone sino (40×40px, fundo rgba(2,89,225,0.04), radius 20, ícone bell 20px stroke #64748B) + info do usuário ("Rede Cuidar" 14px Semi Bold #1E293B / "ong@redecuidar.org" 12px Regular #64748B) + avatar (44px, borda 2px #0259E1, iniciais "RC" 16px Bold azul)
+- Borda inferior: 1px solid #D9EAF2
+
+=== SEÇÃO 2 — LEFT SIDEBAR (280px largura × 100% altura) ===
+(Reutilizar sidebar do painel ONG — item ativo: "Vagas")
+- Largura 280px, fundo branco, borda direita 1px solid #D9EAF2
+- Padding: 32px 20px, layout vertical, gap 8px
+
+**menu-section (11 itens, gap 4px):**
+Cada item: 42px altura, radius 12px, padding 12px 16px, flex horizontal, gap 12px
+- Normal: fundo transparente, ícone stroke #64748B, texto 15px Medium #64748B
+- Ativo ("Vagas"): fundo rgba(2,89,225,0.08), ícone stroke #0259E1, texto 15px Semi Bold #0259E1
+
+Itens: Painel, Editar Perfil, Projetos, **Vagas** ← ATIVO, Voluntários, Eventos, Doações, Prestação de Contas, Relatórios, Documentos, Configurações
+
+**"Sair do painel" (rodapé):** ícone log-out + texto 15px Medium #EF4444
+
+=== SEÇÃO 3 — MAIN CONTENT (1160px largura) ===
+- Largura: calc(100% - 280px)
+- Padding: 40px
+- Layout vertical, gap 32px
+- Fundo implícito cinza claro (~#F8FAFB)
+
+**3.1 — Linha do título (page-title-row):**
+- Flex horizontal, justify space-between, align center
+
+  - Esquerda: layout vertical, gap 6px
+    - Título: "Gerenciar Vagas" — 28px Extra Bold #011C53
+    - Subtítulo: "Divulgue oportunidades e encontre voluntários qualificados para apoiar seus projetos." — 15px Regular #64748B
+
+  - Direita: Botão "+ Nova Vaga"
+    - Fundo #0259E1, border-radius 24px, padding 14px 24px
+    - Flex horizontal, gap 8px, align center
+    - Ícone plus 16px stroke branco + texto "Nova Vaga" 15px Bold branco
+    - Hover: fundo #0148B8
+
+**3.2 — Card da tabela (table-card, 1080×385px):**
+- Fundo branco, border-radius 16px, borda 1px solid #D9EAF2
+- Layout vertical, sem padding externo
+
+  **3.2.1 — Filtros por abas (table-tabs, 65px altura):**
+  - Fundo branco, borda inferior 1px solid #D9EAF2
+  - Padding: 16px 24px
+  - Flex horizontal, gap 12px
+
+  3 abas (pills, border-radius 100px, padding 8px 16px):
+  1. **"Todos"** (ativo): fundo rgba(2,89,225,0.08), texto 14px Bold #0259E1
+  2. **"Abertas"**: fundo transparente, texto 14px Medium #64748B
+  3. **"Encerradas"**: fundo transparente, texto 14px Medium #64748B
+
+  Hover em inativa: fundo rgba(2,89,225,0.04)
+  Clique: troca aba ativa e filtra tabela
+
+  **3.2.2 — Cabeçalho da tabela (table-head, 48px altura):**
+  - Fundo #F5FAFC, borda inferior 1px solid #D9EAF2
+  - Padding: 16px 24px
+  - Flex horizontal
+
+  5 colunas com larguras fixas:
+  | Coluna       | Largura | Texto          |
+  |-------------|---------|----------------|
+  | VAGA        | 442px   | "VAGA"         |
+  | MODALIDADE  | 150px   | "MODALIDADE"   |
+  | INSCRITOS   | 120px   | "INSCRITOS"    |
+  | STATUS      | 140px   | "STATUS"       |
+  | AÇÕES       | 180px   | "AÇÕES"        |
+
+  Texto: 13px Bold #64748B, text-transform uppercase
+
+  **3.2.3 — Linhas da tabela (4 rows, cada 68px):**
+  - Borda inferior: 1px solid #D9EAF2 (exceto última)
+  - Padding: 20px 24px
+  - Flex horizontal, align center
+  - Mesmas larguras de coluna do header
+
+  **Dados das 4 linhas:**
+
+  | Vaga                        | Modalidade  | Inscritos | Status     | Ações            |
+  |----------------------------|-------------|-----------|------------|------------------|
+  | Mentoria de carreira       | Remoto      | 12        | Aberta     | Editar · Fechar  |
+  | Organização de evento      | Presencial  | 8         | Aberta     | Editar · Fechar  |
+  | Aulas de reforço           | Presencial  | 15        | Encerrada  | Reabrir          |
+  | Design para redes sociais  | Remoto      | 5         | Aberta     | Editar · Fechar  |
+
+  **Estilo das células:**
+  - VAGA: 15px Bold #1E293B (largura 442px)
+  - MODALIDADE: 14px Regular #1E293B
+  - INSCRITOS: 14px Bold #1E293B
+  - STATUS: badge pill (border-radius 100px, padding 4px 12px, texto 13px Bold)
+    - "Aberta": fundo rgba(5,191,151,0.08), texto #05BF97
+    - "Encerrada": fundo #E2E8F0, texto #475569
+  - AÇÕES: flex horizontal, gap 12px
+    - Botão "Editar": fundo rgba(2,89,225,0.08), radius 8px, padding 6px 12px, texto 13px Bold #0259E1
+    - Botão "Fechar": fundo transparente, borda 1px solid #D9EAF2, radius 8px, padding 6px 12px, texto 13px Bold #64748B
+    - Botão "Reabrir" (para encerradas): fundo rgba(2,89,225,0.08), radius 8px, padding 6px 12px, texto 13px Bold #0259E1
+    - Hover nos botões: opacity 0.8 ou escurecer levemente
+
+=== RESPONSIVIDADE ===
+
+**Breakpoint 1200px:**
+- Main content: padding 24px
+- Coluna VAGA: reduz para 300px, texto pode truncar com ellipsis
+- Card tabela: largura 100%
+
+**Breakpoint 1024px:**
+- Sidebar colapsa: menu hambúrguer no header
+- Main content: 100% largura
+- Tabela: scroll horizontal se necessário (overflow-x: auto)
+
+**Breakpoint 768px:**
+- Header simplificado com hambúrguer
+- Botão "+ Nova Vaga": largura 100%, abaixo do título
+- Tabela muda para formato card/lista vertical:
+  - Cada vaga vira um card com os dados empilhados
+  - Nome da vaga como título do card
+  - Modalidade, Inscritos, Status como labels à esquerda + valor à direita
+  - Ações como botões no rodapé do card
+
+**Breakpoint 480px:**
+- Padding geral: 16px
+- Cards de vaga: largura 100%, padding 16px
+- Botões de ação: largura 100%, empilhados
+
+=== INTERATIVIDADE (JavaScript) ===
+
+1. **Filtro por abas:**
+   - "Todos": mostra todas as linhas
+   - "Abertas": filtra apenas vagas com status "Aberta"
+   - "Encerradas": filtra apenas vagas com status "Encerrada"
+   - Transição suave ao filtrar (fade ou slide)
+
+2. **Botão "+ Nova Vaga":**
+   - Redirecionar para /ong/vagas/nova (página de cadastro de vaga)
+
+3. **Botão "Editar":**
+   - Redirecionar para /ong/vagas/editar/{id}
+
+4. **Botão "Fechar":**
+   - Modal de confirmação: "Tem certeza que deseja encerrar esta vaga?"
+   - Se confirmado: mudar status para "Encerrada" e trocar ações para "Reabrir"
+   - Animação de transição suave no badge de status
+
+5. **Botão "Reabrir":**
+   - Modal de confirmação: "Deseja reabrir esta vaga?"
+   - Se confirmado: mudar status para "Aberta" e restaurar ações "Editar" + "Fechar"
+
+6. **Hover nas linhas da tabela:**
+   - Fundo levemente destacado (rgba(245,250,252,0.5) ou similar)
+   - Cursor pointer
+
+7. **Sidebar:** item "Vagas" ativo com destaque visual
+
+8. **Ordenação (opcional):** clicar no header de coluna ordena a tabela (ascendente/descendente)
+
+=== STACK TECNOLÓGICO ===
+- HTML5 semântico (table, thead, tbody, tr, th, td, button)
+- CSS3 puro (Flexbox, Grid, variáveis CSS, transitions, media queries)
+- JavaScript vanilla (DOM manipulation, event delegation, classList toggle, confirm/modal)
+- Google Fonts: Inter (400, 500, 600, 700, 800)
+- Ícones: Lucide Icons (plus, bell, grid, user, folder, briefcase, users, calendar, heart, file-text, bar-chart, settings, log-out)
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+Crie a página "Gerenciar Voluntários" do painel da ONG na plataforma Movune em HTML, CSS e JavaScript puros (sem frameworks). A página lista os voluntários inscritos na ONG, permitindo filtrar por área de interesse, gerenciar status e realizar ações como aprovar, rejeitar e enviar mensagens. Dimensão de referência desktop: 1440×920px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
+
+=== DESIGN TOKENS GLOBAIS ===
+- Fonte: Inter (Google Fonts), pesos: 400 (Regular), 500 (Medium), 600 (Semi Bold), 700 (Bold), 800 (Extra Bold)
+- Cores principais:
+  - Azul primário: #0259E1
+  - Navy: #011C53
+  - Verde impacto: #05BF97
+  - Amarelo pendente: #F59E0B
+  - Vermelho rejeitar: #EF4444
+  - Texto escuro: #1E293B
+  - Texto médio: #64748B
+  - Texto cinza escuro: #475569
+  - Cinza slate: #E2E8F0
+  - Fundo input/header tabela: #F5FAFC
+  - Borda: #D9EAF2
+  - Branco: #FFFFFF
+  - Fundo badge azul: rgba(2,89,225,0.08)
+  - Fundo badge verde: rgba(5,191,151,0.08)
+  - Fundo badge amarelo: rgba(245,158,11,0.08)
+  - Fundo badge vermelho: rgba(239,68,68,0.08)
+  - Azul hover: #0148B8
+
+=== SEÇÃO 1 — HEADER GLOBAL ONG (80px altura) ===
+(Reutilizar o mesmo header do painel ONG)
+- Largura 100%, altura 80px, fundo branco
+- Padding horizontal 40px, flex horizontal, justify space-between, align center
+- Esquerda: Logo Movune + badge "PAINEL DA ONG"
+- Direita: sino notificação + info do usuário ("Rede Cuidar" / email) + avatar circular
+- Borda inferior: 1px solid #D9EAF2
+
+=== SEÇÃO 2 — LEFT SIDEBAR (280px largura × 100% altura) ===
+(Reutilizar sidebar do painel ONG — item ativo: "Voluntários")
+- Largura 280px, fundo branco, borda direita 1px solid #D9EAF2
+- Padding: 32px 20px, layout vertical, gap 8px
+
+Itens: Painel, Editar Perfil, Projetos, Vagas, **Voluntários** ← ATIVO, Eventos, Doações, Prestação de Contas, Relatórios, Documentos, Configurações
+- Ativo: fundo rgba(2,89,225,0.08), ícone stroke #0259E1, texto 15px Semi Bold #0259E1
+- Normal: fundo transparente, ícone stroke #64748B, texto 15px Medium #64748B
+
+**"Sair do painel" (rodapé):** ícone log-out + texto 15px Medium #EF4444
+
+=== SEÇÃO 3 — MAIN CONTENT (1160px largura) ===
+- Largura: calc(100% - 280px)
+- Padding: 40px
+- Layout vertical, gap 32px
+- Fundo implícito cinza claro (~#F8FAFB)
+
+**3.1 — Título da página (page-title-row):**
+- Layout vertical, gap 6px (sem botão de ação à direita nesta página)
+- Título: "Gerenciar Voluntários" — 28px Extra Bold #011C53
+- Subtítulo: "Visualize as inscrições, gerencie status de atuação e faça contato direto com seus parceiros." — 15px Regular #64748B
+
+**3.2 — Barra de filtros (filters-container, 1080×68px):**
+- Fundo branco, border-radius 12px, borda 1px solid #D9EAF2
+- Padding 20px, flex horizontal, gap 16px, align center
+
+- Label: "Filtros:" — 14px Bold #1E293B
+
+- 4 chips de filtro (border-radius 8px, padding 6px 14px, texto 13px):
+  1. **"Todos os Status"** (ativo): fundo rgba(2,89,225,0.08), texto Semi Bold #0259E1
+  2. **"Educação"**: fundo transparente, borda 1px solid #D9EAF2, texto Regular #64748B
+  3. **"Tecnologia"**: fundo transparente, borda 1px solid #D9EAF2, texto Regular #64748B
+  4. **"Comunicação"**: fundo transparente, borda 1px solid #D9EAF2, texto Regular #64748B
+
+- Hover em chips inativos: fundo rgba(2,89,225,0.04)
+- Clique: ativa o chip (muda para estilo ativo) e filtra a tabela
+
+**3.3 — Card da tabela (table-card, 1080×320px):**
+- Fundo branco, border-radius 16px, borda 1px solid #D9EAF2
+- Layout vertical
+
+  **3.3.1 — Cabeçalho da tabela (table-head, 48px):**
+  - Fundo #F5FAFC, borda inferior 1px solid #D9EAF2
+  - Padding: 16px 24px, flex horizontal
+
+  5 colunas com larguras fixas:
+  | Coluna           | Largura | Texto            |
+  |-----------------|---------|------------------|
+  | VOLUNTÁRIO      | 312px   | "VOLUNTÁRIO"     |
+  | INTERESSE       | 180px   | "INTERESSE"      |
+  | DISPONIBILIDADE | 180px   | "DISPONIBILIDADE"|
+  | STATUS          | 140px   | "STATUS"         |
+  | AÇÕES           | 220px   | "AÇÕES"          |
+
+  Texto: 13px Bold #64748B, text-transform uppercase
+
+  **3.3.2 — Linhas da tabela (4 rows, cada 68px):**
+  - Borda inferior: 1px solid #D9EAF2 (exceto última)
+  - Padding: 20px 24px, flex horizontal, align center
+
+  **Dados das 4 linhas:**
+
+  | Voluntário     | Interesse    | Disponibilidade  | Status    | Ações                   |
+  |---------------|-------------|------------------|-----------|-------------------------|
+  | Ana Silva     | Educação    | Tardes           | Ativo     | Ver perfil · Mensagem   |
+  | Carlos Souza  | Gestão      | Fins de semana   | Ativo     | Ver perfil · Mensagem   |
+  | Maria Santos  | Comunicação | Flexível         | Pendente  | Aprovar · Rejeitar      |
+  | João Oliveira | Tecnologia  | Noites           | Inativo   | Reativar                |
+
+  **Estilo das células:**
+  - VOLUNTÁRIO: 15px Bold #1E293B
+  - INTERESSE: 14px Regular #1E293B
+  - DISPONIBILIDADE: 14px Regular #1E293B
+  - STATUS: badge pill (border-radius 100px, padding 4px 12px, texto 13px Bold)
+    - "Ativo": fundo rgba(5,191,151,0.08), texto #05BF97
+    - "Pendente": fundo rgba(245,158,11,0.08), texto #F59E0B
+    - "Inativo": fundo #E2E8F0, texto #475569
+
+  - AÇÕES: flex horizontal, gap 12px
+    Os botões variam conforme o status:
+
+    **Para status "Ativo":**
+    - "Ver perfil": fundo transparente, borda 1px solid #D9EAF2, radius 8px, padding 6px 12px, texto 13px Bold #1E293B
+    - "Mensagem": fundo rgba(2,89,225,0.08), radius 8px, padding 6px 12px, texto 13px Bold #0259E1
+
+    **Para status "Pendente":**
+    - "Aprovar": fundo rgba(5,191,151,0.08), radius 8px, padding 6px 12px, texto 13px Bold #05BF97
+    - "Rejeitar": fundo rgba(239,68,68,0.08), radius 8px, padding 6px 12px, texto 13px Bold #EF4444
+
+    **Para status "Inativo":**
+    - "Reativar": fundo transparente, borda 1px solid #D9EAF2, radius 8px, padding 6px 12px, texto 13px Bold #0259E1
+
+=== RESPONSIVIDADE ===
+
+**Breakpoint 1200px:**
+- Main content: padding 24px
+- Coluna VOLUNTÁRIO: reduz para 250px
+- Card tabela: largura 100%
+
+**Breakpoint 1024px:**
+- Sidebar colapsa: menu hambúrguer no header
+- Main content: 100% largura
+- Tabela: scroll horizontal (overflow-x: auto)
+- Filtros: scroll horizontal se necessário
+
+**Breakpoint 768px:**
+- Header simplificado com hambúrguer
+- Filtros: wrap em múltiplas linhas (flex-wrap)
+- Tabela muda para formato card/lista vertical:
+  - Cada voluntário vira um card com dados empilhados
+  - Nome como título do card
+  - Interesse, Disponibilidade, Status como pares label:valor
+  - Ações como botões no rodapé do card
+
+**Breakpoint 480px:**
+- Padding geral: 16px
+- Cards: largura 100%, padding 16px
+- Chips de filtro: scroll horizontal compacto
+- Botões de ação: largura 100%, empilhados verticalmente
+
+=== INTERATIVIDADE (JavaScript) ===
+
+1. **Filtros por chips:**
+   - "Todos os Status": mostra todos os voluntários
+   - "Educação": filtra voluntários com interesse "Educação"
+   - "Tecnologia": filtra por "Tecnologia"
+   - "Comunicação": filtra por "Comunicação"
+   - Múltipla seleção possível (toggle): clicar novamente desativa o filtro
+   - O chip "Todos os Status" reseta os demais
+   - Transição suave ao filtrar (fade)
+
+2. **Botão "Ver perfil":**
+   - Redireciona para /voluntario/{id}/perfil
+
+3. **Botão "Mensagem":**
+   - Abre modal de envio de mensagem rápida (campo de texto + botão "Enviar")
+   - Ou redireciona para /ong/mensagens?para={voluntario_id}
+
+4. **Botão "Aprovar":**
+   - Modal de confirmação: "Deseja aprovar Maria Santos como voluntária?"
+   - Se confirmado: muda status para "Ativo" (badge verde) e ações mudam para "Ver perfil" + "Mensagem"
+   - Transição animada no badge
+
+5. **Botão "Rejeitar":**
+   - Modal de confirmação: "Deseja rejeitar a inscrição de Maria Santos?"
+   - Campo opcional para justificativa
+   - Se confirmado: remove a linha ou muda status para "Rejeitado" (badge vermelho)
+
+6. **Botão "Reativar":**
+   - Modal de confirmação: "Deseja reativar João Oliveira?"
+   - Se confirmado: muda status para "Ativo" e ações mudam para "Ver perfil" + "Mensagem"
+
+7. **Hover nas linhas:**
+   - Fundo levemente destacado
+   - Cursor pointer
+
+8. **Sidebar:** item "Voluntários" ativo com destaque visual
+
+9. **Contador de resultados (opcional):** exibir "Mostrando 4 voluntários" abaixo dos filtros
+
+=== STACK TECNOLÓGICO ===
+- HTML5 semântico (table, thead, tbody, tr, th, td, button, dialog para modais)
+- CSS3 puro (Flexbox, Grid, variáveis CSS, transitions, media queries)
+- JavaScript vanilla (DOM manipulation, event delegation, classList toggle, dialogs/modais)
+- Google Fonts: Inter (400, 500, 600, 700, 800)
+- Ícones: Lucide Icons (bell, grid, user, folder, briefcase, users, calendar, heart, file-text, bar-chart, settings, log-out, message-circle, check, x)
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+Crie a página "Gerenciar Eventos" do painel da ONG na plataforma Movune em HTML, CSS e JavaScript puros (sem frameworks). A página lista os eventos organizados pela ONG em formato de tabela com ações contextuais por status. Dimensão de referência desktop: 1440×920px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
+
+=== DESIGN TOKENS GLOBAIS ===
+- Fonte: Inter (Google Fonts), pesos: 400 (Regular), 500 (Medium), 600 (Semi Bold), 700 (Bold), 800 (Extra Bold)
+- Cores principais:
+  - Azul primário: #0259E1
+  - Navy: #011C53
+  - Verde impacto: #05BF97
+  - Vermelho cancelar: #EF4444
+  - Texto escuro: #1E293B
+  - Texto médio: #64748B
+  - Texto cinza escuro: #475569
+  - Cinza slate: #E2E8F0
+  - Fundo header tabela: #F5FAFC
+  - Borda: #D9EAF2
+  - Branco: #FFFFFF
+  - Fundo badge azul: rgba(2,89,225,0.08)
+  - Fundo badge verde: rgba(5,191,151,0.08)
+  - Fundo badge vermelho: rgba(239,68,68,0.08)
+  - Azul hover: #0148B8
+
+=== SEÇÃO 1 — HEADER GLOBAL ONG (80px altura) ===
+(Reutilizar o mesmo header do painel ONG)
+- Largura 100%, altura 80px, fundo branco
+- Padding horizontal 40px, flex horizontal, justify space-between, align center
+- Esquerda: Logo Movune + badge "PAINEL DA ONG"
+- Direita: sino notificação + info do usuário ("Rede Cuidar" / email) + avatar circular
+- Borda inferior: 1px solid #D9EAF2
+
+=== SEÇÃO 2 — LEFT SIDEBAR (280px largura × 100% altura) ===
+(Reutilizar sidebar do painel ONG — item ativo: "Eventos")
+- Largura 280px, fundo branco, borda direita 1px solid #D9EAF2
+- Padding: 32px 20px, layout vertical, gap 8px
+
+Itens: Painel, Editar Perfil, Projetos, Vagas, Voluntários, **Eventos** ← ATIVO, Doações, Prestação de Contas, Relatórios, Documentos, Configurações
+- Ativo: fundo rgba(2,89,225,0.08), ícone stroke #0259E1, texto 15px Semi Bold #0259E1
+- Normal: fundo transparente, ícone stroke #64748B, texto 15px Medium #64748B
+
+**"Sair do painel" (rodapé):** ícone log-out + texto 15px Medium #EF4444
+
+=== SEÇÃO 3 — MAIN CONTENT (1160px largura) ===
+- Largura: calc(100% - 280px)
+- Padding: 40px
+- Layout vertical, gap 32px
+- Fundo implícito cinza claro (~#F8FAFB)
+
+**3.1 — Linha do título (page-title-row):**
+- Flex horizontal, justify space-between, align center
+
+  - Esquerda: layout vertical, gap 6px
+    - Título: "Gerenciar Eventos" — 28px Extra Bold #011C53
+    - Subtítulo: "Organize mutirões, feiras e encontros para integrar seus projetos à comunidade local." — 15px Regular #64748B
+
+  - Direita: Botão "+ Novo Evento"
+    - Fundo #0259E1, border-radius 24px, padding 14px 24px
+    - Flex horizontal, gap 8px, align center
+    - Ícone plus 16px stroke branco + texto "Novo Evento" 15px Bold branco
+    - Hover: fundo #0148B8
+
+**3.2 — Card da tabela (table-card, 1080×252px):**
+- Fundo branco, border-radius 16px, borda 1px solid #D9EAF2
+- Layout vertical
+
+  **3.2.1 — Cabeçalho da tabela (table-head, 48px):**
+  - Fundo #F5FAFC, borda inferior 1px solid #D9EAF2
+  - Padding: 16px 24px, flex horizontal
+
+  6 colunas com larguras fixas:
+  | Coluna     | Largura | Texto       |
+  |-----------|---------|-------------|
+  | EVENTO    | 352px   | "EVENTO"    |
+  | DATA      | 140px   | "DATA"      |
+  | VAGAS     | 100px   | "VAGAS"     |
+  | INSCRITOS | 120px   | "INSCRITOS" |
+  | STATUS    | 140px   | "STATUS"    |
+  | AÇÕES     | 180px   | "AÇÕES"     |
+
+  Texto: 13px Bold #64748B, text-transform uppercase
+
+  **3.2.2 — Linhas da tabela (3 rows, cada 68px):**
+  - Borda inferior: 1px solid #D9EAF2 (exceto última)
+  - Padding: 20px 24px, flex horizontal, align center
+
+  **Dados das 3 linhas:**
+
+  | Evento                          | Data         | Vagas | Inscritos | Status    | Ações               |
+  |--------------------------------|-------------|-------|-----------|-----------|---------------------|
+  | Mutirão de arrecadação         | 25/Out/2026 | 60    | 42        | Aberto    | Editar · Cancelar   |
+  | Workshop de primeiros socorros | 15/Nov/2026 | 30    | 12        | Aberto    | Editar · Cancelar   |
+  | Feira de saúde comunitária     | 10/Dez/2026 | 100   | 0         | Rascunho  | Publicar · Editar   |
+
+  **Estilo das células:**
+  - EVENTO: 15px Bold #1E293B (largura 352px)
+  - DATA: 14px Regular #1E293B (formato dd/Mmm/yyyy)
+  - VAGAS: 14px Regular #1E293B
+  - INSCRITOS: 14px Bold #1E293B
+  - STATUS: badge pill (border-radius 100px, padding 4px 12px, texto 13px Bold)
+    - "Aberto": fundo rgba(5,191,151,0.08), texto #05BF97
+    - "Rascunho": fundo #E2E8F0, texto #475569
+
+  - AÇÕES: flex horizontal, gap 12px
+    Os botões variam conforme o status:
+
+    **Para status "Aberto":**
+    - "Editar": fundo rgba(2,89,225,0.08), radius 8px, padding 6px 12px, texto 13px Bold #0259E1
+    - "Cancelar": fundo rgba(239,68,68,0.08), radius 8px, padding 6px 12px, texto 13px Bold #EF4444
+
+    **Para status "Rascunho":**
+    - "Publicar": fundo rgba(5,191,151,0.08), radius 8px, padding 6px 12px, texto 13px Bold #05BF97
+    - "Editar": fundo transparente, borda 1px solid #D9EAF2, radius 8px, padding 6px 12px, texto 13px Bold #64748B
+
+    Hover em todos os botões: opacity 0.8
+
+=== RESPONSIVIDADE ===
+
+**Breakpoint 1200px:**
+- Main content: padding 24px
+- Coluna EVENTO: reduz para 280px, texto pode truncar com ellipsis
+- Card tabela: largura 100%
+
+**Breakpoint 1024px:**
+- Sidebar colapsa: menu hambúrguer no header
+- Main content: 100% largura
+- Tabela: scroll horizontal (overflow-x: auto)
+
+**Breakpoint 768px:**
+- Header simplificado com hambúrguer
+- Botão "+ Novo Evento": largura 100%, abaixo do título
+- Tabela muda para formato card/lista vertical:
+  - Cada evento vira um card com dados empilhados
+  - Nome do evento como título do card
+  - Data, Vagas, Inscritos, Status como pares label:valor
+  - Ações como botões no rodapé do card
+
+**Breakpoint 480px:**
+- Padding geral: 16px
+- Cards de evento: largura 100%, padding 16px
+- Botões de ação: largura 100%, empilhados verticalmente
+
+=== INTERATIVIDADE (JavaScript) ===
+
+1. **Botão "+ Novo Evento":**
+   - Redirecionar para /ong/eventos/novo (página de cadastro de evento)
+
+2. **Botão "Editar":**
+   - Redirecionar para /ong/eventos/editar/{id}
+
+3. **Botão "Cancelar":**
+   - Modal de confirmação: "Tem certeza que deseja cancelar o evento '{nome}'? Esta ação não poderá ser desfeita."
+   - Se confirmado: muda status para "Cancelado" (novo badge: fundo rgba(239,68,68,0.08), texto #EF4444)
+   - Ações mudam para apenas "Reabrir" (opcional)
+   - Animação de transição suave no badge
+
+4. **Botão "Publicar":**
+   - Modal de confirmação: "Deseja publicar o evento '{nome}'? Ele ficará visível para todos os usuários."
+   - Se confirmado: muda status para "Aberto" (badge verde) e ações mudam para "Editar" + "Cancelar"
+   - Feedback visual: toast "Evento publicado com sucesso!"
+
+5. **Hover nas linhas da tabela:**
+   - Fundo levemente destacado (rgba(245,250,252,0.5))
+   - Cursor pointer
+
+6. **Sidebar:** item "Eventos" ativo com destaque visual
+
+7. **Ordenação (opcional):** clicar no header "DATA" ordena por data (ascendente/descendente)
+
+8. **Indicador de ocupação (opcional):** exibir barra de progresso sutil na coluna INSCRITOS mostrando a proporção inscritos/vagas
+
+=== STACK TECNOLÓGICO ===
+- HTML5 semântico (table, thead, tbody, tr, th, td, button, dialog)
+- CSS3 puro (Flexbox, Grid, variáveis CSS, transitions, media queries)
+- JavaScript vanilla (DOM manipulation, event delegation, classList toggle, confirm/modais)
+- Google Fonts: Inter (400, 500, 600, 700, 800)
+- Ícones: Lucide Icons (plus, bell, grid, user, folder, briefcase, users, calendar, heart, file-text, bar-chart, settings, log-out)
+
+
+
+-------------------------------------------------------------------------------------------------------------
+
+Crie a página "Gerenciar Doações" do painel da ONG na plataforma Movune em HTML, CSS e JavaScript puros (sem frameworks). A página exibe KPIs de doações recebidas e uma tabela detalhada de todas as doações (financeiras e materiais) com seus respectivos status. Dimensão de referência desktop: 1440×920px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
+
+=== DESIGN TOKENS GLOBAIS ===
+- Fonte: Inter (Google Fonts), pesos: 400 (Regular), 500 (Medium), 600 (Semi Bold), 700 (Bold), 800 (Extra Bold)
+- Cores principais:
+  - Azul primário: #0259E1
+  - Navy: #011C53
+  - Verde impacto: #05BF97
+  - Amarelo pendente: #F59E0B
+  - Texto escuro: #1E293B
+  - Texto médio: #64748B
+  - Fundo header tabela: #F5FAFC
+  - Borda: #D9EAF2
+  - Vermelho: #EF4444
+  - Branco: #FFFFFF
+  - Fundo badge verde: rgba(5,191,151,0.08)
+  - Fundo badge amarelo: rgba(245,158,11,0.08)
+
+=== SEÇÃO 1 — HEADER GLOBAL ONG (80px altura) ===
+(Reutilizar o mesmo header do painel ONG)
+- Largura 100%, altura 80px, fundo branco
+- Padding horizontal 40px, flex horizontal, justify space-between, align center
+- Esquerda: Logo Movune + badge "PAINEL DA ONG"
+- Direita: sino notificação + info do usuário ("Rede Cuidar" / email) + avatar circular
+- Borda inferior: 1px solid #D9EAF2
+
+=== SEÇÃO 2 — LEFT SIDEBAR (280px largura × 100% altura) ===
+(Reutilizar sidebar do painel ONG — item ativo: "Doações")
+- Largura 280px, fundo branco, borda direita 1px solid #D9EAF2
+- Padding: 32px 20px, layout vertical, gap 8px
+
+Itens: Painel, Editar Perfil, Projetos, Vagas, Voluntários, Eventos, **Doações** ← ATIVO, Prestação de Contas, Relatórios, Documentos, Configurações
+- Ativo: fundo rgba(2,89,225,0.08), ícone stroke #0259E1, texto 15px Semi Bold #0259E1
+- Normal: fundo transparente, ícone stroke #64748B, texto 15px Medium #64748B
+
+**"Sair do painel" (rodapé):** ícone log-out + texto 15px Medium #EF4444
+
+=== SEÇÃO 3 — MAIN CONTENT (1160px largura) ===
+- Largura: calc(100% - 280px)
+- Padding: 40px
+- Layout vertical, gap 32px
+- Fundo implícito cinza claro (~#F8FAFB)
+
+**3.1 — Título da página (page-title-row):**
+- Layout vertical, gap 6px (sem botão de ação à direita nesta página)
+- Título: "Gerenciar Doações" — 28px Extra Bold #011C53
+- Subtítulo: "Acompanhe doações financeiras e materiais destinadas aos seus projetos e ações." — 15px Regular #64748B
+
+**3.2 — KPI Cards (kpi-row, 1080×138px):**
+- Flex horizontal, gap 24px
+- 3 cards iguais, cada 344×138px
+
+**Cada KPI Card:**
+- Fundo branco, border-radius 16px, borda 1px solid #D9EAF2
+- Padding 24px, layout vertical, gap 12px
+
+Dados dos 3 cards:
+
+1. **Total Recebido:**
+   - Label: "Total Recebido" — 14px Semi Bold #64748B
+   - Valor: "R$ 45.200" — 28px Extra Bold #011C53
+   - Sub: "Histórico consolidado" — 12px Bold #05BF97
+
+2. **Este Mês:**
+   - Label: "Este Mês" — 14px Semi Bold #64748B
+   - Valor: "R$ 4.200" — 28px Extra Bold #0259E1
+   - Sub: "+12% em relação a agosto" — 12px Regular #64748B
+
+3. **Doadores Únicos:**
+   - Label: "Doadores Únicos" — 14px Semi Bold #64748B
+   - Valor: "87" — 28px Extra Bold #05BF97
+   - Sub: "Indivíduos e empresas" — 12px Regular #64748B
+
+**3.3 — Card da tabela (table-card, 1080×304px):**
+- Fundo branco, border-radius 16px, borda 1px solid #D9EAF2
+- Layout vertical
+
+  **3.3.1 — Cabeçalho da tabela (table-head, 48px):**
+  - Fundo #F5FAFC, borda inferior 1px solid #D9EAF2
+  - Padding: 16px 24px, flex horizontal
+
+  6 colunas com larguras fixas:
+  | Coluna      | Largura | Texto        |
+  |------------|---------|--------------|
+  | ORIGEM     | 312px   | "ORIGEM"     |
+  | TIPO       | 140px   | "TIPO"       |
+  | VALOR/ITEM | 140px   | "VALOR/ITEM" |
+  | DESTINO    | 200px   | "DESTINO"    |
+  | DATA       | 100px   | "DATA"       |
+  | STATUS     | 140px   | "STATUS"     |
+
+  Texto: 13px Bold #64748B, text-transform uppercase
+
+  **3.3.2 — Linhas da tabela (4 rows, cada 64px):**
+  - Borda inferior: 1px solid #D9EAF2 (exceto última)
+  - Padding: 20px 24px, flex horizontal, align center
+
+  **Dados das 4 linhas:**
+
+  | Origem        | Tipo       | Valor/Item | Destino              | Data   | Status     |
+  |--------------|-----------|------------|----------------------|--------|------------|
+  | Ana Silva    | Financeira | R$ 500     | Biblioteca de bairro | 10/Set | Confirmada |
+  | Carlos Souza | Financeira | R$ 250     | Cozinha solidária    | 15/Set | Confirmada |
+  | Maria Santos | Itens      | 50 livros  | Biblioteca de bairro | 20/Set | Recebida   |
+  | Empresa XYZ  | Financeira | R$ 2.000   | Saúde na comunidade  | 25/Set | Pendente   |
+
+  **Estilo das células:**
+  - ORIGEM: 15px Bold #1E293B
+  - TIPO: 14px Regular #1E293B
+  - VALOR/ITEM:
+    - Valores financeiros (R$): 14px Bold #0259E1 (azul para destaque)
+    - Itens materiais (ex: "50 livros"): 14px Bold #1E293B (escuro)
+  - DESTINO: 14px Regular #1E293B
+  - DATA: 14px Regular #64748B (formato dd/Mmm abreviado)
+  - STATUS: badge pill (border-radius 100px, padding 4px 12px, texto 13px Bold)
+    - "Confirmada": fundo rgba(5,191,151,0.08), texto #05BF97
+    - "Recebida": fundo rgba(5,191,151,0.08), texto #05BF97
+    - "Pendente": fundo rgba(245,158,11,0.08), texto #F59E0B
+
+=== RESPONSIVIDADE ===
+
+**Breakpoint 1200px:**
+- Main content: padding 24px
+- KPI cards: 3 colunas com flex-wrap (podem ir para 2+1 se necessário)
+- Coluna ORIGEM: reduz para 250px
+
+**Breakpoint 1024px:**
+- Sidebar colapsa: menu hambúrguer no header
+- Main content: 100% largura
+- KPI cards: 3 colunas mantidas (cada ~33%)
+- Tabela: scroll horizontal (overflow-x: auto)
+
+**Breakpoint 768px:**
+- Header simplificado com hambúrguer
+- KPI cards: empilham em 1 coluna (cada 100% largura)
+- Tabela muda para formato card/lista vertical:
+  - Cada doação vira um card com dados empilhados
+  - Origem como título do card
+  - Tipo, Valor/Item, Destino, Data, Status como pares label:valor
+  - Badge de status no canto superior direito do card
+
+**Breakpoint 480px:**
+- Padding geral: 16px
+- KPI cards: largura 100%, padding 16px
+- Cards de doação: largura 100%, padding 16px
+
+=== INTERATIVIDADE (JavaScript) ===
+
+1. **KPI Cards:**
+   - Animação de contagem (countUp) ao entrar no viewport com Intersection Observer
+   - Hover: leve elevação (box-shadow sutil)
+
+2. **Hover nas linhas da tabela:**
+   - Fundo levemente destacado (rgba(245,250,252,0.5))
+   - Cursor pointer
+
+3. **Clique na linha (opcional):**
+   - Abre detalhes da doação (modal ou redireciona para /ong/doacoes/{id})
+   - Mostra informações completas: doador, método de pagamento, comprovante, mensagem
+
+4. **Filtros (opcional, melhorar UX):**
+   - Filtrar por tipo (Financeira / Itens)
+   - Filtrar por status (Confirmada / Recebida / Pendente)
+   - Filtrar por período (date range picker)
+
+5. **Exportar (opcional):**
+   - Botão "Exportar CSV" para download dos dados da tabela
+
+6. **Status "Pendente":**
+   - Para doações pendentes, possibilidade de marcar como "Confirmada" (botão contextual ao hover ou no modal de detalhes)
+
+7. **Sidebar:** item "Doações" ativo com destaque visual
+
+8. **Ordenação:** clicar nos headers ordena a tabela (DATA ascendente/descendente, VALOR ordenação numérica)
+
+=== STACK TECNOLÓGICO ===
+- HTML5 semântico (table, thead, tbody, tr, th, td, section)
+- CSS3 puro (Flexbox, Grid, variáveis CSS, transitions, media queries)
+- JavaScript vanilla (Intersection Observer para countUp, DOM manipulation, event delegation)
+- Google Fonts: Inter (400, 500, 600, 700, 800)
+- Ícones: Lucide Icons (bell, grid, user, folder, briefcase, users, calendar, heart, file-text, bar-chart, settings, log-out, download)
+
+
+---------------------------------------------------------------------------------------------
+
+
+Crie a página "Prestação de Contas" do painel da ONG na plataforma Movune em HTML, CSS e JavaScript puros (sem frameworks). A página permite registrar lançamentos financeiros (receitas e despesas) e exibe um histórico de lançamentos em tabela. Dimensão de referência desktop: 1440×1150px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
+
+=== DESIGN TOKENS GLOBAIS ===
+- Fonte: Inter (Google Fonts), pesos: 400 (Regular), 500 (Medium), 600 (Semi Bold), 700 (Bold), 800 (Extra Bold)
+- Cores principais:
+  - Azul primário: #0259E1
+  - Navy: #011C53
+  - Verde impacto: #05BF97
+  - Vermelho despesa: #EF4444
+  - Amarelo pendente: #F59E0B
+  - Texto escuro: #1E293B
+  - Texto médio: #64748B
+  - Fundo input: #F5FAFC
+  - Borda: #D9EAF2
+  - Branco: #FFFFFF
+  - Fundo badge verde: rgba(5,191,151,0.08)
+  - Fundo badge amarelo: rgba(245,158,11,0.08)
+  - Fundo badge azul: rgba(2,89,225,0.08)
+  - Azul hover: #0148B8
+
+=== SEÇÃO 1 — HEADER GLOBAL ONG (80px altura) ===
+(Reutilizar o mesmo header do painel ONG)
+- Largura 100%, altura 80px, fundo branco
+- Padding horizontal 40px, flex horizontal, justify space-between, align center
+- Esquerda: Logo Movune + badge "PAINEL DA ONG"
+- Direita: sino notificação + info do usuário ("Rede Cuidar" / email) + avatar circular
+- Borda inferior: 1px solid #D9EAF2
+
+=== SEÇÃO 2 — LEFT SIDEBAR (280px largura × 100% altura) ===
+(Reutilizar sidebar do painel ONG — item ativo: "Prestação de Contas")
+- Largura 280px, fundo branco, borda direita 1px solid #D9EAF2
+- Padding: 32px 20px, layout vertical, gap 8px
+
+Itens: Painel, Editar Perfil, Projetos, Vagas, Voluntários, Eventos, Doações, **Prestação de Contas** ← ATIVO, Relatórios, Documentos, Configurações
+- Ativo: fundo rgba(2,89,225,0.08), ícone stroke #0259E1, texto 15px Semi Bold #0259E1
+- Normal: fundo transparente, ícone stroke #64748B, texto 15px Medium #64748B
+
+**"Sair do painel" (rodapé):** ícone log-out + texto 15px Medium #EF4444
+
+=== SEÇÃO 3 — MAIN CONTENT (1160px largura) ===
+- Largura: calc(100% - 280px)
+- Padding: 40px
+- Layout vertical, gap 32px
+- Fundo implícito cinza claro (~#F8FAFB)
+
+**3.1 — Linha do título:**
+- Flex horizontal, justify space-between, align center
+
+  - Esquerda: layout vertical, gap 6px
+    - Título: "Prestação de Contas" — 28px Extra Bold #011C53
+    - Subtítulo: "Gerencie as receitas, despesas e relatórios financeiros dos seus projetos sociais." — 15px Regular #64748B
+
+  - Direita: Botão "+ Novo lançamento"
+    - Fundo #0259E1, border-radius 24px, padding 14px 24px
+    - Flex horizontal, gap 8px, align center
+    - Ícone plus 16px stroke branco + texto "Novo lançamento" 15px Bold branco
+    - Hover: fundo #0148B8
+
+**3.2 — Card do formulário "Registrar Lançamento Financeiro" (1080×405px):**
+- Fundo branco, border-radius 16px, borda 1px solid #D9EAF2
+- Padding 32px, layout vertical, gap 24px
+
+  **Título do formulário:** "Registrar Lançamento Financeiro" — 18px Extra Bold #011C53
+
+  **Campos do formulário (layout vertical, gap 16px):**
+
+  **Linha 1 (2 campos, flex horizontal, gap 24px):**
+
+  - Campo "Projeto Social" (496px largura):
+    - Label: "Projeto Social" — 14px Semi Bold #1E293B
+    - Select/dropdown: fundo #F5FAFC, border 1px solid #D9EAF2, border-radius 8px
+    - Padding 12px 16px, flex space-between
+    - Valor selecionado: "Biblioteca de Bairro" 14px Regular #1E293B
+    - Ícone chevron-down 16px à direita, stroke #64748B
+
+  - Campo "Tipo de Lançamento" (496px largura):
+    - Label: "Tipo de Lançamento" — 14px Semi Bold #1E293B
+    - **Segmented control (toggle switch):**
+      - Container: fundo #F5FAFC, border-radius 8px, padding 4px
+      - 2 opções lado a lado, cada ~244px:
+        - **"Receita" (ativo):** fundo branco, border-radius 6px, padding 8px 16px, texto 14px Bold #0259E1, sombra sutil
+        - **"Despesa" (inativo):** fundo transparente, padding 8px 16px, texto 14px Medium #64748B
+
+  **Linha 2 (2 campos, flex horizontal, gap 24px):**
+
+  - Campo "Descrição do Lançamento" (652px largura):
+    - Label: "Descrição do Lançamento" — 14px Semi Bold #1E293B
+    - Input: fundo #F5FAFC, border 1px solid #D9EAF2, border-radius 8px, padding 12px 16px
+    - Placeholder: "Ex: Aquisição de livros infantis..." 14px Regular #64748B
+
+  - Campo "Valor (R$)" (340px largura):
+    - Label: "Valor (R$)" — 14px Semi Bold #1E293B
+    - Input numérico: mesma estilização, valor padrão "0,00" 14px Regular #1E293B
+
+  **Linha 3 (2 campos, flex horizontal, gap 24px):**
+
+  - Campo "Data do Fato Gerador" (340px largura):
+    - Label: "Data do Fato Gerador" — 14px Semi Bold #1E293B
+    - Input date: fundo #F5FAFC, borda, radius 8px, padding 12px 16px
+    - Placeholder: "DD/MM/AAAA" 14px Regular #1E293B
+    - Ícone calendar 16px à direita, stroke #64748B
+
+  - Campo "Comprovante / Recibo" (652px largura):
+    - Label: "Comprovante / Recibo" — 14px Semi Bold #1E293B
+    - Área de upload inline: fundo #F5FAFC, borda, radius 8px, padding 12px 16px
+    - Flex horizontal, gap 8px, align center
+    - Ícone upload-cloud 16px stroke #0259E1
+    - "Clique para fazer upload" 14px Semi Bold #0259E1
+    - "ou arraste o arquivo aqui (PDF, PNG, JPG)" 14px Regular #64748B
+    - Input file hidden ativado ao clicar
+
+  **Botão "Registrar Lançamento" (alinhado à direita):**
+  - Fundo #0259E1, border-radius 8px, padding 12px 32px
+  - Texto: "Registrar Lançamento" 14px Bold branco
+  - Hover: fundo #0148B8
+
+**3.3 — Card da tabela de lançamentos (table-card, 1080×300px):**
+- Fundo branco, border-radius 16px, borda 1px solid #D9EAF2
+- Layout vertical
+
+  **3.3.1 — Cabeçalho da tabela (48px):**
+  - Fundo #F5FAFC, borda inferior 1px solid #D9EAF2
+  - Padding: 16px 24px, flex horizontal
+
+  6 colunas:
+  | Coluna       | Largura | Texto         |
+  |-------------|---------|---------------|
+  | LANÇAMENTO  | 251px   | "LANÇAMENTO"  |
+  | PROJETO     | 251px   | "PROJETO"     |
+  | TIPO        | 120px   | "TIPO"        |
+  | VALOR       | 150px   | "VALOR"       |
+  | DATA        | 120px   | "DATA"        |
+  | SITUAÇÃO    | 140px   | "SITUAÇÃO"    |
+
+  Texto: 13px Bold #64748B, text-transform uppercase
+
+  **3.3.2 — Linhas da tabela (4 rows, cada 63px):**
+  - Borda inferior: 1px solid #D9EAF2 (exceto última)
+  - Padding: 20px 24px, flex horizontal, align center
+
+  **Dados das 4 linhas:**
+
+  | Lançamento          | Projeto              | Tipo    | Valor    | Data   | Situação   |
+  |--------------------|----------------------|---------|----------|--------|------------|
+  | Compra de livros   | Biblioteca de bairro | Despesa | R$ 3.200 | 05/Set | Aprovado   |
+  | Doação Empresa XYZ | Cozinha solidária    | Receita | R$ 2.000 | 10/Set | Aprovado   |
+  | Aluguel de espaço  | Saúde na comunidade  | Despesa | R$ 1.500 | 15/Set | Pendente   |
+  | Material didático  | Biblioteca de bairro | Despesa | R$ 800   | 20/Set | Em análise |
+
+  **Estilo das células:**
+  - LANÇAMENTO: 15px Bold #1E293B
+  - PROJETO: 14px Regular #64748B
+  - TIPO: 14px Semi Bold, cor condicional:
+    - "Receita": #05BF97 (verde)
+    - "Despesa": #EF4444 (vermelho)
+  - VALOR: 14px Bold #1E293B
+  - DATA: 14px Regular #64748B (formato dd/Mmm)
+  - SITUAÇÃO: badge pill (border-radius 100px, padding 4px 12px, texto 12px Bold)
+    - "Aprovado": fundo rgba(5,191,151,0.08), texto #05BF97
+    - "Pendente": fundo rgba(245,158,11,0.08), texto #F59E0B
+    - "Em análise": fundo rgba(2,89,225,0.08), texto #0259E1
+
+=== RESPONSIVIDADE ===
+
+**Breakpoint 1200px:**
+- Main content: padding 24px
+- Formulário: campos empilham (cada linha vira 1 coluna)
+- Colunas LANÇAMENTO e PROJETO reduzem
+
+**Breakpoint 1024px:**
+- Sidebar colapsa: menu hambúrguer no header
+- Main content: 100% largura
+- Tabela: scroll horizontal (overflow-x: auto)
+- Formulário: todos os campos em 1 coluna
+
+**Breakpoint 768px:**
+- Header simplificado com hambúrguer
+- Botão "+ Novo lançamento": largura 100%, abaixo do título
+- Card formulário: padding 20px
+- Tabela muda para formato card/lista vertical
+- Segmented control mantém 2 opções lado a lado
+
+**Breakpoint 480px:**
+- Padding geral: 16px
+- Todos os campos: largura 100%
+- Botão "Registrar": largura 100%
+- Cards de lançamento: largura 100%
+
+=== INTERATIVIDADE (JavaScript) ===
+
+1. **Segmented control (Tipo de Lançamento):**
+   - Clique em "Receita" ou "Despesa" alterna a seleção
+   - Ativo: fundo branco, texto Bold azul, box-shadow sutil
+   - Inativo: fundo transparente, texto Medium cinza
+   - Transição suave (200ms ease)
+
+2. **Select "Projeto Social":**
+   - Dropdown customizado ou <select> nativo
+   - Opções: Biblioteca de Bairro, Cozinha Solidária, Saúde na Comunidade, Horta na Escola
+   - Chevron rotaciona ao abrir
+
+3. **Campo "Valor (R$)":**
+   - Máscara monetária: aceitar apenas números, formatar com vírgula decimal e pontos de milhar
+   - Exemplo: digitando "3200" → exibe "3.200,00"
+
+4. **Campo "Data do Fato Gerador":**
+   - Input type="date" ou date picker customizado
+   - Ícone calendar clicável para abrir o picker
+
+5. **Upload de comprovante:**
+   - Clicar abre file picker (accept=".pdf,.png,.jpg,.jpeg")
+   - Suportar drag & drop
+   - Validar tipo e tamanho (máx 5MB)
+   - Após upload: mostrar nome do arquivo + botão X para remover
+
+6. **Botão "Registrar Lançamento":**
+   - Validar campos obrigatórios antes de submeter
+   - Se válido: adicionar nova linha no topo da tabela com animação (slide-in)
+   - Limpar formulário após registro
+   - Toast: "Lançamento registrado com sucesso!"
+   - Se inválido: destacar campos problemáticos com borda vermelha
+
+7. **Botão "+ Novo lançamento" (no header):**
+   - Scroll suave até o formulário (scroll-into-view)
+   - Ou alternativamente: expandir/colapsar o card do formulário
+
+8. **Hover nas linhas da tabela:**
+   - Fundo levemente destacado
+   - Cursor pointer
+
+9. **Sidebar:** item "Prestação de Contas" ativo
+
+10. **Filtros na tabela (opcional):** filtrar por tipo (Receita/Despesa), por situação, por projeto
+
+=== STACK TECNOLÓGICO ===
+- HTML5 semântico (form, fieldset, label, input, select, table, button, dialog)
+- CSS3 puro (Flexbox, Grid, variáveis CSS, transitions, media queries)
+- JavaScript vanilla (FormData, FileReader, input masks, DOM manipulation, drag & drop)
+- Google Fonts: Inter (400, 500, 600, 700, 800)
+- Ícones: Lucide Icons (plus, upload-cloud, calendar, chevron-down, bell, grid, user, folder, briefcase, users, calendar, heart, file-text, bar-chart, settings, log-out)
+
+
+--------------------------------------------------------------------------------------------
+
+Crie a página "Relatórios" do painel da ONG na plataforma Movune em HTML, CSS e JavaScript puros (sem frameworks). A página apresenta KPIs de desempenho, um gráfico de barras de arrecadação mensal e um gráfico de rosca (donut) de distribuição por categoria, além de botões de exportação. Dimensão de referência desktop: 1440×1100px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
+
+=== DESIGN TOKENS GLOBAIS ===
+- Fonte: Inter (Google Fonts), pesos: 400 (Regular), 500 (Medium), 600 (Semi Bold), 700 (Bold), 800 (Extra Bold)
+- Cores principais:
+  - Azul primário: #0259E1
+  - Navy: #011C53
+  - Verde impacto: #05BF97
+  - Cyan: #08C4E7
+  - Texto escuro: #1E293B
+  - Texto médio: #64748B
+  - Fundo input: #F5FAFC
+  - Borda: #D9EAF2
+  - Vermelho: #EF4444
+  - Branco: #FFFFFF
+  - Fundo badge azul: rgba(2,89,225,0.08)
+  - Fundo badge verde: rgba(5,191,151,0.08)
+  - Fundo badge cyan: rgba(8,196,231,0.08)
+  - Fundo badge navy: rgba(1,28,83,0.07)
+
+=== SEÇÃO 1 — HEADER GLOBAL ONG (80px altura) ===
+(Reutilizar o mesmo header do painel ONG)
+
+=== SEÇÃO 2 — LEFT SIDEBAR (280px largura × 100% altura) ===
+(Reutilizar sidebar do painel ONG — item ativo: "Relatórios")
+Itens: Painel, Editar Perfil, Projetos, Vagas, Voluntários, Eventos, Doações, Prestação de Contas, **Relatórios** ← ATIVO, Documentos, Configurações
+
+=== SEÇÃO 3 — MAIN CONTENT (1160px largura) ===
+- Largura: calc(100% - 280px)
+- Padding: 40px
+- Layout vertical, gap 32px
+
+**3.1 — Linha do título:**
+- Flex horizontal, justify space-between, align center
+
+  - Esquerda: layout vertical, gap 6px
+    - Título: "Relatórios" — 28px Extra Bold #011C53
+    - Subtítulo: "Acompanhe o crescimento financeiro, operacional e o impacto social gerado pela sua instituição." — 15px Regular #64748B
+
+  - Direita: 3 botões de exportação (flex horizontal, gap 12px)
+
+    1. **Botão "PDF":**
+       - Fundo branco, borda 1px solid #D9EAF2, border-radius 8px
+       - Padding 10px 16px, flex horizontal, gap 8px, align center
+       - Ícone download 14px stroke #64748B + texto "PDF" 14px Semi Bold #1E293B
+
+    2. **Botão "CSV":**
+       - Mesmo estilo do PDF
+       - Ícone download + texto "CSV" 14px Semi Bold #1E293B
+
+    3. **Botão "Excel":**
+       - Fundo #0259E1, border-radius 8px
+       - Padding 10px 16px, flex horizontal, gap 8px, align center
+       - Ícone download 14px stroke branco + texto "Excel" 14px Semi Bold branco
+       - Hover: fundo #0148B8
+
+**3.2 — KPI Cards (kpi-row, 1080×158px):**
+- Flex horizontal, gap 24px
+- 4 cards, cada 252×158px
+
+**Cada KPI Card:**
+- Fundo branco, border-radius 16px, borda 1px solid #D9EAF2
+- Padding 24px, layout vertical, gap 16px
+
+  - **Header do card:** flex horizontal, justify space-between, align center
+    - Label: 14px Semi Bold #64748B
+    - Ícone circular: 40×40px, border-radius 20px (círculo), fundo com cor temática (opacity 0.08)
+      - Ícone 20px stroke com cor correspondente
+
+  - **Valores:** layout vertical, gap 4px
+    - Valor principal: 28px Extra Bold #1E293B
+    - Subtexto: 13px Medium #05BF97
+
+Dados dos 4 cards:
+
+1. **Total Arrecadado:**
+   - Ícone: coins, fundo rgba(2,89,225,0.08), ícone stroke #0259E1
+   - Valor: "R$ 45.200"
+   - Sub: "+15% este mês" (verde)
+
+2. **Voluntários Ativos:**
+   - Ícone: users, fundo rgba(5,191,151,0.08), ícone stroke #05BF97
+   - Valor: "23"
+   - Sub: "+4 novos voluntários" (verde)
+
+3. **Projetos Ativos:**
+   - Ícone: folder, fundo rgba(8,196,231,0.08), ícone stroke #08C4E7
+   - Valor: "5"
+   - Sub: "+1 novo projeto" (verde)
+
+4. **Impacto Estimado:**
+   - Ícone: award, fundo rgba(1,28,83,0.07), ícone stroke #011C53
+   - Valor: "1.200"
+   - Sub: "Beneficiados diretos" (verde)
+
+**3.3 — Gráficos (2 cards lado a lado, flex horizontal, gap 24px):**
+
+  **3.3.1 — Gráfico de Barras "Arrecadação Mensal" (596×330px):**
+  - Fundo branco, border-radius 16px, borda 1px solid #D9EAF2
+  - Padding 32px, layout vertical, gap 24px
+  - Título: "Arrecadação Mensal (Últimos 6 Meses)" — 18px Extra Bold #011C53
+
+  **Área do gráfico (532×220px):**
+  - Layout horizontal: eixo Y à esquerda + barras à direita
+
+  - **Eixo Y (labels):** layout vertical, justify space-between
+    - Labels: "12K", "9K", "6K", "3K", "0" — 12px Regular #64748B
+    - Linhas horizontais pontilhadas ou sutis de grid (opcional)
+
+  - **Barras:** 6 barras verticais espaçadas uniformemente, largura 40px cada
+    - Cor de preenchimento: #0259E1 (azul sólido)
+    - Border-radius no topo: 4px (arredondamento sutil)
+    - Valores acima de cada barra: 12px Semi Bold #0259E1
+
+  - **Eixo X (meses):** abaixo de cada barra
+    - Labels: "Abr", "Mai", "Jun", "Jul", "Ago", "Set" — 12px Regular #64748B
+
+  Dados das barras (valor → altura proporcional):
+  | Mês | Valor    | Altura relativa |
+  |-----|----------|-----------------|
+  | Abr | R$ 3.100 | ~26%            |
+  | Mai | R$ 5.200 | ~43%            |
+  | Jun | R$ 4.500 | ~38%            |
+  | Jul | R$ 7.800 | ~65%            |
+  | Ago | R$ 8.900 | ~74%            |
+  | Set | R$ 11.200| ~93% (mais alto)|
+
+  **3.3.2 — Gráfico Donut "Distribuição por Categoria" (460×409px):**
+  - Fundo branco, border-radius 16px, borda 1px solid #D9EAF2
+  - Padding 32px, layout vertical, gap 24px
+  - Título: "Distribuição por Categoria" — 18px Extra Bold #011C53
+
+  **Gráfico donut (160×160px, centralizado):**
+  - Gráfico de rosca com 3 segmentos coloridos
+  - Espessura do anel: ~30px (buraco central ~100px diâmetro)
+  - Cores dos segmentos:
+    1. Azul #0259E1 — 50%
+    2. Verde #05BF97 — 28%
+    3. Cyan #08C4E7 — 22%
+  - Usar SVG ou Canvas para desenhar o donut
+
+  **Legenda (abaixo do donut):**
+  - Layout vertical, gap 12px
+  - Cada item: flex horizontal, justify space-between
+    - Esquerda: bolinha 10px (cor correspondente) + label 14px Regular #64748B, gap 8px
+    - Direita: porcentagem 14px Bold #1E293B
+
+  3 itens de legenda:
+  1. 🔵 "Alimentação & Cozinha" — "50%"
+  2. 🟢 "Livros & Educação" — "28%"
+  3. 🔵(cyan) "Infraestrutura & Espaço" — "22%"
+
+=== RESPONSIVIDADE ===
+
+**Breakpoint 1200px:**
+- Main content: padding 24px
+- KPI cards: 2×2 grid
+- Gráficos: empilham verticalmente (1 coluna), cada 100% largura
+
+**Breakpoint 1024px:**
+- Sidebar colapsa: menu hambúrguer
+- Main content: 100% largura
+- KPI cards: 2×2 grid
+- Gráficos: 1 coluna
+
+**Breakpoint 768px:**
+- Header simplificado
+- KPI cards: 1 coluna
+- Botões de exportação: abaixo do título, flex-wrap
+- Gráfico de barras: scroll horizontal se necessário
+- Gráfico donut: centralizado, largura 100%
+
+**Breakpoint 480px:**
+- Padding: 16px
+- KPI cards: 1 coluna, largura 100%
+- Botões de exportação: empilhados
+- Gráficos: padding reduzido, ajustar tamanho do donut
+
+=== INTERATIVIDADE (JavaScript) ===
+
+1. **KPI Cards:**
+   - Contagem animada (countUp) ao entrar no viewport
+   - Hover: leve elevação (box-shadow)
+
+2. **Gráfico de Barras:**
+   - Animação de entrada: barras crescem de baixo para cima (CSS transition + Intersection Observer)
+   - Hover em cada barra: tooltip com valor formatado ("R$ 11.200")
+   - Opcionalmente mudar cor ao hover (mais claro: rgba(2,89,225,0.8))
+
+3. **Gráfico Donut:**
+   - Animação de entrada: gráfico desenha em sentido horário (CSS stroke-dasharray animation com SVG)
+   - Hover em segmento: destaque (ligeiramente separar do centro) + tooltip com categoria e valor
+   - Opcionalmente: centro do donut exibe total ao hover (ex: "R$ 45.200")
+
+4. **Botões de Exportação:**
+   - "PDF": gerar PDF do relatório (usar window.print() ou jsPDF como referência)
+   - "CSV": exportar dados em formato CSV para download
+   - "Excel": exportar em formato XLSX (ou .csv com extensão .xls como fallback)
+   - Feedback visual ao clicar (loading spinner breve + "Download iniciado")
+
+5. **Sidebar:** item "Relatórios" ativo
+
+6. **Filtro de período (opcional):** adicionar seletor de período no topo (últimos 3 meses, 6 meses, 1 ano)
+
+=== IMPLEMENTAÇÃO DOS GRÁFICOS ===
+
+**Gráfico de Barras (CSS puro ou Canvas):**
+```css
+.bar {
+  width: 40px;
+  background: #0259E1;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.8s ease-out;
+}
+Cada barra é um div dentro de um container flex (align-items: flex-end)
+Altura calculada proporcionalmente ao valor máximo (R$ 12.000 = 100%)
+Gráfico Donut (SVG):
+
+Código svg
+<svg viewBox="0 0 160 160">
+  <circle cx="80" cy="80" r="60" fill="none" stroke="#0259E1" stroke-width="30" 
+          stroke-dasharray="188.5 377" transform="rotate(-90 80 80)"/>
+  <circle cx="80" cy="80" r="60" fill="none" stroke="#05BF97" stroke-width="30"
+          stroke-dasharray="105.6 377" stroke-dashoffset="-188.5" transform="rotate(-90 80 80)"/>
+  <circle cx="80" cy="80" r="60" fill="none" stroke="#08C4E7" stroke-width="30"
+          stroke-dasharray="82.9 377" stroke-dashoffset="-294.1" transform="rotate(-90 80 80)"/>
+</svg>
+=== STACK TECNOLÓGICO ===
+
+HTML5 semântico (section, article, figure, figcaption)
+CSS3 puro (Flexbox, Grid, variáveis CSS, transitions, animations, media queries)
+JavaScript vanilla (Intersection Observer, Canvas API ou SVG, File download, countUp)
+Google Fonts: Inter (400, 500, 600, 700, 800)
+Ícones: Lucide Icons (download, coins, users, folder, award, bell, grid, user, briefcase, calendar, heart, file-text, bar-chart, settings, log-out)
+Sem dependências externas para gráficos (CSS puro + SVG)
+
+
+
+-------------------------------------------------------------------------------------------
+
+Crie a página "Documentos da Organização" do painel administrativo da ONG na plataforma Movune, usando HTML semântico, CSS puro (variáveis CSS) e JavaScript vanilla. A página deve ser pixel-perfect conforme as especificações abaixo e totalmente responsiva.
+
+=== DESIGN TOKENS GLOBAIS ===
+
+Fontes:
+- Família: "Inter", sans-serif
+- Pesos utilizados: 400 (Regular), 700 (Bold), 800 (Extra Bold)
+
+Cores:
+- Navy (títulos): #011C53
+- Texto principal (nomes docs): #1E293B
+- Texto secundário (subtítulo, "—"): #64748B
+- Azul primário (botões, ações): #0259E1
+- Verde (status Válido): #05BF97
+- Amarelo (status Vencendo): #F59E0B
+- Vermelho (status Vencido, data vencida): #EF4444
+- Branco: #FFFFFF
+- Fundo da página: #F5FAFC
+- Borda geral: #D9EAF2
+- Fundo header tabela: #F5FAFC
+
+Espaçamento e Bordas:
+- Border-radius cards: 16px
+- Border-radius botão primário: 24px
+- Border-radius badges status: 100px (pill)
+- Border-radius botões ação tabela: 8px
+- Borda padrão: 1px solid #D9EAF2
+
+=== ESTRUTURA DA PÁGINA (1440×900px) ===
+
+Layout geral com 3 áreas:
+1. HEADER SUPERIOR — fixa no topo, 1440×80px, fundo branco, borda inferior 1px solid #D9EAF2
+2. SIDEBAR ESQUERDA — 280px largura, altura 100vh - 80px, fundo branco, borda direita 1px solid #D9EAF2
+3. ÁREA DE CONTEÚDO PRINCIPAL — ocupa o restante (1160px), fundo #F5FAFC
+
+--- HEADER (80px altura) ---
+- Lado esquerdo: logo Movune (32px) + badge "PAINEL DA ONG" (bg #0259E1 com opacidade 0.08, texto #0259E1, font-size 11px, bold, uppercase, border-radius 6px, padding 4px 10px)
+- Lado direito: ícone sino (24px, cor #64748B) + avatar circular (40px) + nome do usuário (font-size 14px, bold, #1E293B) + seta dropdown
+
+--- SIDEBAR (280px) ---
+- Padding: 20px 16px
+- 11 itens de menu empilhados verticalmente, gap 4px
+- Cada item: height 44px, border-radius 10px, padding 12px 16px, display flex, align-items center, gap 12px
+- Ícone do item: 20px, cor #64748B (inativo) ou #0259E1 (ativo)
+- Texto do item: font-size 15px, regular, cor #64748B (inativo) ou #0259E1 bold (ativo)
+- Item ativo ("Documentos"): background #0259E1 com opacidade 0.08
+- Itens do menu em ordem: Dashboard, Perfil da ONG, Projetos, Vagas, Voluntários, Eventos, Doações, Prestação de Contas, Relatórios, Documentos (ativo), Configurações
+- Separador antes de "Configurações": linha 1px solid #D9EAF2, margin 8px 0
+- No fundo da sidebar: botão "Sair" com ícone log-out, cor #EF4444, font-size 15px, bold
+
+--- ÁREA DE CONTEÚDO PRINCIPAL ---
+- Padding: 40px em todos os lados
+- Display: flex, flex-direction: column, gap: 32px
+- Largura interna: 1080px
+
+SEÇÃO 1 — CABEÇALHO DA PÁGINA (título + botão)
+- Display: flex, justify-content: space-between, align-items: center
+- Lado esquerdo (coluna, gap 6px):
+  - Título: "Documentos da Organização", font-size 28px, Extra Bold (800), cor #011C53
+  - Subtítulo: "Gerencie as certidões, estatutos e atas para manter a regularidade institucional perante apoiadores e o governo.", font-size 15px, regular, cor #64748B
+- Lado direito:
+  - Botão "+ Enviar documento": bg #0259E1, border-radius 24px, padding 14px 24px, gap 8px entre ícone e texto
+  - Ícone upload: 16×16px, stroke branco (ícone de seta para cima com linha base)
+  - Texto: "Enviar documento", font-size 15px, bold, cor #FFFFFF
+  - Hover: bg #0248C5, cursor pointer
+
+SEÇÃO 2 — TABELA DE DOCUMENTOS
+- Card container: bg #FFFFFF, border-radius 16px, border 1px solid #D9EAF2, overflow hidden
+- Largura total: 1080px
+
+HEADER DA TABELA:
+- Altura: 48px, bg #F5FAFC, border-bottom 1px solid #D9EAF2
+- Padding: 16px 24px
+- Colunas (flex, não usar <table>):
+  - DOCUMENTO: largura 512px
+  - VENCIMENTO: largura 180px
+  - STATUS: largura 140px
+  - AÇÃO: largura 200px
+- Texto: font-size 13px, bold, uppercase, cor #64748B, letter-spacing 0.5px
+
+LINHAS DA TABELA (5 linhas):
+- Cada linha: height 68px, padding 20px 24px, display flex, align-items center, border-bottom 1px solid #D9EAF2
+- Última linha: sem border-bottom
+
+Coluna DOCUMENTO (512px):
+- Display flex, align-items center, gap 12px
+- Ícone arquivo (file): 20×20px, ícone de documento/página, stroke #64748B
+- Nome: font-size 15px, bold, cor #1E293B
+
+Coluna VENCIMENTO (180px):
+- Font-size 14px
+- Com data: regular, cor #1E293B (formato DD/Mmm/AAAA, ex: "15/Mar/2027")
+- Exceção: se o documento está VENCIDO, a data fica bold, cor #EF4444
+- Sem vencimento: exibe "—" (travessão), regular, cor #64748B
+
+Coluna STATUS (140px):
+- Badge pill: border-radius 100px, padding 4px 12px, font-size 12px, bold
+- Três variações:
+  - "Válido": bg rgba(5,191,151,0.08), texto #05BF97
+  - "Vencendo": bg rgba(245,158,11,0.08), texto #F59E0B
+  - "Vencido": bg rgba(239,68,68,0.08), texto #EF4444
+
+Coluna AÇÃO (200px):
+- Display flex, gap 12px
+- Botões pequenos: border-radius 8px, padding 6px 12px, font-size 13px, bold
+- Botão "Baixar" (presente em todas as linhas): bg rgba(2,89,225,0.08), texto #0259E1
+- Botão "Atualizar" (documentos válidos sem urgência): bg transparente, border 1px solid #D9EAF2, texto #64748B
+- Botão "Renovar" (documentos vencendo): bg rgba(245,158,11,0.08), texto #F59E0B
+- Botão "Renovar" (documentos vencidos): bg rgba(239,68,68,0.08), texto #EF4444
+- Hover nos botões: opacidade 0.8, cursor pointer
+
+DADOS DAS 5 LINHAS:
+1. Estatuto social | — | Válido (verde) | Baixar + Atualizar
+2. Ata de eleição da diretoria | 15/Mar/2027 | Válido (verde) | Baixar + Atualizar
+3. Certidão CNPJ | 20/Dez/2026 | Vencendo (amarelo) | Baixar + Renovar (amarelo)
+4. Certificado CEBAS | 30/Jun/2026 (vermelho, bold) | Vencido (vermelho) | Baixar + Renovar (vermelho)
+5. Relatório anual 2025 | — | Válido (verde) | Baixar (somente)
+
+=== RESPONSIVIDADE ===
+
+Breakpoint 1200px:
+- Sidebar permanece, conteúdo principal reduz proporcionalmente
+- Colunas da tabela se ajustam com flex-shrink
+
+Breakpoint 1024px:
+- Sidebar colapsa (ícone hambúrguer no header, sidebar vira drawer lateral com overlay escuro)
+- Conteúdo principal ocupa 100% da largura
+- Padding da área principal: 32px 24px
+
+Breakpoint 768px:
+- Cabeçalho da página: flex-direction column, align-items flex-start, gap 16px
+- Botão "+ Enviar documento" ocupa 100% da largura
+- Tabela: trocar layout flex para cards empilhados verticalmente
+- Cada card de documento:
+  - Bg branco, border-radius 12px, border 1px solid #D9EAF2, padding 16px
+  - Nome do documento: font-size 15px, bold, com ícone arquivo à esquerda
+  - Dados (Vencimento, Status) empilhados abaixo: flex-wrap, gap 8px
+  - Botões de ação: flex-wrap na parte inferior do card
+
+Breakpoint 480px:
+- Padding geral: 16px
+- Título: font-size 22px
+- Subtítulo: font-size 13px
+- Cards de documento: padding 12px
+- Botões de ação: empilham verticalmente, width 100%
+
+=== INTERATIVIDADE (JavaScript) ===
+
+1. Botão "+ Enviar documento": abre modal com:
+   - Título "Enviar novo documento"
+   - Campo de upload (drag and drop + botão "Selecionar arquivo")
+   - Dropdown "Tipo de documento" (Estatuto, Ata, Certidão, Certificado, Relatório, Outro)
+   - Campo "Data de vencimento" (opcional, input date)
+   - Botões "Cancelar" (outline) + "Enviar" (azul primário)
+
+2. Botão "Baixar": simula download do documento (console.log com nome do doc)
+
+3. Botão "Atualizar": abre modal similar ao de envio, pré-preenchido com o tipo do documento, para substituir o arquivo
+
+4. Botão "Renovar": abre modal específico com:
+   - Título "Renovar [nome do documento]"
+   - Campo de upload para novo arquivo
+   - Campo "Nova data de vencimento" (input date)
+   - Botões "Cancelar" + "Renovar documento"
+
+5. Sidebar: item ativo com destaque visual; hover nos itens inativos com bg rgba(0,0,0,0.04)
+
+6. Lógica visual de vencimento:
+   - Se data_vencimento < hoje → status "Vencido" (vermelho), data em vermelho bold
+   - Se data_vencimento < hoje + 90 dias → status "Vencendo" (amarelo)
+   - Caso contrário ou sem data → status "Válido" (verde)
+
+=== ESTRUTURA DE ARQUIVOS ===
+- documentos-ong.html
+- css/documentos-ong.css (variáveis CSS, layout, responsividade)
+- js/documentos-ong.js (modais, ações, lógica de vencimento)
+
+=== TECNOLOGIAS ===
+- HTML5 semântico (<main>, <aside>, <header>, <section>, <table> ou divs flex)
+- CSS3 com variáveis customizadas (--color-navy, --color-blue, --color-green, etc.)
+- JavaScript ES6+ vanilla (sem frameworks)
+- Ícones: Lucide Icons via CDN (file, upload, bell, log-out, etc.)
+- Font: Inter via Google Fonts
+
+
+--------------------------------------------------------------------------------------------
+
+
+
+Crie a página "Configurações" do painel administrativo da ONG na plataforma Movune, usando HTML semântico, CSS puro (variáveis CSS) e JavaScript vanilla. A página deve ser pixel-perfect conforme as especificações abaixo e totalmente responsiva.
+
+=== DESIGN TOKENS GLOBAIS ===
+
+Fontes:
+- Família: "Inter", sans-serif
+- Pesos utilizados: 400 (Regular), 500 (Medium), 600 (Semi Bold), 700 (Bold), 800 (Extra Bold)
+
+Cores:
+- Navy (títulos de seção): #011C53
+- Texto principal: #1E293B
+- Texto secundário: #64748B
+- Azul primário (toggles ativos): #0259E1
+- Cinza toggle inativo: #64748B
+- Vermelho (zona de perigo): #EF4444
+- Branco: #FFFFFF
+- Fundo da página: #F5FAFC
+- Fundo input readonly: #F5FAFC
+- Borda geral: #D9EAF2
+
+Espaçamento e Bordas:
+- Border-radius cards: 16px
+- Border-radius inputs/botões: 8px
+- Border-radius toggles: 12px (pill)
+- Borda padrão: 1px solid #D9EAF2
+
+=== ESTRUTURA DA PÁGINA (1440×1100px) ===
+
+Layout geral com 3 áreas:
+1. HEADER SUPERIOR — fixo no topo, 1440×80px, fundo branco, borda inferior 1px solid #D9EAF2
+2. SIDEBAR ESQUERDA — 280px largura, altura 100vh - 80px, fundo branco, borda direita 1px solid #D9EAF2
+3. ÁREA DE CONTEÚDO PRINCIPAL — ocupa o restante (1160px), fundo #F5FAFC
+
+--- HEADER (80px altura) ---
+- Lado esquerdo: logo Movune (32px) + badge "PAINEL DA ONG" (bg #0259E1 com opacidade 0.08, texto #0259E1, font-size 11px, bold, uppercase, border-radius 6px, padding 4px 10px)
+- Lado direito: ícone sino (24px, cor #64748B) + avatar circular (40px) + nome do usuário (font-size 14px, bold, #1E293B) + seta dropdown
+
+--- SIDEBAR (280px) ---
+- Padding: 20px 16px
+- 11 itens de menu empilhados verticalmente, gap 4px
+- Cada item: height 44px, border-radius 10px, padding 12px 16px, display flex, align-items center, gap 12px
+- Ícone do item: 20px, cor #64748B (inativo) ou #0259E1 (ativo)
+- Texto do item: font-size 15px, regular, cor #64748B (inativo) ou #0259E1 bold (ativo)
+- Item ativo ("Configurações"): background #0259E1 com opacidade 0.08
+- Itens do menu em ordem: Dashboard, Perfil da ONG, Projetos, Vagas, Voluntários, Eventos, Doações, Prestação de Contas, Relatórios, Documentos, Configurações (ativo)
+- Separador antes de "Configurações": linha 1px solid #D9EAF2, margin 8px 0
+- No fundo da sidebar: botão "Sair" com ícone log-out, cor #EF4444, font-size 15px, bold
+
+--- ÁREA DE CONTEÚDO PRINCIPAL ---
+- Padding: 40px em todos os lados
+- Display: flex, flex-direction: column, gap: 32px
+- Largura interna: 1080px
+
+SEÇÃO 1 — CABEÇALHO DA PÁGINA
+- Coluna, gap 6px
+- Título: "Configurações", font-size 28px, Extra Bold (800), cor #011C53
+- Subtítulo: "Gerencie suas credenciais de acesso, preferências operacionais e configurações de privacidade da ONG.", font-size 15px, regular, cor #64748B
+
+SEÇÃO 2 — CARD "DADOS DA CONTA"
+- Container: bg #FFFFFF, border-radius 16px, border 1px solid #D9EAF2, padding 32px
+- Layout: vertical, gap 24px
+
+Título do card: "Dados da Conta", font-size 18px, Extra Bold (800), cor #011C53
+
+Campo E-mail (flex horizontal, gap 24px, align-items flex-end):
+- Coluna esquerda (flex-grow, 850px):
+  - Label: "E-mail de acesso", font-size 14px, Semi Bold (600), cor #1E293B, margin-bottom 8px
+  - Input readonly: width 100%, height 41px, bg #F5FAFC, border-radius 8px, border 1px solid #D9EAF2, padding 12px 16px
+  - Valor exibido: "contato@redecuidar.org", font-size 14px, regular, cor #1E293B
+  - O input tem aparência de campo preenchido não editável (readonly com cursor default)
+- Botão direito:
+  - "Alterar Senha": height 41px, bg transparente, border-radius 8px, border 1px solid #D9EAF2, padding 12px 24px
+  - Texto: font-size 14px, bold, cor #1E293B
+  - Hover: bg #F5FAFC, cursor pointer
+
+SEÇÃO 3 — CARD "NOTIFICAÇÕES POR E-MAIL"
+- Container: bg #FFFFFF, border-radius 16px, border 1px solid #D9EAF2, padding 32px
+- Layout: vertical, gap 24px
+
+Título: "Notificações por E-mail", font-size 18px, Extra Bold (800), cor #011C53
+
+Lista de toggles (vertical, gap 16px):
+Cada item é uma linha horizontal (gap 12px, align-items center):
+- Toggle switch: 44×24px, border-radius 12px, padding 2px
+  - Ativo (ON): bg #0259E1, bolinha branca 20×20px alinhada à direita (justify-content flex-end)
+  - Inativo (OFF): bg #64748B, bolinha branca 20×20px alinhada à esquerda (justify-content flex-start)
+  - Transição suave: transition all 0.2s ease
+- Label: font-size 14px, Medium (500), cor #1E293B
+
+4 itens de notificação (estado inicial):
+1. ✅ ON — "Novas doações recebidas"
+2. ✅ ON — "Novas inscrições de voluntários nas vagas"
+3. ❌ OFF — "Atualizações e novos recursos da plataforma"
+4. ✅ ON — "Relatórios e resumos mensais de impacto"
+
+SEÇÃO 4 — CARD "PREFERÊNCIAS DE EXIBIÇÃO"
+- Container: bg #FFFFFF, border-radius 16px, border 1px solid #D9EAF2, padding 32px
+- Layout: vertical, gap 24px
+
+Título: "Preferências de Exibição", font-size 18px, Extra Bold (800), cor #011C53
+
+Lista de toggles (vertical, gap 16px):
+Mesmo padrão dos toggles anteriores (44×24px, mesmas cores e transições).
+
+3 itens (todos ON no estado inicial):
+1. ✅ ON — "Perfil público visível no buscador"
+2. ✅ ON — "Aceitar doações financeiras online"
+3. ✅ ON — "Aceitar novos voluntários nos projetos ativos"
+
+SEÇÃO 5 — CARD "ZONA DE PERIGO"
+- Container: bg #FFFFFF, border-radius 16px, border 1px solid #EF4444 (borda vermelha!), padding 32px
+- Layout: horizontal (space-between), align-items center
+
+Lado esquerdo (coluna, gap 4px):
+- Título: "Zona de Perigo", font-size 18px, Extra Bold (800), cor #EF4444
+- Descrição: "A exclusão ou desativação da sua conta é permanente e apagará todos os dados de voluntários e doações.", font-size 14px, regular, cor #64748B
+
+Lado direito:
+- Botão "Desativar conta": height 41px, bg transparente, border-radius 8px, border 1px solid #EF4444, padding 12px 24px
+- Texto: font-size 14px, bold, cor #EF4444
+- Hover: bg rgba(239,68,68,0.08), cursor pointer
+
+=== RESPONSIVIDADE ===
+
+Breakpoint 1200px:
+- Sidebar permanece, conteúdo principal reduz proporcionalmente
+- Campo de e-mail e botão "Alterar Senha" mantêm layout horizontal
+
+Breakpoint 1024px:
+- Sidebar colapsa (ícone hambúrguer no header, sidebar vira drawer lateral com overlay escuro)
+- Conteúdo principal ocupa 100% da largura
+- Padding da área principal: 32px 24px
+
+Breakpoint 768px:
+- Cards: padding 24px
+- Campo E-mail + Botão "Alterar Senha": flex-direction column, gap 12px
+  - Input e-mail: width 100%
+  - Botão "Alterar Senha": width 100%
+- Card "Zona de Perigo": flex-direction column, gap 16px, align-items flex-start
+  - Botão "Desativar conta": width 100%
+- Toggles: labels podem quebrar em 2 linhas se necessário
+
+Breakpoint 480px:
+- Padding geral: 16px
+- Título: font-size 22px
+- Subtítulo: font-size 13px
+- Cards: padding 16px
+- Títulos dos cards: font-size 16px
+- Toggle labels: font-size 13px
+
+=== INTERATIVIDADE (JavaScript) ===
+
+1. Toggle switches: clicáveis, alternam entre ON (azul, bolinha à direita) e OFF (cinza, bolinha à esquerda) com transição CSS suave (0.2s ease). Ao clicar:
+   - Muda visualmente o estado
+   - Armazena o estado em um objeto JavaScript (pode usar localStorage para persistência)
+   - Console.log o nome da preferência + novo estado
+
+2. Botão "Alterar Senha": abre modal centralizado com overlay escuro contendo:
+   - Título: "Alterar Senha"
+   - Campo "Senha atual" (type password, com ícone olho para mostrar/ocultar)
+   - Campo "Nova senha" (type password, com ícone olho)
+   - Campo "Confirmar nova senha" (type password, com ícone olho)
+   - Validação: nova senha mínimo 8 caracteres, confirmação deve coincidir
+   - Botões: "Cancelar" (outline) + "Salvar nova senha" (azul primário)
+   - Estilo dos inputs: bg #F5FAFC, border 1px solid #D9EAF2, border-radius 8px, padding 12px 16px
+
+3. Botão "Desativar conta": abre modal de confirmação com:
+   - Ícone de alerta (⚠️ ou ícone warning vermelho)
+   - Título: "Desativar conta da organização"
+   - Texto: "Esta ação é irreversível. Todos os dados de voluntários, doações e projetos serão permanentemente apagados. Digite 'DESATIVAR' para confirmar."
+   - Campo de texto para digitar "DESATIVAR"
+   - Botão "Confirmar desativação" (bg #EF4444, cor branca) — habilitado apenas quando o texto digitado for exatamente "DESATIVAR"
+   - Botão "Cancelar" (outline)
+
+4. Sidebar: item ativo com destaque visual; hover nos itens inativos com bg rgba(0,0,0,0.04)
+
+5. Input de e-mail: readonly (não editável), cursor default, com visual de campo desabilitado sutil
+
+=== ESTRUTURA DE ARQUIVOS ===
+- configuracoes-ong.html
+- css/configuracoes-ong.css (variáveis CSS, layout, responsividade)
+- js/configuracoes-ong.js (toggles, modais, validação de senha, confirmação de desativação)
+
+=== TECNOLOGIAS ===
+- HTML5 semântico (<main>, <aside>, <header>, <section>, <form>)
+- CSS3 com variáveis customizadas (--color-navy, --color-blue, --color-red, --color-slate, etc.)
+- JavaScript ES6+ vanilla (sem frameworks)
+- Ícones: Lucide Icons via CDN (bell, log-out, eye, eye-off, alert-triangle, etc.)
+- Font: Inter via Google Fonts
+
+
