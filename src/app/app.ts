@@ -52,7 +52,7 @@ export class App implements OnDestroy {
             '/ong/editar-perfil',
             '/ong/projetos',
             '/perfil-ong',
-          ].includes(event.urlAfterRedirects.split(/[?#]/)[0]) || /^\/ong\/projetos\/[^/]+\/editar$/.test(event.urlAfterRedirects.split(/[?#]/)[0]),
+          ].includes(event.urlAfterRedirects.split(/[?#]/)[0]) || event.urlAfterRedirects.startsWith('/ong/') || /^\/voluntario\/[^/]+\/perfil$/.test(event.urlAfterRedirects.split(/[?#]/)[0]),
         );
       }
     });

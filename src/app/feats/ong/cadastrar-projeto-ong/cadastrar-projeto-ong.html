@@ -1,1 +1,32 @@
-<app-feature-page [page]="page" />
+﻿<app-ong-shell>
+  <header class="create-heading">
+    <h1>Cadastrar Novo Projeto</h1>
+    <p>Preencha os dados abaixo para publicar uma nova iniciativa social na plataforma Movune.</p>
+  </header>
+  <form class="create-form" novalidate>
+    <fieldset>
+      <legend>Informações do Projeto</legend>
+      <div class="fields">
+        <div class="field"><label for="project-name">Nome do Projeto <span>*</span></label><input id="project-name" name="name" required maxlength="150" placeholder="Ex: Mutirão de Reflorestamento Urbano" aria-describedby="name-error"><p class="field-error" id="name-error" hidden></p></div>
+        <div class="field-row">
+          <div class="field"><label for="category">Categoria</label><div class="select-wrap"><select id="category" name="category"><option value="">Selecione uma categoria</option><option>Educação</option><option>Saúde</option><option>Meio Ambiente</option><option>Assistência Social</option><option>Cultura</option><option>Direitos Humanos</option></select><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></div></div>
+          <div class="field"><label for="goal">Meta Financeira (R$)</label><input id="goal" name="goal" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Ex: 15000" aria-describedby="goal-error"><p class="field-error" id="goal-error" hidden></p></div>
+          <div class="field"><label for="days">Prazo (Dias)</label><input id="days" name="days" type="number" min="1" step="1" inputmode="numeric" placeholder="Ex: 45" aria-describedby="days-error"><p class="field-error" id="days-error" hidden></p></div>
+        </div>
+        <div class="field"><label for="description">Descrição Completa <span>*</span></label><textarea id="description" name="description" required placeholder="Descreva os objetivos, impacto esperado e como o projeto será executado..." aria-describedby="description-error"></textarea><p class="field-error" id="description-error" hidden></p></div>
+      </div>
+    </fieldset>
+    <fieldset><legend>Metas e Resultados Esperados</legend><ol class="objectives" aria-label="Metas do projeto"></ol><button class="add-objective" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Adicionar nova meta</button><p class="limit-note" hidden>Limite de 10 metas atingido.</p></fieldset>
+    <fieldset><legend>Imagem de Capa</legend>
+      <div class="upload-zone">
+        <button class="upload-trigger" type="button" aria-describedby="upload-help upload-error"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg><strong>Arraste uma imagem ou clique para fazer upload</strong><span id="upload-help">JPG, PNG de até 5MB. Proporção recomendada: 16:9</span></button>
+        <img class="cover-preview" alt="Prévia da imagem de capa" hidden>
+        <button class="remove-cover" type="button" hidden>Remover imagem</button>
+      </div>
+      <input class="file-input" type="file" accept="image/jpeg,image/png" hidden>
+      <p class="field-error" id="upload-error" role="alert" hidden></p>
+    </fieldset>
+    <div class="form-actions"><button class="draft-button" type="button">Salvar Rascunho</button><button class="publish-button" type="submit">Publicar Projeto</button></div>
+    <p class="form-feedback" role="status" aria-live="polite" hidden></p>
+  </form>
+</app-ong-shell>

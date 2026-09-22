@@ -1,22 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
+import { vi, afterEach } from 'vitest';
 import { GerenciaDoacaoOng } from './gerencia-doacao-ong';
 
 describe('GerenciaDoacaoOng', () => {
-  let component: GerenciaDoacaoOng;
-  let fixture: ComponentFixture<GerenciaDoacaoOng>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [GerenciaDoacaoOng],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(GerenciaDoacaoOng);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  afterEach(() => { TestBed.resetTestingModule(); vi.unstubAllGlobals(); });
+  it('renders the management page inside the shared ONG shell', async () => {
+    const storage = new Map<string,string>();
+    vi.stubGlobal('localStorage', { getItem: (key:string) => storage.get(key) ?? null, setItem: (key:string,value:string) => storage.set(key,value), removeItem: (key:string) => storage.delete(key) });
+    vi.stubGlobal('matchMedia', () => ({ matches:true, addEventListener() {} }));
+    Object.defineProperty(HTMLDialogElement.prototype, 'close', { configurable:true, value() {} });
+    await TestBed.configureTestingModule({ imports:[GerenciaDoacaoOng] }).compileComponents();
+    const fixture = TestBed.createComponent(GerenciaDoacaoOng);
+    fixture.detectChanges(); await fixture.whenStable();
+    const root:HTMLElement = fixture.nativeElement;
+    expect(root.querySelector('.global-header')).toBeTruthy();
+    expect(root.querySelector('.page-body')!.children.length).toBeGreaterThan(0);
+    expect(root.querySelector('#page-title')!.textContent).toBeTruthy();
+    fixture.destroy();
   });
 });

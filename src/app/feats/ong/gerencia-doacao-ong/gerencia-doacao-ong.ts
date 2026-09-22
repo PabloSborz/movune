@@ -1,34 +1,36 @@
-import { Component, computed, inject } from '@angular/core';
-
-import { FeaturePage } from '../../../components/feature-page/feature-page';
-import { PAGE_CONTENT } from '../../../shared/page-content';
+import { Component, ElementRef, DestroyRef, ViewEncapsulation, afterNextRender, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { OngShell } from '../../../components/ong-shell/ong-shell';
+import { AuthStore } from '../../../shared/auth-store.service';
 import { SiteActivityStore } from '../../../shared/site-activity.service';
-
+import { activityRows } from '../shared/ong-data';
+import { initializeOngPage } from '../shared/ong-pages';
 @Component({
-  selector: 'app-gerencia-doacao-ong',
-  imports: [FeaturePage],
-  templateUrl: './gerencia-doacao-ong.html',
-  styleUrl: './gerencia-doacao-ong.css',
+  selector: 'app-gerencia-doacao-ong', imports: [OngShell],
+  templateUrl: './gerencia-doacao-ong.html', styleUrls: ['../shared/ong-pages.css', '../shared/ong-widgets.css', '../shared/ong-responsive.css', './gerencia-doacao-ong.css'],
+  encapsulation: ViewEncapsulation.None, host: { class: 'ong-workspace' },
 })
 export class GerenciaDoacaoOng {
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly destroy = inject(DestroyRef);
+  private readonly router = inject(Router);
+  private readonly auth = inject(AuthStore);
   private readonly activity = inject(SiteActivityStore);
-
-  readonly page = computed(() => {
-    const registros = this.activity
-      .byType('doacao')
-      .map((record) => [
-        record.ownerName || record.fields['Dados do doador'] || 'Visitante',
-        record.fields['Tipo de doacao'] || 'Doacao',
-        record.fields['Projeto apoiado'] || record.pageTitle,
-        record.status,
-      ]);
-
-    return {
-      ...PAGE_CONTENT.gerenciaDoacaoOng,
-      table: {
-        columns: PAGE_CONTENT.gerenciaDoacaoOng.table.columns,
-        rows: [...registros, ...PAGE_CONTENT.gerenciaDoacaoOng.table.rows],
-      },
-    };
-  });
+  constructor() {
+    afterNextRender(() => {
+      const cleanup = initializeOngPage(this.host.nativeElement, 'doacoes', {
+        importedRows: activityRows(this.activity.byType('doacao')),
+        owner: this.auth.session()?.id ?? 'demo', email: this.auth.session()?.email ?? 'contato@redecuidar.org',
+        path: this.router.url, navigate: path => { void this.router.navigateByUrl(path); },
+        changePassword: (current, next) => {
+          const account = this.auth.ongs().find(ong => ong.id === this.auth.session()?.id);
+          if (!account || account.senha !== current) return 'Senha atual incorreta.';
+          const result = this.auth.updatePassword(account.email, next);
+          return result.ok ? '' : result.message;
+        },
+        deactivate: () => { const id = this.auth.session()?.id; if (id) this.auth.removeOng(id); this.auth.logout(); void this.router.navigateByUrl('/login'); },
+      });
+      this.destroy.onDestroy(cleanup);
+    });
+  }
 }

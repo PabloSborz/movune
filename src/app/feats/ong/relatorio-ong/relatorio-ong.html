@@ -1,1 +1,8 @@
-<app-feature-page [page]="page" />
+<app-ong-shell>
+<section class="management-page" data-page="relatorios" aria-labelledby="page-title">
+  <header class="management-heading"><div><h1 id="page-title">Relatórios</h1><p>Acompanhe o crescimento financeiro, operacional e o impacto social gerado pela sua instituição.</p></div><div class="exports"><button data-export="pdf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> PDF</button><button data-export="csv"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> CSV</button><button class="primary" data-export="excel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Excel</button></div></header>
+  <div class="page-body"></div>
+  <p class="page-feedback" role="status" aria-live="polite" hidden></p>
+</section>
+<dialog class="management-dialog" aria-labelledby="modal-title"><form class="modal-form" novalidate><h2 id="modal-title"></h2><div class="modal-content"></div><p class="modal-error" role="alert" hidden></p><footer><button type="button" data-close>Cancelar</button><button class="primary" type="submit" data-confirm>Confirmar</button></footer></form></dialog>
+</app-ong-shell>
