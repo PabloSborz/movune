@@ -1,1 +1,8 @@
-<app-feature-page [page]="page" />
+<app-ong-shell>
+<section class="management-page" data-page="eventos" aria-labelledby="page-title">
+  <header class="management-heading"><div><h1 id="page-title">Gerenciar Eventos</h1><p>Organize mutirões, feiras e encontros para integrar seus projetos à comunidade local.</p></div><button type="button" class="primary" data-action="new"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Novo Evento</button></header>
+  <div class="page-body"></div>
+  <p class="page-feedback" role="status" aria-live="polite" hidden></p>
+</section>
+<dialog class="management-dialog" aria-labelledby="modal-title"><form class="modal-form" novalidate><h2 id="modal-title"></h2><div class="modal-content"></div><p class="modal-error" role="alert" hidden></p><footer><button type="button" data-close>Cancelar</button><button class="primary" type="submit" data-confirm>Confirmar</button></footer></form></dialog>
+</app-ong-shell>

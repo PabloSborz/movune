@@ -26,7 +26,8 @@ export class OngShell {
     const controller = new AbortController();
     const options = { signal: controller.signal };
     root.querySelectorAll<HTMLAnchorElement>('#desktop-menu .nav-item').forEach(link => {
-      const active = this.router.url.split(/[?#]/)[0].startsWith(link.pathname);
+      const pathname = this.router.url.split(/[?#]/)[0];
+      const active = pathname.startsWith(link.pathname) || (pathname === '/ong/gerenciar-projeto-ong' && link.pathname === '/ong/projetos');
       link.classList.toggle('active', active);
       if (active) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');

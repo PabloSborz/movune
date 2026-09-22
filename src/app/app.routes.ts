@@ -3,6 +3,19 @@ import { Routes } from '@angular/router';
 import { adminGuard, ongGuard, userGuard, authGuard } from './shared/auth.guard';
 
 export const routes: Routes = [
+  { path: 'ong/gerenciar-vaga-ong', redirectTo: '/ong/vagas', pathMatch: 'full' },
+  { path: 'ong/vagas/nova', canActivate: [ongGuard], loadComponent: () => import('./feats/ong/gerenciar-vaga-ong/gerenciar-vaga-ong').then(m => m.GerenciarVagaOng) },
+  { path: 'ong/vagas/editar/:id', canActivate: [ongGuard], loadComponent: () => import('./feats/ong/gerenciar-vaga-ong/gerenciar-vaga-ong').then(m => m.GerenciarVagaOng) },
+  { path: 'ong/gerenciar-voluntario-ong', redirectTo: '/ong/voluntarios', pathMatch: 'full' },
+  { path: 'ong/gerenciar-eventos-ong', redirectTo: '/ong/eventos', pathMatch: 'full' },
+  { path: 'ong/eventos/novo', canActivate: [ongGuard], loadComponent: () => import('./feats/ong/gerenciar-eventos-ong/gerenciar-eventos-ong').then(m => m.GerenciarEventosOng) },
+  { path: 'ong/eventos/editar/:id', canActivate: [ongGuard], loadComponent: () => import('./feats/ong/gerenciar-eventos-ong/gerenciar-eventos-ong').then(m => m.GerenciarEventosOng) },
+  { path: 'ong/gerencia-doacao-ong', redirectTo: '/ong/doacoes', pathMatch: 'full' },
+  { path: 'ong/prestacao-conta-ong', redirectTo: '/ong/prestacao-contas', pathMatch: 'full' },
+  { path: 'ong/relatorio-ong', redirectTo: '/ong/relatorios', pathMatch: 'full' },
+  { path: 'ong/documento-ong', redirectTo: '/ong/documentos', pathMatch: 'full' },
+  { path: 'ong/configuracao-ong', redirectTo: '/ong/configuracoes', pathMatch: 'full' },
+  { path: 'voluntario/:id/perfil', canActivate: [ongGuard], loadComponent: () => import('./feats/ong/gerenciar-voluntario-ong/gerenciar-voluntario-ong').then(m => m.GerenciarVoluntarioOng) },
   {
     path: 'inicio',
     canActivate: [authGuard],
@@ -210,7 +223,11 @@ export const routes: Routes = [
         (m) => m.GerenciarProjetoOng,
       ),
   },
-  { path: 'ong/gerenciar-projeto-ong', redirectTo: 'ong/projetos', pathMatch: 'full' },
+  {
+    path: 'ong/gerenciar-projeto-ong',
+    canActivate: [ongGuard],
+    loadComponent: () => import('./feats/ong/cadastrar-projeto-ong/cadastrar-projeto-ong').then(m => m.CadastrarProjetoOng),
+  },
   {
     path: 'ong/projetos/:id/editar',
     canActivate: [ongGuard],
