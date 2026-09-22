@@ -237,7 +237,7 @@ Itens na ordem:
 ---------------------------------------------------------------------------------
 
 
-Crie a página "Gerenciar Vagas" do painel da ONG na plataforma Movune em HTML, CSS e JavaScript puros (sem frameworks). A página lista as vagas de voluntariado publicadas pela ONG em formato de tabela com filtros e ações. Dimensão de referência desktop: 1440×920px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
+Faça em ong/gerenciar-vaga-ong em HTML, CSS e JavaScript puros (sem frameworks). A página lista as vagas de voluntariado publicadas pela ONG em formato de tabela com filtros e ações. Dimensão de referência desktop: 1440×920px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
 
 === DESIGN TOKENS GLOBAIS ===
 - Fonte: Inter (Google Fonts), pesos: 400 (Regular), 500 (Medium), 600 (Semi Bold), 700 (Bold), 800 (Extra Bold)
@@ -428,7 +428,7 @@ Itens: Painel, Editar Perfil, Projetos, **Vagas** ← ATIVO, Voluntários, Event
 ------------------------------------------------------------------------------------------------------------------------
 
 
-Crie a página "Gerenciar Voluntários" do painel da ONG na plataforma Movune em HTML, CSS e JavaScript puros (sem frameworks). A página lista os voluntários inscritos na ONG, permitindo filtrar por área de interesse, gerenciar status e realizar ações como aprovar, rejeitar e enviar mensagens. Dimensão de referência desktop: 1440×920px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
+Faça em ong/gerenciar-voluntario-ong em HTML, CSS e JavaScript puros (sem frameworks). A página lista os voluntários inscritos na ONG, permitindo filtrar por área de interesse, gerenciar status e realizar ações como aprovar, rejeitar e enviar mensagens. Dimensão de referência desktop: 1440×920px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
 
 === DESIGN TOKENS GLOBAIS ===
 - Fonte: Inter (Google Fonts), pesos: 400 (Regular), 500 (Medium), 600 (Semi Bold), 700 (Bold), 800 (Extra Bold)
@@ -629,7 +629,7 @@ Itens: Painel, Editar Perfil, Projetos, Vagas, **Voluntários** ← ATIVO, Event
 
 -------------------------------------------------------------------------------------------------------------------
 
-Crie a página "Gerenciar Eventos" do painel da ONG na plataforma Movune em HTML, CSS e JavaScript puros (sem frameworks). A página lista os eventos organizados pela ONG em formato de tabela com ações contextuais por status. Dimensão de referência desktop: 1440×920px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
+Faça em ong/gerenciar-eventos-ong em HTML, CSS e JavaScript puros (sem frameworks). A página lista os eventos organizados pela ONG em formato de tabela com ações contextuais por status. Dimensão de referência desktop: 1440×920px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
 
 === DESIGN TOKENS GLOBAIS ===
 - Fonte: Inter (Google Fonts), pesos: 400 (Regular), 500 (Medium), 600 (Semi Bold), 700 (Bold), 800 (Extra Bold)
@@ -808,7 +808,7 @@ Itens: Painel, Editar Perfil, Projetos, Vagas, Voluntários, **Eventos** ← ATI
 
 -------------------------------------------------------------------------------------------------------------
 
-Crie a página "Gerenciar Doações" do painel da ONG na plataforma Movune em HTML, CSS e JavaScript puros (sem frameworks). A página exibe KPIs de doações recebidas e uma tabela detalhada de todas as doações (financeiras e materiais) com seus respectivos status. Dimensão de referência desktop: 1440×920px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
+Faça em ong/gerencia-doacao-ong HTML, CSS e JavaScript puros (sem frameworks). A página exibe KPIs de doações recebidas e uma tabela detalhada de todas as doações (financeiras e materiais) com seus respectivos status. Dimensão de referência desktop: 1440×920px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
 
 === DESIGN TOKENS GLOBAIS ===
 - Fonte: Inter (Google Fonts), pesos: 400 (Regular), 500 (Medium), 600 (Semi Bold), 700 (Bold), 800 (Extra Bold)
@@ -994,7 +994,7 @@ Dados dos 3 cards:
 ---------------------------------------------------------------------------------------------
 
 
-Crie a página "Prestação de Contas" do painel da ONG na plataforma Movune em HTML, CSS e JavaScript puros (sem frameworks). A página permite registrar lançamentos financeiros (receitas e despesas) e exibe um histórico de lançamentos em tabela. Dimensão de referência desktop: 1440×1150px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
+Faça em ong/prestacao-conta-ong em HTML, CSS e JavaScript puros (sem frameworks). A página permite registrar lançamentos financeiros (receitas e despesas) e exibe um histórico de lançamentos em tabela. Dimensão de referência desktop: 1440×1150px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
 
 === DESIGN TOKENS GLOBAIS ===
 - Fonte: Inter (Google Fonts), pesos: 400 (Regular), 500 (Medium), 600 (Semi Bold), 700 (Bold), 800 (Extra Bold)
@@ -1238,7 +1238,7 @@ Itens: Painel, Editar Perfil, Projetos, Vagas, Voluntários, Eventos, Doações,
 
 --------------------------------------------------------------------------------------------
 
-Crie a página "Relatórios" do painel da ONG na plataforma Movune em HTML, CSS e JavaScript puros (sem frameworks). A página apresenta KPIs de desempenho, um gráfico de barras de arrecadação mensal e um gráfico de rosca (donut) de distribuição por categoria, além de botões de exportação. Dimensão de referência desktop: 1440×1100px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
+Faça em ong/relatorio-ong HTML, CSS e JavaScript puros (sem frameworks). A página apresenta KPIs de desempenho, um gráfico de barras de arrecadação mensal e um gráfico de rosca (donut) de distribuição por categoria, além de botões de exportação. Dimensão de referência desktop: 1440×1100px. Layout do dashboard ONG: header + sidebar esquerda + conteúdo principal.
 
 === DESIGN TOKENS GLOBAIS ===
 - Fonte: Inter (Google Fonts), pesos: 400 (Regular), 500 (Medium), 600 (Semi Bold), 700 (Bold), 800 (Extra Bold)
@@ -1478,7 +1478,7 @@ Sem dependências externas para gráficos (CSS puro + SVG)
 
 -------------------------------------------------------------------------------------------
 
-Crie a página "Documentos da Organização" do painel administrativo da ONG na plataforma Movune, usando HTML semântico, CSS puro (variáveis CSS) e JavaScript vanilla. A página deve ser pixel-perfect conforme as especificações abaixo e totalmente responsiva.
+Faça em ong/documento-ong, usando HTML semântico, CSS puro (variáveis CSS) e JavaScript vanilla. A página deve ser pixel-perfect conforme as especificações abaixo e totalmente responsiva.
 
 === DESIGN TOKENS GLOBAIS ===
 
@@ -1667,7 +1667,7 @@ Breakpoint 480px:
 
 
 
-Crie a página "Configurações" do painel administrativo da ONG na plataforma Movune, usando HTML semântico, CSS puro (variáveis CSS) e JavaScript vanilla. A página deve ser pixel-perfect conforme as especificações abaixo e totalmente responsiva.
+Faça em ong/configuracao-ong, usando HTML semântico, CSS puro (variáveis CSS) e JavaScript vanilla. A página deve ser pixel-perfect conforme as especificações abaixo e totalmente responsiva.
 
 === DESIGN TOKENS GLOBAIS ===
 
@@ -1857,4 +1857,7 @@ Breakpoint 480px:
 - Ícones: Lucide Icons via CDN (bell, log-out, eye, eye-off, alert-triangle, etc.)
 - Font: Inter via Google Fonts
 
+
+
+lembrando aqui tem vários prompts e faça o que esta escrito em cada prompt
 
