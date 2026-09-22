@@ -1,4 +1,4 @@
-<section class="feature-page">
+<section class="feature-page" [class.feature-page--como-funciona]="page.title === 'Como funciona'">
   <div class="hero">
     <div class="hero__copy">
       <span class="eyebrow">{{ page.eyebrow }}</span>
@@ -37,14 +37,15 @@
     </div>
   </div>
 
-  <div class="metrics" *ngIf="page.metrics?.length">
-    <article *ngFor="let metric of page.metrics">
-      <strong>{{ metric.value }}</strong>
-      <span>{{ metric.label }}</span>
-    </article>
-  </div>
+  <div class="feature-page__body">
+    <div class="metrics" *ngIf="page.metrics?.length">
+      <article *ngFor="let metric of page.metrics">
+        <strong>{{ metric.value }}</strong>
+        <span>{{ metric.label }}</span>
+      </article>
+    </div>
 
-  <div class="filters" *ngIf="page.filters?.length">
+    <div class="filters" *ngIf="page.filters?.length">
     <div class="filters-heading">
       <strong>Encontre o que procura</strong>
       <span>{{ filteredCards().length }} resultado(s)</span>
@@ -65,9 +66,9 @@
         {{ filter }}
       </button>
     </div>
-  </div>
+    </div>
 
-  <div class="content-grid">
+    <div class="content-grid">
     <section class="panel" *ngIf="page.sections?.length">
       <article *ngFor="let section of page.sections" class="text-block">
         <h2>{{ section.title }}</h2>
@@ -150,5 +151,6 @@
         </tbody>
       </table>
     </section>
+    </div>
   </div>
 </section>

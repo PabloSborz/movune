@@ -1,4 +1,4 @@
-// Conteúdo declarativo das páginas que usam o componente FeaturePage.
+
 export interface PageAction {
   label: string;
   href: string;
@@ -73,7 +73,7 @@ export const PAGE_CONTENT = {
     eyebrow: 'Guia da plataforma',
     title: 'Como funciona',
     description:
-      'Entenda o caminho da Movune para conectar pessoas, ONGs, empresas, doações, voluntariado e transparência em um único fluxo.',
+      'A Movune é uma plataforma pensada para conectar doadores, voluntários, empresas e ONGs de forma simples, transparente e eficiente.',
     image: sloganImage,
     actions: [
       { label: 'Encontrar ONGs', href: '/ongs' },
@@ -81,64 +81,48 @@ export const PAGE_CONTENT = {
       { label: 'Cadastrar ONG', href: '/cadastro-ong', variant: 'secondary' },
     ],
     metrics: [
-      { value: '1', label: 'descubra uma causa' },
-      { value: '2', label: 'escolha como ajudar' },
-      { value: '3', label: 'acompanhe o impacto' },
+      { value: '1', label: 'Descubra uma causa' },
+      { value: '2', label: 'Escolha como ajudar' },
+      { value: '3', label: 'Acompanhe o impacto' },
     ],
     sections: [
       {
-        title: 'Para usuários',
-        items: [
-          'Use a Home para ver um resumo das causas, projetos, eventos, vagas e doações.',
-          'Acesse as páginas públicas para comparar ONGs, entender campanhas e escolher uma forma de apoio.',
-          'Ao entrar como usuário, salve favoritos, acompanhe inscrições, consulte doações e veja certificados.',
-        ],
+        title: 'Para Apoiadores e Voluntários',
+        body: 'Explore causas alinhadas ao seu perfil, participe de eventos solidários e acompanhe onde cada contribuição é aplicada com total transparência.',
       },
       {
-        title: 'Para ONGs',
-        items: [
-          'Cadastre o perfil institucional com dados publicos, area de atuacao e canais de contato.',
-          'Publique projetos, vagas, eventos, documentos e prestações de contas para fortalecer a confiança.',
-          'Acompanhe doações, voluntários e relatórios na área da ONG depois do acesso autenticado.',
-        ],
+        title: 'Para Organizações Sociais (ONGs)',
+        body: 'Divulgue seus projetos, capte recursos, gerencie voluntários e publique prestações de contas em um painel simples e estruturado.',
       },
       {
-        title: 'Para empresas parceiras',
-        items: [
-          'Encontre campanhas alinhadas a causas sociais, territorios e indicadores de impacto.',
-          'Apoie projetos com recursos, serviços, espaços, comunicação ou programas de voluntariado corporativo.',
-          'Use os dados de transparência para acompanhar resultados e manter a parceria bem documentada.',
-        ],
-      },
-      {
-        title: 'Transparência em cada etapa',
-        body: 'A Movune organiza metas, comprovantes, despesas, resultados e histórico de atualizações para que cada apoiador entenda como a ajuda vira impacto real.',
+        title: 'Para Empresas Parceiras',
+        body: 'Fortaleça programas de responsabilidade social e ESG conectando seus colaboradores e recursos a projetos sociais de alto impacto.',
       },
     ],
     cards: [
       {
-        title: 'Doar',
-        meta: 'Apoio financeiro ou material',
+        title: 'Doações Transparentes',
+        meta: 'Apoio financeiro e material',
         description:
-          'Escolha uma campanha, veja a meta e registre a contribuição com dados suficientes para acompanhamento.',
-        tags: ['Pix', 'Itens', 'Recorrente'],
+          'Apoie campanhas ativas via Pix, itens essenciais ou doações mensais e receba relatórios detalhados.',
+        tags: ['Pix', 'Doação Direta', 'Relatórios'],
         href: '/doacoes',
       },
       {
-        title: 'Ser voluntário',
+        title: 'Vagas de Voluntariado',
         meta: 'Tempo e habilidades',
         description:
-          'Encontre vagas presenciais, remotas ou híbridas e participe de atividades com inscrição organizada.',
+          'Inscreva-se em vagas presenciais ou remotas, ajude ONGs da sua região e receba certificados de participação.',
         tags: ['Remoto', 'Presencial', 'Certificado'],
         href: '/voluntariado',
       },
       {
-        title: 'Cadastrar ONG',
-        meta: 'Organização social',
+        title: 'Projetos e Eventos',
+        meta: 'Ações comunitárias',
         description:
-          'Abra um perfil para publicar causas, receber apoio e manter a prestação de contas em um lugar claro.',
-        tags: ['Perfil público', 'Projetos', 'Prestação'],
-        href: '/cadastro-ong',
+          'Acompanhe mutirões, oficinas e eventos promovidos pelas organizações em tempo real.',
+        tags: ['Agenda', 'Comunidade', 'Mutirões'],
+        href: '/eventos',
       },
     ],
   },
@@ -900,6 +884,65 @@ export const PAGE_CONTENT = {
       'Preferencias de pagamento',
     ],
   },
+  configuracaoSistema: {
+    eyebrow: 'Area administrativa',
+    title: 'Configuracao do Sistema',
+    description: 'Gerencie parametros gerais, seguranca e preferencias da plataforma.',
+    image: logoImage,
+    fields: ['Nome da plataforma', 'E-mail de suporte', 'Notificacoes', 'Politica de acesso'],
+  },
+  gerenciarConteudo: {
+    eyebrow: 'Area administrativa',
+    title: 'Gerenciar Conteudo',
+    description: 'Revise paginas, comunicados e informacoes publicadas na plataforma.',
+    image: brandImage,
+    table: {
+      columns: ['Conteudo', 'Tipo', 'Atualizado em', 'Status'],
+      rows: [
+        ['Pagina inicial', 'Pagina', 'Hoje', 'Publicado'],
+        ['Guia da plataforma', 'Pagina', 'Ontem', 'Publicado'],
+      ],
+    },
+  },
+  gerenciarDenuncia: {
+    eyebrow: 'Area administrativa',
+    title: 'Gerenciar Denuncias',
+    description: 'Analise denuncias, registre providencias e acompanhe o status de cada caso.',
+    image: logoImage,
+    table: {
+      columns: ['Denuncia', 'Alvo', 'Recebida em', 'Status'],
+      rows: [
+        ['#1024', 'Projeto social', 'Hoje', 'Em analise'],
+        ['#1023', 'Perfil de usuario', 'Ontem', 'Resolvida'],
+      ],
+    },
+  },
+  gerenciarDoacao: {
+    eyebrow: 'Area administrativa',
+    title: 'Gerenciar Doacoes',
+    description: 'Acompanhe doacoes financeiras e materiais registradas na plataforma.',
+    image: brandImage,
+    table: {
+      columns: ['Doador', 'Tipo', 'Projeto apoiado', 'Status'],
+      rows: [
+        ['Ana Lima', 'Pix', 'Biblioteca de bairro', 'Confirmada'],
+        ['Visitante', 'Material', 'Cozinha solidaria', 'Pendente'],
+      ],
+    },
+  },
+  gerenciarProjetos: {
+    eyebrow: 'Area administrativa',
+    title: 'Gerenciar Projetos',
+    description: 'Acompanhe projetos sociais, metas, aprovacao e resultados publicados.',
+    image: brandImage,
+    table: {
+      columns: ['Projeto', 'ONG', 'Meta', 'Status'],
+      rows: [
+        ['Biblioteca de bairro', 'Rede Cuidar', 'R$ 18.400', 'Em andamento'],
+        ['Horta escola', 'Casa Verde Viva', 'R$ 9.800', 'Em revisao'],
+      ],
+    },
+  },
   painelAdmin: {
     eyebrow: 'Area administrativa',
     title: 'Painel do Administrador',
@@ -944,207 +987,63 @@ export const PAGE_CONTENT = {
       rows: [
         ['Rede Cuidar', 'Sao Paulo', 'Completo', 'Aprovada'],
         ['Instituto Aprender', 'Curitiba', 'Pendente', 'Em analise'],
-        ['Casa Verde Viva', 'Recife', 'Completo', 'Aprovada'],
       ],
     },
-  },
-  gerenciarProjetos: {
-    eyebrow: 'Area administrativa',
-    title: 'Gerenciar Projetos',
-    description: 'Revise, aprove, destaque ou remova projetos publicados pelas ONGs.',
-    image: sloganImage,
-    table: {
-      columns: ['Projeto', 'ONG', 'Categoria', 'Status'],
-      rows: [
-        ['Biblioteca de bairro', 'Rede Cuidar', 'Educacao', 'Aprovado'],
-        ['Cozinha solidaria', 'Rede Cuidar', 'Alimentacao', 'Destaque'],
-        ['Horta escola', 'Casa Verde Viva', 'Meio ambiente', 'Revisao'],
-      ],
-    },
-  },
-  gerenciarDoacao: {
-    eyebrow: 'Area administrativa',
-    title: 'Gerenciar Doacoes',
-    description: 'Acompanhe transacoes, comprovantes, falhas de pagamento e possiveis problemas.',
-    image: brandImage,
-    table: {
-      columns: ['Transacao', 'Valor', 'Destino', 'Status'],
-      rows: [
-        ['#1024', 'R$ 250', 'Biblioteca', 'Confirmada'],
-        ['#1025', 'R$ 90', 'Horta escola', 'Processando'],
-        ['#1026', 'R$ 1.200', 'Cozinha', 'Em revisao'],
-      ],
-    },
-  },
-  gerenciarDenuncia: {
-    eyebrow: 'Area administrativa',
-    title: 'Gerenciar Denuncias',
-    description:
-      'Analise denuncias, registre decisoes, aplique medidas e preserve o historico de moderacao.',
-    image: logoImage,
-    table: {
-      columns: ['Denuncia', 'Alvo', 'Prioridade', 'Status'],
-      rows: [
-        ['Conteudo inadequado', 'Projeto', 'Media', 'Em analise'],
-        ['Documento suspeito', 'ONG', 'Alta', 'Investigacao'],
-        ['Mensagem abusiva', 'Usuario', 'Baixa', 'Resolvida'],
-      ],
-    },
-  },
-  gerenciarConteudo: {
-    eyebrow: 'Area administrativa',
-    title: 'Gerenciar Conteudo',
-    description:
-      'Controle banners, noticias, categorias, destaques e textos editoriais da plataforma.',
-    image: sloganImage,
-    fields: [
-      'Banner principal',
-      'Noticias',
-      'Categorias',
-      'Projetos em destaque',
-      'ONGs em destaque',
-    ],
   },
   relatorioAdmin: {
     eyebrow: 'Area administrativa',
     title: 'Relatorios Administrativos',
-    description:
-      'Indicadores de crescimento, engajamento, arrecadacao, desempenho e saude da plataforma.',
-    image: brandImage,
+    description: 'Consulte indicadores de operacao, impacto e movimentacao da plataforma.',
+    image: sloganImage,
     metrics: [
-      { value: '+18%', label: 'crescimento mensal' },
-      { value: '42%', label: 'engajamento' },
-      { value: 'R$ 860k', label: 'arrecadacao total' },
-    ],
-    sections: [
-      {
-        title: 'Relatorios disponiveis',
-        items: [
-          'Crescimento de usuarios.',
-          'Performance de campanhas.',
-          'Atividade das ONGs.',
-          'Evolucao de doacoes.',
-        ],
-      },
-    ],
-  },
-  configuracaoSistema: {
-    eyebrow: 'Area administrativa',
-    title: 'Configuracoes do Sistema',
-    description: 'Configure taxas, categorias, permissoes, notificacoes e formas de pagamento.',
-    image: logoImage,
-    fields: [
-      'Taxas',
-      'Categorias',
-      'Permissoes',
-      'Formas de pagamento',
-      'Templates de notificacao',
-    ],
-  },
-  politicaPrivacidade: {
-    eyebrow: 'Pagina legal',
-    title: 'Politica de Privacidade',
-    description:
-      'Explica como dados pessoais sao coletados, usados, armazenados e protegidos na plataforma.',
-    image: sloganImage,
-    sections: [
-      {
-        title: 'Coleta e uso',
-        items: [
-          'Dados de cadastro e contato.',
-          'Historico de doacoes e inscricoes.',
-          'Informacoes necessarias para verificacao de ONGs.',
-        ],
-      },
-      {
-        title: 'Protecao',
-        body: 'O acesso aos dados deve ser limitado por perfil, com medidas de seguranca, rastreabilidade e respeito a legislacao aplicavel.',
-      },
-    ],
-  },
-  termosUso: {
-    eyebrow: 'Pagina legal',
-    title: 'Termos de Uso',
-    description:
-      'Regras para usuarios, ONGs e administradores utilizarem a plataforma com responsabilidade.',
-    image: sloganImage,
-    sections: [
-      {
-        title: 'Responsabilidades',
-        items: [
-          'Usuarios devem fornecer dados verdadeiros.',
-          'ONGs devem manter informacoes e comprovantes atualizados.',
-          'Conteudos podem ser moderados.',
-        ],
-      },
-      {
-        title: 'Uso adequado',
-        body: 'A plataforma deve ser usada para fins licitos, colaborativos e alinhados ao apoio social.',
-      },
+      { value: '342', label: 'projetos ativos' },
+      { value: '3.4k', label: 'voluntarios' },
+      { value: 'R$ 860k', label: 'apoio mobilizado' },
     ],
   },
   politicaCookies: {
-    eyebrow: 'Pagina legal',
+    eyebrow: 'Politicas legais',
     title: 'Politica de Cookies',
-    description:
-      'Informacoes sobre cookies, preferencias, medicao de uso e melhorias de experiencia.',
-    image: sloganImage,
+    description: 'Entenda como utilizamos cookies para melhorar a experiencia na Movune.',
     sections: [
-      {
-        title: 'Tipos de cookies',
-        items: [
-          'Essenciais para login e seguranca.',
-          'Analiticos para entender navegacao.',
-          'Preferencias para lembrar escolhas do usuario.',
-        ],
-      },
-      {
-        title: 'Controle',
-        body: 'O usuario deve poder revisar preferencias de cookies quando a funcionalidade estiver ativa.',
-      },
+      { title: 'Uso de cookies', body: 'Utilizamos cookies essenciais para funcionamento, seguranca e preferencias.' },
+      { title: 'Gerenciamento', body: 'Voce pode controlar cookies nas configuracoes do seu navegador.' },
     ],
   },
   politicaDoacao: {
-    eyebrow: 'Pagina legal',
-    title: 'Politica de Doacoes',
-    description: 'Regras sobre campanhas, taxas, cancelamentos, comprovantes e responsabilidades.',
-    image: sloganImage,
+    eyebrow: 'Politicas legais',
+    title: 'Politica de Doacao',
+    description: 'Consulte as regras para registrar, acompanhar e cancelar doacoes na plataforma.',
     sections: [
-      {
-        title: 'Fluxo de doacao',
-        items: [
-          'Doacoes devem indicar projeto ou ONG beneficiada.',
-          'Transacoes precisam registrar status e comprovante.',
-          'Cancelamentos seguem regras do meio de pagamento.',
-        ],
-      },
-      {
-        title: 'Responsabilidades',
-        body: 'ONGs sao responsaveis por informar uso dos recursos e manter prestacoes de contas atualizadas.',
-      },
+      { title: 'Transparencia', body: 'As doacoes sao vinculadas a campanhas e projetos identificados.' },
+      { title: 'Comprovantes', body: 'Registros e comprovantes ficam disponiveis para acompanhamento.' },
+    ],
+  },
+  politicaPrivacidade: {
+    eyebrow: 'Politicas legais',
+    title: 'Politica de Privacidade',
+    description: 'Saiba como coletamos, usamos e protegemos seus dados pessoais.',
+    sections: [
+      { title: 'Dados coletados', body: 'Coletamos apenas os dados necessarios para oferecer nossos servicos.' },
+      { title: 'Seus direitos', body: 'Voce pode solicitar acesso, correcao ou exclusao dos seus dados.' },
     ],
   },
   politicaTransparencia: {
-    eyebrow: 'Pagina legal',
+    eyebrow: 'Politicas legais',
     title: 'Politica de Transparencia',
-    description:
-      'Criterios de verificacao, publicacao de relatorios e prestacao de contas das ONGs.',
-    image: brandImage,
+    description: 'Conheca os compromissos da Movune com informacao clara e prestacao de contas.',
     sections: [
-      {
-        title: 'Criterios',
-        items: [
-          'Documentos institucionais atualizados.',
-          'Receitas e despesas vinculadas a projetos.',
-          'Comprovantes revisaveis pela administracao.',
-        ],
-      },
-      {
-        title: 'Visibilidade publica',
-        body: 'Indicadores, resultados e comprovantes principais devem ficar acessiveis para fortalecer a confianca dos apoiadores.',
-      },
+      { title: 'Informacoes publicas', body: 'Projetos, campanhas e indicadores sao apresentados de forma acessivel.' },
+      { title: 'Acompanhamento', body: 'A plataforma registra atualizacoes para facilitar a verificacao do impacto.' },
+    ],
+  },
+  termosUso: {
+    eyebrow: 'Politicas legais',
+    title: 'Termos de Uso',
+    description: 'Leia as condicoes para utilizar os recursos e participar da comunidade Movune.',
+    sections: [
+      { title: 'Uso da plataforma', body: 'Use a Movune de forma legal, respeitosa e com informacoes verdadeiras.' },
+      { title: 'Responsabilidades', body: 'Cada usuario e responsavel pelas informacoes e interacoes que publicar.' },
     ],
   },
 } satisfies Record<string, PageContent>;
-
-export type PageKey = keyof typeof PAGE_CONTENT;
