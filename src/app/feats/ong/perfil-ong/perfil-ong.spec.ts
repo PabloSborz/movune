@@ -23,6 +23,22 @@ describe('PerfilOng', () => {
 
   function click(selector: string) { root.querySelector<HTMLElement>(selector)!.click(); }
 
+  it.each([null, { id: 'visitor', perfil: 'usuario' }, { id: 'admin', perfil: 'admin' }, { id: 'organization', perfil: 'ong' }])('uses the ONG home only for an ONG session: %j', session => {
+    if (session) records.set('movune:sessao', JSON.stringify(session));
+    for (const selector of ['.global-header .brand', '.header-organization']) {
+      const link = root.querySelector<HTMLAnchorElement>(selector)!;
+      link.dispatchEvent(new Event('focus'));
+      expect(link.getAttribute('href')).toBe(session?.perfil === 'ong' ? '/ong/painel' : '/');
+    }
+    const edit = root.querySelector<HTMLAnchorElement>('.edit-profile-button')!;
+    expect(edit.hidden).toBe(session?.perfil !== 'ong');
+    expect(edit.getAttribute('href')).toBe('/ong/editar-perfil');
+    records.delete('movune:sessao');
+    const avatar = root.querySelector<HTMLAnchorElement>('.header-organization')!;
+    avatar.dispatchEvent(new Event('focus'));
+    expect(avatar.getAttribute('href')).toBe('/');
+  });
+
   it('renders the public identity and accurate progress values', () => {
     expect(root.querySelector('h1')!.textContent).toBe('Rede Cuidar');
     expect([...root.querySelectorAll('[role="progressbar"]')].map(bar => bar.getAttribute('aria-valuenow'))).toEqual(['75', '25', '100']);
@@ -70,7 +86,7 @@ describe('PerfilOng', () => {
 
   it('provides the requested donation and volunteering destinations', () => {
     expect(root.querySelector('.action-buttons-group a.primary')!.getAttribute('href')).toBe('/doar/rede-cuidar');
-    expect(root.querySelector('.action-buttons-group a.outline')!.getAttribute('href')).toBe('/voluntariado/rede-cuidar');
+    expect(root.querySelector('.action-buttons-group a[href="/voluntariado/rede-cuidar"]')).toBeTruthy();
     expect(root.querySelector('.site-link')!.getAttribute('rel')).toContain('noopener');
   });
 });

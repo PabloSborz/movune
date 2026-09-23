@@ -1,5 +1,5 @@
 import { Component, DestroyRef, ElementRef, afterNextRender, inject } from '@angular/core';
-import { initializePublicProfile } from '../../../../../public/ong/perfil-ong/profile.js';
+import { initializePublicProfile } from '../standalone/perfil-ong/profile.js';
 
 @Component({
   selector: 'app-perfil-ong',

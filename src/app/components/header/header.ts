@@ -39,6 +39,11 @@ export class Header {
   private readonly choiceDialog = inject(ChoiceDialogService);
 
   readonly session = this.auth.session;
+  get homeRoute(): string {
+    const session = this.session();
+    if (!session || (this.home && !this.authenticatedHome)) return '/';
+    return session.perfil === 'ong' ? '/ong/painel' : '/inicio';
+  }
   get profilePhoto(): string {
     return this.auth.users().find(user => user.id === this.session()?.id)?.avatar || '';
   }

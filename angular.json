@@ -23,6 +23,12 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/app/feats/ong/standalone",
+                "output": "/ong",
+                "ignore": ["**/*.d.ts", "**/*.md"]
               }
             ],
             "styles": [

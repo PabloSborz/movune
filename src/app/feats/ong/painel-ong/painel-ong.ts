@@ -11,6 +11,7 @@ export class PainelOng {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly router = inject(Router);
   private readonly auth = inject(AuthStore);
+  protected homeRoute(): string { return this.auth.session()?.perfil === 'ong' ? '/ong/painel' : '/'; }
   private readonly destroy = inject(DestroyRef);
 
   constructor() {
@@ -31,6 +32,10 @@ export class PainelOng {
     root.addEventListener('click', event => {
       const target = event.target as Element;
       const trigger = target.closest<HTMLElement>('[data-toggle]');
+      if (trigger?.dataset['toggle'] === 'profile-menu' && !this.auth.session()) {
+        void this.router.navigateByUrl('/');
+        return;
+      }
       if (trigger) {
         const panel = root.querySelector<HTMLElement>('#' + trigger.dataset['toggle'])!;
         const shouldOpen = panel.hidden;

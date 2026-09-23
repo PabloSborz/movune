@@ -1,7 +1,7 @@
 @if (home) {
   <header class="landing-header">
     <div class="landing-nav-inner" [class.landing-nav-authenticated]="authenticatedHome">
-      <a [routerLink]="session() ? '/inicio' : '/'" class="landing-brand" aria-label="Movune, início"
+      <a [routerLink]="homeRoute" class="landing-brand" aria-label="Movune, início"
         ><img src="/logo-transparent.png" alt="" /><span>Movune</span></a
       >
       <nav class="landing-desktop-nav" aria-label="Navegação principal">
@@ -79,7 +79,7 @@
         </button>
       </div>
 
-      <a [routerLink]="session() ? '/inicio' : '/'" class="brand" aria-label="Movune início">
+      <a [routerLink]="homeRoute" class="brand" aria-label="Movune início">
         <img src="/logo-transparent.png" alt="Movune" />
       </a>
 

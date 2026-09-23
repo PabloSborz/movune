@@ -1,9 +1,18 @@
-<div class="dashboard">
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gerenciar Eventos — Movune</title><link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/shell.css"><link rel="stylesheet" href="../shared/ong-pages.css"><link rel="stylesheet" href="../shared/ong-widgets.css"><link rel="stylesheet" href="../shared/ong-responsive.css">
+<link rel="stylesheet" href="./page.css">
+<style>body{margin:0}.dashboard{min-height:max(100vh,var(--ong-page-height))}</style>
+<script type="module" src="../shared/standalone.js"></script></head>
+<body class="ong-workspace " data-kind="eventos"><div class="ong-shell"><div class="dashboard">
   <a class="skip-link" href="#dashboard-content">Pular para o conteúdo</a>
   <header class="global-header">
     <div class="logo-group">
       <button class="icon-button hamburger" type="button" data-drawer aria-label="Abrir navegação" aria-haspopup="dialog" aria-controls="mobile-navigation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-      <a href="/" [attr.href]="homeRoute()" data-route aria-label="Movune — Painel da ONG"><img class="logo" src="/logo-transparent.png" width="120" height="40" alt="Movune"></a>
+      <a href="/" data-route aria-label="Movune — Painel da ONG"><img class="logo" src="/logo-transparent.png" width="120" height="40" alt="Movune"></a>
       <span class="panel-badge">Painel da ONG</span>
     </div>
     <div class="header-actions">
@@ -17,9 +26,9 @@
         </section>
       </div>
       <div class="user-logged">
-        <div class="user-info"><strong>Rede Cuidar</strong><span>contato&#64;redecuidar.org</span></div>
+        <div class="user-info"><strong>Rede Cuidar</strong><span>contato@redecuidar.org</span></div>
         <div class="popover-anchor">
-          <a class="avatar" href="/" [attr.href]="homeRoute()" data-route aria-label="Página inicial da ONG"><img src="/ong-avatar.svg" width="40" height="40" alt="Rede Cuidar"></a>
+          <a class="avatar" href="/" data-route aria-label="Página inicial da ONG"><img src="/ong-avatar.svg" width="40" height="40" alt="Rede Cuidar"></a>
           <button class="icon-button" type="button" data-toggle="profile-menu" aria-label="Abrir menu da conta" aria-expanded="false" aria-controls="profile-menu">⋮</button>
           <nav class="popover profile-menu" id="profile-menu" data-popover hidden aria-label="Menu da conta">
             <a href="/perfil-ong" data-route><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg>Ver perfil</a>
@@ -33,7 +42,7 @@
   <div class="content-wrapper">
     <aside class="left-sidebar" aria-label="Navegação do painel">
       <nav id="desktop-menu" class="menu-section" aria-label="Menu da ONG">
-        <a class="nav-item active" href="/ong/painel" data-route aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="11" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="18" width="7" height="3" rx="1"/></svg><span>Painel</span></a>
+        <a class="nav-item" href="/ong/painel" data-route><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="11" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="18" width="7" height="3" rx="1"/></svg><span>Painel</span></a>
 <a class="nav-item" href="/ong/projetos" data-route><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg><span>Projetos</span></a>
 <a class="nav-item" href="/ong/vagas" data-route><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3h8v4M3 12a20 20 0 0 0 18 0M12 11v4"/></svg><span>Vagas</span></a>
 <a class="nav-item" href="/ong/voluntarios" data-route><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 21v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6M21 21v-2a6 6 0 0 0-4-5"/></svg><span>Voluntários</span></a>
@@ -47,30 +56,14 @@
       <button class="nav-item nav-item-sair" type="button" data-logout><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3H4v18h5M9 12h12m-4-4 4 4-4 4"/></svg>Sair do painel</button>
     </aside>
     <main class="main-content" id="dashboard-content" tabindex="-1">
-      <header class="page-heading"><h1>Painel — Rede Cuidar</h1><p>Monitore as atividades, recursos e impacto social da sua organização em tempo real.</p></header>
-      <section class="kpi-row" aria-label="Indicadores da organização">
-        <article class="kpi-card"><div class="kpi-header"><h2>Projetos Ativos</h2><span class="icon-circle blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg></span></div><div><p class="kpi-value" aria-label="5"><span aria-hidden="true" data-count="5">5</span></p><p class="kpi-change"><strong>+1</strong> novo este mês</p></div></article>
-<article class="kpi-card"><div class="kpi-header"><h2>Voluntários Ativos</h2><span class="icon-circle green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 21v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6M21 21v-2a6 6 0 0 0-4-5"/></svg></span></div><div><p class="kpi-value" aria-label="23"><span aria-hidden="true" data-count="23">23</span></p><p class="kpi-change"><strong>+4</strong> novos este mês</p></div></article>
-<article class="kpi-card"><div class="kpi-header"><h2>Doações Este Mês</h2><span class="icon-circle cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M9 6v6M7 7h3a1 1 0 0 1 0 2H8a1 1 0 0 0 0 2h3M16 9a6 6 0 1 1-7 7"/></svg></span></div><div><p class="kpi-value" aria-label="R$ 4.200"><span aria-hidden="true" data-count="4200" data-currency="true">R$ 4.200</span></p><p class="kpi-change"><strong>+12%</strong> este mês</p></div></article>
-<article class="kpi-card"><div class="kpi-header"><h2>Eventos Próximos</h2><span class="icon-circle navy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 11h18M7 15h2M13 15h2M7 18h2"/></svg></span></div><div><p class="kpi-value" aria-label="2"><span aria-hidden="true" data-count="2">2</span></p><p class="kpi-change"><strong class="stable">Estável</strong> este mês</p></div></article>
-      </section>
-      <div class="lower-row">
-        <section class="content-card activity-card" aria-labelledby="activity-title">
-          <h2 id="activity-title">Atividades Recentes</h2>
-          <ul class="activity-list">
-            <li><a href="/ong/voluntarios?busca=Ana%20Souza" data-route><span class="icon-circle green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg></span><span class="activity-copy"><strong>Novo voluntário inscrito</strong><span>Ana Souza se candidatou para 'Biblioteca de Bairro'</span><small>há 2h</small></span></a></li>
-<li><a href="/ong/doacoes?busca=Carlos%20Lima" data-route><span class="icon-circle blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M9 6v6M7 7h3a1 1 0 0 1 0 2H8a1 1 0 0 0 0 2h3M16 9a6 6 0 1 1-7 7"/></svg></span><span class="activity-copy"><strong>Doação recebida</strong><span>R$ 150 recebidos via Pix de Carlos Lima</span><small>há 5h</small></span></a></li>
-<li><a href="/ong/projetos?busca=Horta%20Escola" data-route><span class="icon-circle cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg></span><span class="activity-copy"><strong>Projeto atualizado</strong><span>Metas e prazos do projeto 'Horta Escola' foram ajustados</span><small>há 1 dia</small></span></a></li>
-          </ul>
-        </section>
-        <section class="content-card alerts-card" aria-labelledby="alerts-title">
-          <h2 id="alerts-title">Alertas e Notificações</h2>
-          <ul class="alert-list"><li><a class="alert critical" href="/ong/documentos" data-route><span class="severity">Crítico</span><span>Documento vencendo em 15 dias (Certidão de Regularidade)</span></a></li>
-<li><a class="alert attention" href="/ong/prestacao-contas" data-route><span class="severity">Atenção</span><span>Prestação de contas pendente (Cozinha Solidária - Jan/2026)</span></a></li>
-<li><a class="alert pending" href="/ong/voluntarios" data-route><span class="severity">Pendente</span><span>3 inscrições de voluntários aguardando aprovação</span></a></li></ul>
-        </section>
-      </div>
-    </main>
+<section class="management-page" data-page="eventos" aria-labelledby="page-title">
+  <header class="management-heading"><div><h1 id="page-title">Gerenciar Eventos</h1><p>Organize mutirões, feiras e encontros para integrar seus projetos à comunidade local.</p></div><button type="button" class="primary" data-action="new"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Novo Evento</button></header>
+  <div class="page-body"></div>
+  <p class="page-feedback" role="status" aria-live="polite" hidden></p>
+</section>
+<dialog class="management-dialog" aria-labelledby="modal-title"><form class="modal-form" novalidate><h2 id="modal-title"></h2><div class="modal-content"></div><p class="modal-error" role="alert" hidden></p><footer><button type="button" data-close>Cancelar</button><button class="primary" type="submit" data-confirm>Confirmar</button></footer></form></dialog>
+
+</main>
   </div>
   <dialog class="mobile-drawer" id="mobile-navigation" aria-label="Navegação da ONG">
     <div class="drawer-inner"><div class="drawer-heading"><strong>Painel da ONG</strong><button type="button" class="icon-button" data-close-drawer aria-label="Fechar navegação"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div><div data-mobile-menu></div><button class="nav-item nav-item-sair" type="button" data-logout><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3H4v18h5M9 12h12m-4-4 4 4-4 4"/></svg>Sair do painel</button></div>
@@ -79,3 +72,4 @@
     <div class="logout-content"><span class="icon-circle critical"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3H4v18h5M9 12h12m-4-4 4 4-4 4"/></svg></span><h2 id="logout-title">Deseja sair?</h2><p id="logout-description">Você precisará entrar novamente para acessar o painel da ONG.</p><div class="dialog-actions"><button type="button" class="cancel-button" data-cancel-logout autofocus>Cancelar</button><button type="button" class="confirm-button" data-confirm-logout>Sair do painel</button></div></div>
   </dialog>
 </div>
+</div></body></html>

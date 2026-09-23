@@ -2,6 +2,8 @@
   "name": "movune",
   "version": "0.0.0",
   "scripts": {
+    "build:ong-static": "node scripts/build-ong-static.mjs",
+    "test:ong-static": "vitest run scripts/ong-static.spec.mjs --environment jsdom",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",

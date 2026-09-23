@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
+import { vi } from 'vitest';
 
 import { Header } from './header';
 
@@ -23,6 +24,31 @@ describe('Header', () => {
     expect(component).toBeTruthy();
   });
 
+  it('links the logged-in ONG logo to its home in both header layouts', () => {
+    component.session.set({ id: 'ong-test', perfil: 'ong', nome: 'ONG', email: 'ong@example.com', iniciadoEm: '' });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.brand').getAttribute('href')).toBe('/ong/painel');
+    fixture.componentRef.setInput('home', true);
+    fixture.componentRef.setInput('authenticatedHome', true);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.landing-brand').getAttribute('href')).toBe('/ong/painel');
+  });
+
+  it('opens the ONG profile from its account menu without an edit shortcut', async () => {
+    fixture.componentRef.setInput('home', true);
+    fixture.componentRef.setInput('authenticatedHome', true);
+    component.session.set({ id: 'ong-test', perfil: 'ong', nome: 'ONG', email: 'ong@example.com', iniciadoEm: '' });
+    fixture.detectChanges();
+    fixture.nativeElement.querySelector('app-profile-menu .avatar').click();
+    fixture.detectChanges();
+    const menu: HTMLElement = fixture.nativeElement.querySelector('app-profile-menu .popover');
+    expect(menu.textContent).not.toContain('Editar perfil');
+    const navigate = vi.spyOn(TestBed.inject(Router), 'navigateByUrl').mockResolvedValue(true);
+    menu.querySelector('button')!.click();
+    expect(navigate).toHaveBeenCalledWith('/perfil-ong');
+    navigate.mockRestore();
+  });
+
   it('links Transparência and the logo to their current routes', () => {
     fixture.componentRef.setInput('home', true);
     fixture.detectChanges();
@@ -39,13 +65,13 @@ describe('Header', () => {
     expect(fixture.nativeElement.querySelector('.header-back')).toBeTruthy();
   });
 
-  it('keeps public home actions even with an active session', () => {
+  it.each(['usuario', 'ong', 'admin'] as const)('keeps the public home logo and actions with an active %s session', perfil => {
     fixture.componentRef.setInput('home', true);
-    component.session.set({ id: 'test', perfil: 'usuario', nome: 'Teste', email: 'teste@example.com', iniciadoEm: '' });
+    component.session.set({ id: 'test', perfil, nome: 'Teste', email: 'teste@example.com', iniciadoEm: '' });
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('a[href="/login"]')).toBeTruthy();
     expect(fixture.nativeElement.querySelector('a[href="/escolha"]')).toBeTruthy();
-    expect(fixture.nativeElement.querySelector('.landing-brand').getAttribute('href')).toBe('/inicio');
+    expect(fixture.nativeElement.querySelector('.landing-brand').getAttribute('href')).toBe('/');
   });
 
   it('shows account actions only on the access home', () => {

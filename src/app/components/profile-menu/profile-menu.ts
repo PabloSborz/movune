@@ -6,13 +6,15 @@ import { AuthStore } from '../../shared/auth-store.service';
 @Component({
   selector: 'app-profile-menu',
   template: `
-    <button #trigger type="button" class="avatar" aria-label="Abrir opções do perfil" [attr.aria-expanded]="open" (click)="open = !open">
+    <button #trigger type="button" class="avatar" aria-label="Abrir opções do perfil" [attr.aria-expanded]="open" (click)="toggleProfile()">
       @if (photo) { <img [src]="photo" alt="" /> } @else { {{ initials }} }
     </button>
     @if (open) {
       <nav class="popover" aria-label="Opções do perfil">
         <button type="button" (click)="go(false)">Ver meu perfil</button>
-        <button type="button" (click)="go(true)">Editar perfil</button>
+        @if (auth.session()?.perfil !== 'ong') {
+          <button type="button" (click)="go(true)">Editar perfil</button>
+        }
         <button type="button" class="logout" (click)="logout()">Sair</button>
       </nav>
     }
@@ -32,11 +34,20 @@ export class ProfileMenu {
   @Input() photo = '';
   @Input() initials = '';
   open = false;
-  private readonly auth = inject(AuthStore);
+  protected readonly auth = inject(AuthStore);
   private readonly router = inject(Router);
   private readonly host = inject(ElementRef);
   private readonly document = inject(DOCUMENT);
   readonly trigger = viewChild<ElementRef<HTMLButtonElement>>('trigger');
+
+  toggleProfile(): void {
+    if (!this.auth.session()) {
+      this.open = false;
+      void this.router.navigateByUrl('/');
+      return;
+    }
+    this.open = !this.open;
+  }
 
   @HostListener('document:click', ['$event'])
   outside(event: Event): void {
@@ -52,7 +63,7 @@ export class ProfileMenu {
     this.open = false;
     const profile = this.auth.session()?.perfil;
     const route = profile === 'ong'
-      ? (edit ? '/ong/editar-perfil' : '/ong/painel')
+      ? (edit ? '/ong/editar-perfil' : '/perfil-ong')
       : profile === 'admin'
         ? '/admin/painel'
         : edit

@@ -8,8 +8,40 @@ export function initializePublicProfile(root) {
   const win = root.ownerDocument.defaultView;
   const reducedMotion = win.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
   const header = root.querySelector('.global-header');
+  const homeLinks = header.querySelectorAll('.brand, .header-organization');
+  const updateHomeLinks = () => {
+    let ongSession = false;
+    try {
+      const session = JSON.parse(win.localStorage.getItem('movune:sessao') || 'null');
+      ongSession = session?.perfil === 'ong' && typeof session.id === 'string' && !!session.id;
+    } catch { /* Public home remains available without a readable session. */ }
+    const editProfile = root.querySelector('.edit-profile-button');
+    if (editProfile) editProfile.hidden = !ongSession;
+    homeLinks.forEach(link => {
+      link.setAttribute('href', ongSession ? '/ong/painel' : '/');
+      link.setAttribute('aria-label', ongSession ? 'Ir para a página inicial da ONG' : 'Ir para a página inicial');
+    });
+  };
+  updateHomeLinks();
+  homeLinks.forEach(link => {
+    for (const event of ['pointerdown', 'focus', 'click']) link.addEventListener(event, updateHomeLinks, options);
+  });
+  win.addEventListener('storage', event => {
+    if (event.key === 'movune:sessao' || event.key === null) updateHomeLinks();
+  }, options);
   const menu = root.querySelector('.public-nav');
   const menuButton = root.querySelector('.menu-toggle');
+  const notificationsButton = root.querySelector('.profile-notifications');
+  const notificationsPanel = root.querySelector('.profile-notifications-panel');
+  const closeNotifications = () => {
+    if (notificationsPanel) notificationsPanel.hidden = true;
+    notificationsButton?.setAttribute('aria-expanded', 'false');
+  };
+  notificationsButton?.addEventListener('click', () => {
+    const open = notificationsPanel.hidden;
+    notificationsPanel.hidden = !open;
+    notificationsButton.setAttribute('aria-expanded', String(open));
+  }, options);
   const followButton = root.querySelector('.follow-button');
   const feedback = root.querySelector('.follow-feedback');
   const tabs = [...root.querySelectorAll('.profile-tab')];
@@ -31,18 +63,24 @@ export function initializePublicProfile(root) {
     if (restoreFocus) menuButton.focus();
   };
   menuButton.addEventListener('click', () => {
+    closeNotifications();
     const opened = menu.classList.toggle('open');
     menuButton.setAttribute('aria-expanded', String(opened));
     menuButton.setAttribute('aria-label', opened ? 'Fechar menu' : 'Abrir menu');
   }, options);
   root.ownerDocument.addEventListener('click', event => {
     if (!header.contains(event.target)) closeMenu();
+    if (!event.target.closest('.profile-notifications, .profile-notifications-panel')) closeNotifications();
   }, options);
   root.addEventListener('keydown', event => {
     if (event.key === 'Escape' && menu.classList.contains('open')) closeMenu(true);
+    if (event.key === 'Escape' && notificationsPanel && !notificationsPanel.hidden) {
+      closeNotifications();
+      notificationsButton?.focus();
+    }
   }, options);
   menu.addEventListener('click', event => { if (event.target.closest('a')) closeMenu(); }, options);
-  const breakpoint = win.matchMedia?.('(min-width: 769px)');
+  const breakpoint = win.matchMedia?.('(min-width: 1121px)');
   breakpoint?.addEventListener('change', event => { if (event.matches) closeMenu(); }, options);
 
   followButton.addEventListener('click', () => {
