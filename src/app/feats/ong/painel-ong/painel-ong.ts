@@ -1,9 +1,11 @@
 import { Component, ElementRef, DestroyRef, afterNextRender, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthStore } from '../../../shared/auth-store.service';
+import { BackButton } from '../../../components/back-button/back-button';
 
 @Component({
   selector: 'app-painel-ong',
+  imports: [BackButton],
   templateUrl: './painel-ong.html',
   styleUrl: './painel-ong.css',
 })
@@ -11,7 +13,6 @@ export class PainelOng {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly router = inject(Router);
   private readonly auth = inject(AuthStore);
-  protected homeRoute(): string { return this.auth.session()?.perfil === 'ong' ? '/ong/painel' : '/'; }
   private readonly destroy = inject(DestroyRef);
 
   constructor() {

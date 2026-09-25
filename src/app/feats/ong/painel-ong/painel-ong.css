@@ -128,7 +128,12 @@ dialog::backdrop { background: rgba(0, 0, 0, .3); }
   .lower-row { flex-direction: column; }
   .content-card { width: 100%; }
 }
+.global-header { position: fixed; inset: 0 0 auto; z-index: 30; }
+.content-wrapper { padding-top: 80px; }
+.left-sidebar { position: fixed; top: 80px; bottom: 0; left: 0; width: 280px; overflow-y: auto; z-index: 10; }
+.main-content { margin-left: 280px; scroll-margin-top: 96px; }
 @media (max-width: 1024px) {
+  .main-content { margin-left: 0; }
   .left-sidebar { display: none; }
   .hamburger { display: inline-flex; }
   .main-content { padding: 24px; }

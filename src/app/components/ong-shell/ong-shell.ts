@@ -11,7 +11,6 @@ export class OngShell {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly router = inject(Router);
   private readonly auth = inject(AuthStore);
-  protected readonly homeRoute = computed(() => this.auth.session()?.perfil === 'ong' ? '/ong/painel' : '/');
   protected readonly organization = computed(() => {
     const ong = this.auth.ongs().find(item => item.id === this.auth.session()?.id);
     return ong && (ong.id !== 'demo-ong' || ong.descricao !== undefined) ? ong : undefined;

@@ -22,7 +22,7 @@
           <path d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
-      <a href="/" [attr.href]="homeRoute()" data-route aria-label="Movune — Painel da ONG"
+      <a href="/pagina-acesso/home" data-route aria-label="Movune — Página inicial"
         ><img class="logo" src="/logo-transparent.png" width="120" height="40" alt="Movune"
       /></a>
       <span class="panel-badge">Painel da ONG</span>
@@ -81,10 +81,9 @@
         <div class="popover-anchor">
           <a
             class="avatar"
-            href="/"
-            [attr.href]="homeRoute()"
+            href="/perfil-ong"
             data-route
-            aria-label="Página inicial da ONG"
+            aria-label="Página pública da ONG"
             ><img
               [src]="organization()?.logo || '/ong-avatar.svg'"
               width="40"
